@@ -1,0 +1,61 @@
+<header class="main-header">
+    <div class="nav-container">
+
+        <!-- LOGO SECTION -->
+        <div class="logo">
+            <a href="#">
+                <!-- IMPORTANT: Replace 'logo.png' with your actual logo file -->
+                <img src="/images/Logo-white.webp" alt="IconTech Studio" class="logo-img">
+            </a>
+        </div>
+
+        <!-- DESKTOP NAVIGATION -->
+        <nav class="desktop-nav">
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">About Us</a></li>
+
+                <!-- Dropdown for Services -->
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link">Services <span class="chevron">▾</span></a>
+                    <ul class="dropdown-content">
+                        <li><a href="#">Application Development</a></li>
+                        <li><a href="#">Website Development</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="nav-link">Our Work</a></li>
+
+            </ul>
+        </nav>
+
+        <!-- HEADER ACTIONS (CTA + Mobile Toggle) -->
+        <div class="header-right">
+            <!-- Magnetic Wrapper for the main button -->
+            <div class="magnetic-wrap">
+                <a href="#" class="btn-book magnetic-item">BOOK A CALL</a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="menu-toggle" id="menuBtn">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- MOBILE OVERLAY MENU -->
+<div class="mobile-overlay" id="mobileMenu">
+    <nav class="mobile-nav">
+        <a href="#">Launch pad</a>
+        <a href="#">About Us</a>
+        <a href="#">Our Work</a>
+        <div class="mobile-label">Services</div>
+        <a href="#" class="mobile-sub">App Development</a>
+        <a href="#" class="mobile-sub">Web Development</a>
+        <a href="#" class="mobile-sub">UI/UX Design</a>
+
+        <a href="#" class="btn-book mobile-cta-btn">BOOK A CALL</a>
+    </nav>
+</div>
