@@ -6,8 +6,7 @@ document.addEventListener("siteReady", () => {
     initPhilosophyReveal();
     initHistoryTimeline();
     initRecognitionReveal();
-    initAboutFinalCTA();
-
+    initCommonFinalCTA();
 
 });
 
@@ -285,43 +284,4 @@ function initRecognitionReveal() {
     });
 }
 
-function initAboutFinalCTA() {
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".about-final-cta",
-            start: "top 70%",
-        }
-    });
 
-    // 1. Reveal Banner and Left Content
-    tl.from(".cta-banner", {
-        opacity: 0,
-        y: 60,
-        duration: 1.2,
-        ease: "power3.out"
-    })
-    .from(".cta-left > *", {
-        opacity: 0,
-        y: 20,
-        stagger: 0.15,
-        duration: 0.8
-    }, "-=0.8")
-
-    // 2. Cinematic Shutter Reveal for Founder Portrait
-    .from(".founder-portrait-wrap", {
-        clipPath: "inset(0 0 100% 0)",
-        opacity: 0,
-        scale: 1.1,
-        duration: 1.5,
-        ease: "expo.inOut"
-    }, "-=1")
-
-    // 3. Fade in Quote & Author
-    .from(".founder-quote-area > *", {
-        opacity: 0,
-        y: 15,
-        stagger: 0.2,
-        duration: 1,
-        ease: "power2.out"
-    }, "-=0.5");
-}
