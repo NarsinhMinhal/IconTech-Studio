@@ -30,6 +30,9 @@ async function initSite() {
 
         setupButtonInteractions();
         setupMobileMenu();
+        
+        // Signal for about.js
+        document.dispatchEvent(new Event("siteReady"));
 
     } catch (error) {
         console.error("Critical Loading Error:", error);

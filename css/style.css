@@ -245,6 +245,23 @@ body {
     gap: 15px;
 }
 
+.btn-secondary-outline {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.btn-secondary-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
 .magnetic-wrap {
     display: inline-block;
     position: relative;
@@ -1759,7 +1776,6 @@ body {
 .stagger-form input, .stagger-form textarea {
     width: 100%; 
     padding: 18px 20px; 
-    background: var(--btn-grad);
     border: none;
     border-radius: 4px; 
     font-size: 15px; 
