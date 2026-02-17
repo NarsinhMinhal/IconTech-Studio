@@ -33,6 +33,16 @@ body {
     align-items: center;
     gap: 10px;
 }
+
+.container {
+    width: 92%;
+    /* Same width on both sides */
+    max-width: 1400px;
+    margin: 0 auto;
+    /* Centers the content perfectly */
+    position: relative;
+}
+
 /* ==========================
     HEADER
     ========================= */
