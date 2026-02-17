@@ -3,10 +3,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // 2. The Loading Engine
 async function initSite() {
-    console.log("IconTech Engine: Initializing...");
+    console.log("🚀 IconTech Engine: Initializing...");
 
     try {
-        // AWAIT both components to be fully loaded into the DOM
+        // AWAIT both components
         await Promise.all([
             fetch('header.html').then(res => res.text()).then(html => {
                 document.getElementById('header-placeholder').innerHTML = html;
@@ -16,52 +16,60 @@ async function initSite() {
             })
         ]);
 
-        // NOW that they exist in the DOM, refresh ScrollTrigger to calculate new height
-        ScrollTrigger.refresh();
-
-        // 3. EXECUTE ALL MODULES
-        runAllAnimations();
-        initHorizontalScroll();
-        initSpotlightMarquee(); 
-        initServicesPinning();
-        initFeaturedProjects();
-        initFAQ();
-        initFinalCTA();
-
+        // Global UI Setup (Runs on every page)
+        setupGlobalAnimations(); 
         setupButtonInteractions();
         setupMobileMenu();
+        initLazyCTA();
+        // PAGE ROUTER: Detect where we are
+        if (document.querySelector(".hero-section")) {
+            console.log("🏠 Logic: Home Page");
+            initHomeModules();
+        } 
         
-        // Signal for about.js
+        // Signal for other scripts (about.js or portfolio.js)
         document.dispatchEvent(new Event("siteReady"));
+
+        // Final calculation refresh
+        ScrollTrigger.refresh();
 
     } catch (error) {
         console.error("Critical Loading Error:", error);
-        // Fallback: Show content if fetch fails
-        gsap.set(".main-header, .footer-section, .hero-section", { opacity: 1 });
+        gsap.set(".main-header, .footer-section, main", { opacity: 1 });
     }
 }
 
-// 3. THE ANIMATION VAULT
-function runAllAnimations() {
-    // --- A. HEADER & HERO ENTRANCE ---
+// 3. GLOBAL MODULES (Header/Footer/Buttons)
+function setupGlobalAnimations() {
     const headerTl = gsap.timeline();
     headerTl.to(".main-header", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
         .from(".nav-link", { y: -10, opacity: 0, stagger: 0.1 }, "-=0.5")
-        .from(".btn-book", { scale: 0, opacity: 0, duration: 0.8, ease: "back.out" }, "-=0.3");
+        .from(".main-header .btn-book", { scale: 0, opacity: 0, duration: 0.8, ease: "back.out" }, "-=0.3");
 
+    gsap.to(".footer-section", { scrollTrigger: { trigger: ".footer-section", start: "top 80%" }, opacity: 1, duration: 1 });
+    
+    const brandingText = document.getElementById('footer-branding-text');
+    if (brandingText) {
+        gsap.from(brandingText, {
+            scrollTrigger: { trigger: ".massive-branding-area", start: "top 95%" },
+            y: 100, opacity: 0, duration: 1.5,
+            onComplete: () => {
+                gsap.to(brandingText, { backgroundPosition: "200% center", duration: 10, repeat: -1, ease: "none" });
+                gsap.to(brandingText, { y: -15, scale: 1.03, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+            }
+        });
+    }
+}
+
+// 4. HOME PAGE ONLY MODULES
+function initHomeModules() {
     const heroTl = gsap.timeline();
     heroTl.to(".hero-main-title", { opacity: 1, y: 0, duration: 1.2, delay: 0.5 })
+        .from(".hero-btns .btn-book", { scale: 0, opacity: 0, duration: 0.8, ease: "back.out" }, "-=0.3")
         .from(".phone-frame-container", { y: 150, opacity: 0, scale: 0.9, duration: 1.2, ease: "expo.out" }, "-=0.5")
         .to(".phone-card", { opacity: 1, x: 0, stagger: 0.2, duration: 0.8, ease: "power2.out" }, "-=0.8");
 
-    // Continuous Phone Float
-    gsap.to(".phone-frame-container", {
-        y: "+=15",
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-    });
+    gsap.to(".phone-frame-container", { y: "+=15", duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
     // Client Logos Reveal
     gsap.to(".client-logo", {
@@ -69,35 +77,44 @@ function runAllAnimations() {
         opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power2.out"
     });
 
-    // Footer Reveal & Continuous Text
-    gsap.to(".footer-section", { scrollTrigger: { trigger: ".footer-section", start: "top 80%" }, opacity: 1, duration: 1 });
-
-    gsap.from("#footer-branding-text", {
-        scrollTrigger: { trigger: ".massive-branding-area", start: "top 95%" },
-        y: 100, opacity: 0, duration: 1.5,
-        onComplete: () => {
-            const txt = document.getElementById('footer-branding-text');
-            gsap.to(txt, { backgroundPosition: "200% center", duration: 10, repeat: -1, ease: "none" });
-            gsap.to(txt, { y: -15, scale: 1.03, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
-        }
-    });
-
-    // Process Section
-    gsap.from(".process-header", { scrollTrigger: { trigger: ".process-header", start: "top 85%" }, opacity: 0, y: 30, duration: 1, ease: "power3.out" });
-    gsap.to(".card-reveal", { scrollTrigger: { trigger: ".process-grid", start: "top 80%" }, opacity: 1, y: 0, stagger: 0.15, duration: 1, ease: "power2.out" });
-    gsap.from(".process-cta", { scrollTrigger: { trigger: ".process-cta", start: "top 90%" }, opacity: 0, y: 40, duration: 1.2, ease: "expo.out" });
-
-    // Dropdown Logic (Desktop)
-    const dropTrigger = document.querySelector('.nav-dropdown');
-    const dropMenu = document.querySelector('.dropdown-content');
-    if (dropTrigger && dropMenu) {
-        dropTrigger.addEventListener('mouseenter', () => gsap.to(dropMenu, { autoAlpha: 1, y: 0, duration: 0.4 }));
-        dropTrigger.addEventListener('mouseleave', () => gsap.to(dropMenu, { autoAlpha: 0, y: 10, duration: 0.3 }));
-    }
+    // Execute Home Sections
+    initHorizontalScroll();
+    initSpotlightMarquee();
+    initServicesPinning();
+    initFeaturedProjects();
+    initFAQ();
+    initFinalCTA();
+    
+    // Process Reveal
+    gsap.from(".process-header", { scrollTrigger: { trigger: ".process-header", start: "top 85%" }, opacity: 0, y: 30, duration: 1 });
+    gsap.from(".process-cta", { 
+    scrollTrigger: { 
+        trigger: ".process-cta", // WATCH THE CTA ITSELF
+        start: "top 90%",        // Starts when the top of the CTA peeks into the screen
+        toggleActions: "play none none none" 
+    }, 
+    opacity: 0, 
+    y: 40, 
+    duration: 2, 
+    ease: "power3.out" 
+});
+    gsap.to(".card-reveal", { scrollTrigger: { trigger: ".process-grid", start: "top 80%" }, opacity: 1, y: 0, stagger: 0.15, duration: 1 });
 }
 
-// 4. MODULES
+
+// 5. MODULES
 function initHorizontalScroll() {
+    gsap.from(".how-it-works", { 
+    scrollTrigger: { 
+        trigger: ".how-it-works", 
+        start: "top 90%",        
+        toggleActions: "play none none none" 
+    }, 
+    opacity: 0, 
+    y: 40, 
+    duration: 3, 
+    ease: "power3.out" 
+});
     let mm = gsap.matchMedia();
     mm.add("(min-width: 901px)", () => {
         const horizontalSection = document.querySelector(".horizontal-container");
@@ -116,6 +133,7 @@ function initHorizontalScroll() {
 }
 
 function initSpotlightMarquee() {
+    
     const track = document.getElementById("marqueeTrack");
     if (!track) return;
 
@@ -148,10 +166,18 @@ function initSpotlightMarquee() {
     });
 
 }
-
-window.addEventListener("load", initSpotlightMarquee);
-
 function initServicesPinning() {
+    gsap.from(".services-wrapper", { 
+    scrollTrigger: { 
+        trigger: ".services-wrapper", 
+        start: "top 90%",        
+        toggleActions: "play none none none" 
+    }, 
+    opacity: 0, 
+    y: 40, 
+    duration: 3, 
+    ease: "power3.out" 
+});
     let mm = gsap.matchMedia();
     mm.add("(min-width: 1025px)", () => {
         const section = document.querySelector(".services-pin-section");
@@ -238,50 +264,21 @@ function initFinalCTA() {
 }
 
 function setupButtonInteractions() {
-    // A. Constant Pulse for ALL buttons
-    gsap.to(".btn-book", { 
-        boxShadow: "0 0 20px rgba(165, 148, 253, 0.8)", 
-        repeat: -1, yoyo: true, duration: 1.5, overwrite: "auto" 
-    });
-
-    // B. Magnetic Physics for ALL buttons
+    gsap.to(".btn-book", { boxShadow: "0 0 20px rgba(165, 148, 253, 0.8)", repeat: -1, yoyo: true, duration: 1.5, overwrite: "auto" });
     const wraps = document.querySelectorAll('.magnetic-wrap');
-    
     wraps.forEach(wrap => {
         const item = wrap.querySelector('.magnetic-item');
         if (!item) return;
-
         const xTo = gsap.quickTo(item, "x", { duration: 0.4, ease: "power3" });
         const yTo = gsap.quickTo(item, "y", { duration: 0.4, ease: "power3" });
-
-        // Clean up old listeners to prevent "lag" or "stuck" buttons
-        wrap.onmousemove = null; 
-        
         wrap.onmousemove = (e) => {
             const r = wrap.getBoundingClientRect();
-            const centerX = r.left + r.width / 2;
-            const centerY = r.top + r.height / 2;
-            
-            // Calculate distance
-            const rawX = (e.clientX - centerX);
-            const rawY = (e.clientY - centerY);
-
-            // Clamp ensures the button stays in a professional small area (max 25px)
-            const x = gsap.utils.clamp(-25, 25, rawX / 3);
-            const y = gsap.utils.clamp(-25, 25, rawY / 3);
-
-            xTo(x);
-            yTo(y);
-            
-            // Subtle 3D tilt
+            const x = gsap.utils.clamp(-25, 25, (e.clientX - (r.left + r.width/2))/2.5);
+            const y = gsap.utils.clamp(-25, 25, (e.clientY - (r.top + r.height/2))/2.5);
+            xTo(x); yTo(y);
             gsap.to(item, { rotationY: x * 0.2, rotationX: y * -0.2, duration: 0.3 });
         };
-
-        wrap.onmouseleave = () => {
-            xTo(0);
-            yTo(0);
-            gsap.to(item, { rotationY: 0, rotationX: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
-        };
+        wrap.onmouseleave = () => { xTo(0); yTo(0); gsap.to(item, { rotationY: 0, rotationX: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" }); };
     });
 }
 
@@ -292,9 +289,52 @@ function setupMobileMenu() {
     let isOpen = false;
     btn.onclick = () => {
         isOpen = !isOpen;
-        gsap.to(menu, { right: isOpen ? 0 : "-100%", duration: 0.5, ease: "power3.inOut" });
+        gsap.to(menu, { right: isOpen ? 0 : "-100%", duration: 0.6, ease: "power4.inOut" });
     };
 }
 
-// Start the whole engine
+function initLazyCTA() {
+    const placeholder = document.getElementById('final-CTA-placeholder');
+    if (!placeholder) return;
+
+    let isLoaded = false;
+
+    ScrollTrigger.create({
+        trigger: placeholder,
+        start: "top 110%", 
+        onEnter: async () => {
+            if (isLoaded) return;
+            isLoaded = true;
+
+            try {
+                const response = await fetch('final-CTA.html');
+                const html = await response.text();
+                placeholder.innerHTML = html;
+
+                // IMPORTANT: Tell GSAP the page height has changed
+                ScrollTrigger.refresh();
+
+                // Wait for the elements to be physically rendered
+                const checkExistence = setInterval(() => {
+                    const hasHTML = placeholder.querySelector(".common-final-cta"); // MATCHED CLASS
+                    const hasFunction = typeof window.initFinalCTAAnimations === "function";
+
+                    if (hasHTML && hasFunction) {
+                        clearInterval(checkExistence);
+                        window.initFinalCTAAnimations();
+                        
+                        // Make the new buttons magnetic
+                        if (typeof setupButtonInteractions === "function") {
+                            setupButtonInteractions();
+                        }
+                    }
+                }, 50);
+
+            } catch (error) {
+                console.error("❌ Lazy Load Error:", error);
+            }
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", initSite);
