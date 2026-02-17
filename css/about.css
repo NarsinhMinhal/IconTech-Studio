@@ -54,19 +54,6 @@
     align-items: center;
 }
 
-/* Typography */
-.heading-tag {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: var(--purple-light);
-    font-weight: 800;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .about-hero-title {
     font-size: clamp(3.5rem, 8vw, 6rem);
     font-weight: 800;
