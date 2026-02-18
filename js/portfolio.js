@@ -7,7 +7,6 @@ document.addEventListener("siteReady", () => {
     initWorkAnimations();
     initWhyIconTech();
     initWorkPage();
-    initCommonFinalCTA();
 
 });
 
@@ -108,4 +107,3 @@ function initWorkPage() {
         onComplete: () => gsap.set(".tile-reveal", { clearProps: "all" })
     });
 }
-

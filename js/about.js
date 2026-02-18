@@ -6,7 +6,6 @@ document.addEventListener("siteReady", () => {
     initPhilosophyReveal();
     initHistoryTimeline();
     initRecognitionReveal();
-    initCommonFinalCTA();
 
 });
 
@@ -283,5 +282,3 @@ function initRecognitionReveal() {
         });
     });
 }
-
-
