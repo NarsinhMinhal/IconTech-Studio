@@ -1,0 +1,517 @@
+/* --- SERVICES HERO --- */
+.services-hero {
+    position: relative;
+    padding: 160px 0 100px;
+    background-color: #05010a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Background Network Dots/Lines Overlay */
+.tech-network-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(rgba(165, 148, 253, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(165, 148, 253, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px, 100% 40px;
+    z-index: 1;
+    opacity: 0.5;
+}
+
+.services-hero-container {
+    position: relative;
+    z-index: 10;
+}
+
+.services-hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* LEFT SIDE */
+.services-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: #fff;
+    letter-spacing: -2px;
+}
+
+.services-hero-para {
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 550px;
+    margin-bottom: 45px;
+}
+
+/* RIGHT SIDE VISUAL */
+.services-hero-visual {
+    position: relative;
+    width: 100%;
+}
+
+.visual-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.floating-tech-svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 20px 50px rgba(165, 148, 253, 0.1));
+}
+
+/* Animations targets for GSAP */
+.code-line-1,
+.code-line-2,
+.code-line-3 {
+    transform-origin: left;
+}
+
+.floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+}
+
+.orb-1 {
+    width: 300px;
+    height: 300px;
+    background: rgba(99, 44, 155, 0.2);
+    top: -20%;
+    right: -10%;
+}
+
+.orb-2 {
+    width: 250px;
+    height: 250px;
+    background: rgba(165, 148, 253, 0.15);
+    bottom: 0;
+    left: -10%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .services-hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 80px;
+    }
+
+    .services-hero-para {
+        margin: 0 auto 40px;
+    }
+
+    .services-hero-btn {
+        display: flex;
+        justify-content: center;
+    }
+
+    .services-hero-visual {
+        order: -1;
+        margin-bottom: 40px;
+    }
+
+    .visual-wrapper {
+        max-width: 400px;
+    }
+}
+
+/* --- SERVICES GRID HEADER --- */
+.services-intro {
+    margin-bottom: 80px;
+    text-align: left; /* Aligns with the start of your container */
+}
+
+/* Reusing your high-end title styles */
+.services-main-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: -2px;
+    margin-top: 15px;
+}
+
+.services-grid-section {
+    padding: 100px 0;
+    background: #05010a;
+}
+
+.services-main-grid {
+    display: grid;
+    /* Forces 3 equal columns on large screens */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.svc-card {
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Ensures all cards match height */
+    transition: border-color 0.4s ease, transform 0.4s ease;
+}
+
+.svc-card:hover {
+    border-color: var(--purple-light);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.svc-image-box {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #111;
+}
+
+.svc-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc-card:hover .svc-image-box img {
+    transform: scale(1.08);
+}
+
+.svc-card-content {
+    padding: 35px 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.svc-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.svc-text {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Static Tags Grid */
+.svc-list {
+    margin-top: auto;
+    /* Pushes list to the bottom */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 15px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.svc-tag {
+    font-size: 12px;
+    color: #bbb;
+    font-weight: 500;
+    position: relative;
+    padding-left: 15px;
+}
+
+/* The 'Bullet' indicator */
+.svc-tag::before {
+    content: "";
+    /* Empty content */
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 6px;
+    height: 6px;
+    background: var(--purple-light);
+    box-shadow: 0 0 8px var(--purple-light);
+    /* Glow effect */
+    border-radius: 1px;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 1100px) {
+    .services-main-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* 2 columns on tablet */
+}
+
+@media (max-width: 768px) {
+    .services-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* 1 column on mobile */
+    .svc-card-content {
+        padding: 25px;
+    }
+
+    .svc-title {
+        font-size: 20px;
+    }
+
+    .services-intro {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .services-intro .about-tag {
+        justify-content: center;
+    }
+}
+
+/* ======================
+    ARCHITECT PROCESS SECTION
+    ==================== */
+.architect-process-section {
+    padding: 160px 0;
+    background: #05010a;
+    position: relative;
+    overflow: hidden;
+}
+
+.process-intro {
+    margin-bottom: 120px;
+}
+
+.process-display-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    letter-spacing: -3px;
+    color: #fff;
+}
+
+.process-display-title i {
+    font-family: serif;
+    font-style: italic;
+    opacity: 0.5;
+    font-weight: 400;
+}
+
+/* THE BLUEPRINT LAYOUT */
+.process-blueprint-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 150px;
+    /* Large space for scrolling impact */
+}
+
+/* The Progress Wire */
+.blueprint-line-bg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(-50%);
+}
+
+.blueprint-line-active {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 0;
+    background: var(--purple-light);
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px var(--purple-main);
+    z-index: 2;
+}
+
+/* THE ROWS */
+.step-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.step-row:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+/* Text Side */
+.step-content {
+    width: 45%;
+}
+
+.step-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--purple-light);
+    margin-bottom: 20px;
+}
+
+.step-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 0.9;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.step-para {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #888;
+    max-width: 450px;
+}
+
+/* Visual Side */
+.step-visual {
+    width: 45%;
+}
+
+.shutter-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #111;
+    border-radius: 4px;
+    /* Sharp modern look */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    clip-path: inset(100% 0 0 0);
+    /* Initial hidden state for GSAP */
+}
+
+.shutter-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) contrast(1.1);
+}
+
+/* Mobile logic */
+@media (max-width: 1024px) {
+
+    .step-row,
+    .step-row:nth-child(even) {
+        flex-direction: column;
+        text-align: center;
+        gap: 50px;
+    }
+
+    .step-content,
+    .step-visual {
+        width: 100%;
+    }
+
+    .blueprint-line-bg,
+    .blueprint-line-active {
+        left: 0;
+        transform: none;
+    }
+
+    .step-para {
+        margin: 0 auto;
+    }
+}
+
+/* ======================
+    WORK MARQUEE SECTION
+    ==================== */
+.work-marquee-section {
+    padding: 140px 0;
+    /* BACKGROUND: Added a subtle radial gradient so the center isn't a "dead black void" */
+    background: radial-gradient(circle at center, #0a0118 0%, #05010a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle Light Leak behind the marquee */
+.work-marquee-section::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw; height: 40vh;
+    background: radial-gradient(circle, rgba(165, 148, 253, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.work-title {
+    font-size: 72px; /* Massive impact */
+    font-weight: 800;
+    letter-spacing: -3px;
+    color: #fff;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 10;
+}
+
+.work-title i {
+    font-family: serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--purple-light); /* Makes 'Work' stand out */
+}
+
+.work-viewport {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    /* Soft edges to the marquee */
+    /* mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); */
+}
+
+.work-track {
+    display: inline-flex;
+    gap: 30px;
+    will-change: transform;
+}
+
+.work-img-card {
+    width: 550px;
+    aspect-ratio: 16/9;
+    flex-shrink: 0;
+    background: #000;
+    border-radius: 8px; /* Slightly more rounded for premium feel */
+    overflow: hidden;
+    position: relative;
+    /* GLASS BORDER: The secret to high-end UI */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.work-img-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* INITIAL STATE: Slightly dim and desaturated */
+    /* filter: brightness(0.6) saturate(0.8); */
+    transition: filter 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-img-card:hover img {
+    filter: brightness(1.1) saturate(1); /* Lights up the image */
+    transform: scale(1.05); /* Smooth zoom */
+}
