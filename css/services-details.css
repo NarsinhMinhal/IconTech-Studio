@@ -1,0 +1,916 @@
+/* --- APP DEV HERO --- */
+.app-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: #05010a;
+    padding-top: 100px;
+    overflow: hidden;
+}
+
+.app-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.app-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(10px); /* Adds a premium 'dreamy' reveal effect */
+    will-change: transform, opacity, filter;
+}
+
+/* CONTENT SIDE */
+.app-main-title {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 35px;
+    color: #fff;
+}
+
+.app-description {
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 550px;
+    margin-bottom: 50px;
+}
+
+/* MOCKUP SHOWCASE */
+.app-hero-visual {
+    position: relative;
+    height: 600px;
+    width: 100%;
+}
+
+.iphone-stack-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    height: 650px;
+    display: flex;
+    align-items: center;
+    perspective: 2000px;
+}
+
+.iphone-mockup {
+    position: absolute;
+    width: 250px;
+    aspect-ratio: 1 / 2.1;
+    border-radius: 40px;
+    overflow: hidden;
+    background: #000;
+    /* Physical bezel look */
+    border: 6px solid #1a1a1a;
+    box-shadow: -20px 40px 60px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    will-change: transform, filter;
+    transition: filter 0.5s ease;
+
+    /* INITIAL STATE FOR GSAP */
+    opacity: 0;
+}
+
+.iphone-mockup img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Inactive screens are slightly darker to make hover "pop" */
+    /* filter: brightness(0.6) saturate(0.8); */
+}
+
+/* THE UP-DOWN STAGGER (Matching your image) */
+.s-left-2 {
+    left: 0;
+    top: 15%;
+    z-index: 4;
+}
+
+.s-left-1 {
+    left: 15%;
+    top: 5%;
+    z-index: 3;
+}
+
+.s-right-1 {
+    left: 30%;
+    top: 12%;
+    z-index: 2;
+}
+
+.s-front {
+    left: 45%;
+    top: 20%;
+    z-index: 1;
+}
+
+/* HOVER HIGHLIGHT EFFECT */
+.iphone-mockup:hover {
+    z-index: 100 !important;
+    /* Bring to frontmost layer */
+    box-shadow: 0 50px 100px rgba(165, 148, 253, 0.3);
+    /* Purple Glow */
+}
+
+.iphone-mockup:hover img {
+    cursor: default;
+    filter: brightness(1.1) saturate(1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .iphone-stack-container {
+        max-width: 400px;
+        height: 500px;
+    }
+
+    .iphone-mockup {
+        width: 180px;
+    }
+
+    .s-left-2 {
+        left: 0;
+    }
+
+    .s-left-1 {
+        left: 20%;
+    }
+
+    .s-right-1 {
+        left: 40%;
+    }
+
+    .s-front {
+        left: 60%;
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .app-hero-grid {
+        gap: 40px;
+    }
+
+    .mockup-screen {
+        width: 200px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .app-hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 80px;
+    }
+
+    .app-description {
+        margin: 0 auto 50px;
+    }
+
+    .app-hero-btns {
+        display: flex;
+        justify-content: center;
+    }
+
+    .app-hero-visual {
+        height: 400px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .mockup-screen {
+        width: 150px;
+    }
+}
+
+/* --- PARTNER TRUST SECTION --- */
+.partner-trust-section {
+    padding: 140px 0;
+    background: #05010a;
+    overflow: hidden;
+}
+
+.partner-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 100px;
+    align-items: center;
+}
+
+/* LEFT SIDE */
+.partner-main-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 50px;
+}
+
+.partner-main-title span {
+    color: var(--purple-light);
+}
+
+.partner-points {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.partner-point-item {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.point-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.partner-point-item p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #888;
+    max-width: 420px;
+}
+
+/* RIGHT SIDE VISUAL */
+.partner-visual {
+    position: relative;
+    padding-bottom: 60px;
+    /* Space for the overlapping card */
+}
+
+.portrait-frame {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expert-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8);
+}
+
+/* Floating Tech Tags */
+.tech-tag {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 10px 25px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 13px;
+    z-index: 15;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.tag-ios {
+    top: -20px;
+    right: 80px;
+}
+
+.tag-android {
+    top: 40px;
+    right: -20px;
+}
+
+/* The Impact Card (Overlapping) */
+.impact-glass-card {
+    position: absolute;
+    bottom: -60px;
+    left: -100px;
+    /* Overlaps into the center */
+    width: 120%;
+    background: rgba(99, 44, 155, 0.9);
+    /* Your logo purple */
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 20;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.impact-glass-card p {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+    .impact-glass-card {
+        left: -20px;
+        width: 100%;
+        padding: 30px;
+        bottom: -40px;
+    }
+
+    .partner-grid {
+        gap: 60px;
+    }
+}
+
+@media (max-width: 900px) {
+    .partner-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .partner-point-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .partner-visual {
+        margin-top: 100px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .impact-glass-card {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .tag-android {
+        right: 20px;
+    }
+}
+
+/* --- BUILD CAPABILITY SECTION --- */
+.build-capability-section {
+    padding: 140px 0;
+    background: #05010a;
+}
+
+.capability-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+/* LEFT SIDE */
+.capability-header {
+    width: 35%;
+}
+
+.build-main-title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: #fff;
+}
+
+.build-main-title i {
+    font-family: serif;
+    font-style: italic;
+    opacity: 0.6;
+    font-weight: 400;
+}
+
+/* RIGHT SIDE LIST */
+.capability-list {
+    width: 60%;
+}
+
+.capability-row {
+    position: relative;
+    width: 100%;
+}
+
+.row-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    padding: 60px 0;
+    transition: background 0.4s ease;
+}
+
+/* The Horizontal Line */
+.row-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    /* Managed by GSAP */
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.bottom-line {
+    top: auto;
+    bottom: 0;
+}
+
+.row-title h3 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    line-height: 1.4;
+}
+
+.row-text p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #888;
+    transition: color 0.4s ease;
+}
+
+/* INTERACTIVE HOVER */
+.capability-row:hover .row-text p {
+    color: #fff;
+}
+
+.capability-row:hover .row-divider {
+    background: var(--purple-light);
+    box-shadow: 0 0 10px var(--purple-main);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .capability-wrapper {
+        flex-direction: column;
+        gap: 60px;
+    }
+
+    .capability-header,
+    .capability-list {
+        width: 100%;
+    }
+
+    .row-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 40px 0;
+    }
+}
+
+/* --- ROADMAP SECTION --- */
+.roadmap-section {
+    padding: 140px 0;
+    background: #05010a;
+    position: relative;
+    overflow: hidden;
+}
+
+.roadmap-header {
+    margin-bottom: 100px;
+}
+
+.reveal-line {
+    overflow: hidden; /* This creates the 'shutter' effect */
+    display: block;
+}
+
+.roadmap-main-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin: 0;
+    /* Initial state for GSAP to take over */
+    transform: translateY(100%); 
+    filter: blur(15px);
+    opacity: 0;
+}
+
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* THE POWER LINE (Progressive Vertical Line) */
+.roadmap-steps {
+    position: relative;
+    padding-left: 80px;
+}
+
+.power-line-bg {
+    position: absolute;
+    left: 25px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.power-line-active {
+    position: absolute;
+    left: 25px;
+    top: 0;
+    width: 2px;
+    height: 0;
+    /* Managed by GSAP */
+    background: var(--purple-light);
+    box-shadow: 0 0 15px var(--purple-main);
+}
+
+.step-item {
+    position: relative;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.step-number {
+    position: absolute;
+    left: -80px;
+    top: 0;
+    width: 52px;
+    height: 52px;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #fff;
+    z-index: 10;
+    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Active State for numbers when the line reaches them */
+.step-item.active .step-number {
+    border-color: var(--purple-light);
+    box-shadow: 0 0 20px rgba(165, 148, 253, 0.3);
+    background: var(--purple-main);
+}
+
+.step-info h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.step-info p {
+    font-size: 16px;
+    color: #888;
+    line-height: 1.6;
+    max-width: 450px;
+}
+
+/* --- CINEMATIC ROADMAP VISUAL --- */
+.roadmap-visual {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-engine-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    perspective: 2000px;
+}
+
+.visual-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    background: #111;
+    border-radius: 40px;
+    /* Matching the iPhone look */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    z-index: 5;
+}
+
+.engine-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Moving Light Reflection across the image */
+.glass-reflection {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg, rgba(255, 255, 255, 0.1) 0%, transparent 40%, rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+    z-index: 6;
+}
+
+.engine-aura {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(99, 44, 155, 0.2) 0%, transparent 70%);
+    z-index: 1;
+}
+
+/* Floating Status Tag */
+.visual-meta-tag {
+    position: absolute;
+    bottom: 40px;
+    right: -20px;
+    background: #fff;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff88;
+    animation: tag-pulse 2s infinite;
+}
+
+@keyframes tag-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .roadmap-visual {
+        height: 450px;
+    }
+
+    .visual-engine-wrapper {
+        max-width: 320px;
+    }
+
+    .visual-meta-tag {
+        right: 20px;
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .roadmap-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .roadmap-visual {
+        height: 400px;
+    }
+
+    .roadmap-steps {
+        padding-left: 60px;
+    }
+
+    .step-number {
+        left: -60px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .power-line-bg,
+    .power-line-active {
+        left: 21px;
+    }
+}
+
+/* --- SPECIALIZED SERVICES --- */
+.specialized-services-section {
+    padding: 140px 0;
+    background: #05010a;
+    position: relative;
+    z-index: 5;
+}
+
+.special-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 100px;
+    align-items: center;
+}
+
+.title-mask {
+    overflow: hidden; /* Clips the text so it can "emerge" */
+    display: block;
+}
+
+.special-title.reveal-item {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin: 0;
+    /* Starting position for GSAP */
+    transform: translateY(110%); 
+    opacity: 0;
+    will-change: transform, filter, opacity;
+}
+
+.special-title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    margin-bottom: 60px;
+    letter-spacing: -2px;
+}
+
+.special-title i {
+    font-family: serif;
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.6;
+}
+
+/* LIST STYLING */
+.special-list {
+    margin-bottom: 40px;
+}
+
+.special-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.special-item:hover {
+    padding-left: 15px;
+}
+
+.arrow-icon {
+    color: var(--purple-light);
+    font-size: 20px;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.special-item:hover .arrow-icon {
+    transform: translateX(5px);
+}
+
+.special-item p {
+    font-size: 20px;
+    font-weight: 400;
+
+    color: rgba(255, 255, 255, 0.8) !important;
+    /* Force color visibility */
+    margin: 0;
+}
+
+/* HIDDEN DRAWER */
+.hidden-services-wrap {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.view-more-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.btn-arrow {
+    color: var(--purple-light);
+    transition: transform 0.4s ease;
+}
+
+.view-more-btn.active .btn-arrow {
+    transform: rotate(180deg);
+}
+
+.view-more-btn .btn-text {
+    position: relative;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.view-more-btn .btn-text::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    /* THE FIX: Pin to left */
+    width: 100%;
+    /* Spans the full text */
+    height: 1px;
+    background: var(--purple-light);
+    box-shadow: 0 0 12px var(--purple-main);
+
+    /* THE KEY: Sets the starting point of the animation to the left edge */
+    transform-origin: left;
+
+    /* THE FIX: Start at 0 size using scale */
+    transform: scaleX(0);
+
+    /* High-end cubic-bezier for a 'snappy' studio feel */
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.view-more-btn:hover .btn-text::after {
+    /* Expand to full size */
+    transform: scaleX(1);
+}
+
+/* IMAGE FRAME */
+.special-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    border-radius: 40px;
+    /* Matching the reference image */
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.special-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-overlay-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(165, 148, 253, 0.1), transparent);
+    pointer-events: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .special-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .special-visual {
+        order: -1;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
