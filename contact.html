@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Call | IconTech Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/contact.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="contact-hero">
+            <div class="container">
+                <div class="contact-grid">
+                    
+                    <!-- Left Side: Content & Image -->
+                    <div class="contact-visual-side">
+                        <div class="contact-text-area">
+                            <span class="heading-tag contact-reveal">Let's Connect</span>
+                            <h1 class="project-main-title contact-reveal">Ready to make your <br><span class="purple-text">impact memorable?</span></h1>
+                        </div>
+                        
+                        <div class="contact-image-frame contact-reveal">
+                            <!-- High-end Studio Photo -->
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070" alt="IconTech Studio Workspace">
+                        </div>
+                    </div>
+
+                    <!-- Right Side: The Interactive Form -->
+                    <div class="contact-form-side">
+                        <div class="contact-form-card contact-reveal">
+                            <p class="form-intro">Fill the form below, and we’ll set up a brief call to explore how we can help you!</p>
+                            
+                            <form id="bookACallForm" class="contact-form">
+                                <div class="form-input-grid">
+                                    <div class="form-group"><input type="text" placeholder="Your name" required></div>
+                                    <div class="form-group"><input type="text" placeholder="Company name"></div>
+                                    <div class="form-group"><input type="email" placeholder="Email ID" required></div>
+                                    <div class="form-group"><input type="tel" placeholder="Phone Number"></div>
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <textarea placeholder="Tell us about the project" rows="5"></textarea>
+                                </div>
+
+                                <div class="form-services">
+                                    <label class="check-container"><input type="checkbox"><span>App Dev</span></label>
+                                    <label class="check-container"><input type="checkbox"><span>Web Dev</span></label>
+                                    <label class="check-container"><input type="checkbox"><span>UI/UX</span></label>
+                                    <label class="check-container"><input type="checkbox"><span>Other</span></label>
+                                </div>
+
+                                <div class="form-action">
+                                    <div class="magnetic-wrap">
+                                        <button type="submit" class="btn-book magnetic-item">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="booking-section">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="booking-header">
+            <span class="heading-tag booking-reveal">GET STARTED</span>
+            <h1 class="booking-main-title booking-reveal">
+                Let's talk about your Next <span class="purple-text">big project!</span>
+            </h1>
+        </div>
+
+        <!-- Calendly Embed Container -->
+        <div class="calendly-card-wrapper booking-reveal">
+            <div class="calendly-glass-frame">
+                <!-- IMPORTANT: Replace the URL below with your actual Calendly Link -->
+                 
+                <!-- Add ?hide_event_type_details=1&hide_gdpr_banner=1&background_color=0d0d0d&text_color=ffffff&primary_color=a594fd for theme matching -->
+                <div class="calendly-inline-widget" 
+                     data-url="https://calendly.com/icontechstudio/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0d0d0d&text_color=ffffff&primary_color=a594fd" 
+                     style="min-width:320px;height:700px;">
+                </div>
+                <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            </div>
+            
+            <!-- Hardware Details for "Awesome" Look -->
+            <div class="frame-tag">SECURE BOOKING ENGINE</div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/contact.js"></script>
+</body>
+</html>
