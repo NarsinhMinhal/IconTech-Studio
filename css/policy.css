@@ -1,0 +1,177 @@
+/* --- POLICY PAGE STYLING --- */
+.policy-hero {
+    background: radial-gradient(circle at top, #1a0b2e 0%, #05010a 100%);
+    min-height: 100vh;
+    padding: 180px 0 100px;
+    text-align: center;
+}
+
+.policy-content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* THE DISPLAY TITLE (Matching Image) */
+.policy-display-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: -3px;
+    color: #fff;
+}
+
+.gradient-text {
+    /* Multi-color gradient matching your screenshot: Yellow/Orange to Purple */
+    background: linear-gradient(to right, #ffcc33, #e81cff, #a594fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.policy-intro {
+    font-size: 22px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 80px;
+}
+
+.policy-intro p { margin-bottom: 25px; }
+
+.policy-link {
+    color: var(--purple-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(165, 148, 253, 0.3);
+    transition: 0.3s;
+}
+
+.policy-link:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+/* Legal Blocks */
+.policy-details {
+    text-align: left;
+    display: grid;
+    gap: 50px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 80px;
+}
+
+.policy-block h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--purple-light);
+}
+
+.policy-block p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #888;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .policy-display-title { font-size: 3.5rem; }
+    .policy-intro { font-size: 18px; }
+}
+
+/* --- POLICY BODY STYLING --- */
+.policy-body-section {
+    padding-bottom: 120px;
+    background: #05010a;
+}
+
+.last-updated {
+    text-align: right;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Glassmorphic Policy Blocks */
+.policy-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 60px;
+    margin-bottom: 30px;
+    transition: all 0.4s ease;
+}
+
+.policy-card:hover {
+    border-color: rgba(165, 148, 253, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.policy-sub-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 25px;
+    letter-spacing: -1px;
+}
+
+.dim-text {
+    font-size: 18px;
+    font-weight: 400;
+    color: #666;
+    margin-left: 10px;
+}
+
+.policy-card p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.policy-card p:last-child { margin-bottom: 0; }
+
+.purple-text-link {
+    color: var(--purple-light);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.purple-text-link:hover {
+    border-bottom-color: var(--purple-light);
+}
+
+/* Bullet Point Styling */
+.policy-bullets {
+    margin-bottom: 30px;
+
+    list-style: none;
+    padding: 20px 0;
+}
+
+.policy-bullets li {
+    font-size: 16px;
+    color: #888;
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.policy-bullets li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--purple-light);
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .policy-card { padding: 40px 30px; }
+}
+
+@media (max-width: 600px) {
+    .policy-sub-title { font-size: 24px; }
+    .dim-text { display: block; margin-left: 0; margin-top: 5px; }
+}
