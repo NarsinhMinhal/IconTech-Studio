@@ -3,7 +3,7 @@
 
         <!-- LOGO SECTION -->
         <div class="logo">
-            <a href="#">
+            <a href="index.html">
                 <!-- IMPORTANT: Replace 'logo.png' with your actual logo file -->
                 <img src="/images/Logo-white.webp" alt="IconTech Studio" class="logo-img">
             </a>
@@ -12,19 +12,19 @@
         <!-- DESKTOP NAVIGATION -->
         <nav class="desktop-nav">
             <ul class="nav-list">
-                <li><a href="#" class="nav-link">Home</a></li>
-                <li><a href="#" class="nav-link">About Us</a></li>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
 
                 <!-- Dropdown for Services -->
                 <li class="nav-dropdown">
-                    <a href="#" class="nav-link">Services <span class="chevron">▾</span></a>
+                    <a href="services.html" class="nav-link">Services <span class="chevron">▾</span></a>
                     <ul class="dropdown-content">
-                        <li><a href="#">Application Development</a></li>
-                        <li><a href="#">Website Development</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="app-development.html">Application Development</a></li>
+                        <li><a href="web-development.html">Website Development</a></li>
+                        <li><a href="ui-ux-development.html">UI/UX Design</a></li>
                     </ul>
                 </li>
-                <li><a href="#" class="nav-link">Our Work</a></li>
+                <li><a href="portfolio.html" class="nav-link">Our Work</a></li>
 
             </ul>
         </nav>
@@ -33,7 +33,7 @@
         <div class="header-right">
             <!-- Magnetic Wrapper for the main button -->
             <div class="magnetic-wrap">
-                <a href="#" class="btn-book magnetic-item">BOOK A CALL</a>
+                <a href="contact.html" class="btn-book magnetic-item">BOOK A CALL</a>
             </div>
 
             <!-- Mobile Hamburger Button -->
@@ -48,14 +48,27 @@
 <!-- MOBILE OVERLAY MENU -->
 <div class="mobile-overlay" id="mobileMenu">
     <nav class="mobile-nav">
-        <a href="#">Launch pad</a>
-        <a href="#">About Us</a>
-        <a href="#">Our Work</a>
-        <div class="mobile-label">Services</div>
-        <a href="#" class="mobile-sub">App Development</a>
-        <a href="#" class="mobile-sub">Web Development</a>
-        <a href="#" class="mobile-sub">UI/UX Design</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="portfolio.html">Our Work</a>
+        
+        <!-- Mobile Dropdown Wrapper -->
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-header" id="mobileServicesToggle">
+                <a href="services.html">
+                <span>Services</span></a>
+                <span class="mobile-chevron">▾</span>
+            </div>
+            
+            <div class="mobile-sub-menu" id="mobileSubMenu">
+                <a href="app-development.html" class="mobile-sub">App Development</a>
+                <a href="web-development.html" class="mobile-sub">Web Development</a>
+                <a href="ui-ux-development.html" class="mobile-sub">UI/UX Design</a>
+            </div>
+        </div>
 
-        <a href="#" class="btn-book mobile-cta-btn">BOOK A CALL</a>
+        <div class="mobile-cta-wrap">
+            <a href="contact.html" class="btn-book">BOOK A CALL</a>
+        </div>
     </nav>
 </div>
