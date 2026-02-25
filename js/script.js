@@ -1,12 +1,12 @@
-// 1. Register Plugins
+// 1. REGISTER PLUGINS
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// 2. The Loading Engine
+// 2. THE LOADING ENGINE
 async function initSite() {
-    console.log("🚀 IconTech Engine: Initializing...");
+    console.log("🚀 IconTech Engine: Starting...");
 
     try {
-        // AWAIT both components
+        // AWAIT common components
         await Promise.all([
             fetch('header.html').then(res => res.text()).then(html => {
                 document.getElementById('header-placeholder').innerHTML = html;
@@ -16,48 +16,76 @@ async function initSite() {
             })
         ]);
 
-        // Global UI Setup (Runs on every page)
+        // Global UI Setup (Runs on every page load)
         setupGlobalAnimations(); 
         setupButtonInteractions();
         setupMobileMenu();
         initLazyCTA();
-        // PAGE ROUTER: Detect where we are
+
+        // PAGE ROUTER: Detect where we are and run specific modules
         if (document.querySelector(".hero-section")) {
-            console.log("🏠 Logic: Home Page");
+            console.log("🏠 Logic: Home Page Active");
             initHomeModules();
         } 
         
-        // Signal for other scripts (about.js or portfolio.js)
+        // Signal for page-specific scripts (portfolio.js / about.js)
         document.dispatchEvent(new Event("siteReady"));
 
-        // Final calculation refresh
+        // Final calculation refresh to ensure ScrollTriggers are accurate
         ScrollTrigger.refresh();
 
     } catch (error) {
         console.error("Critical Loading Error:", error);
-        gsap.set(".main-header, .footer-section, main", { opacity: 1 });
+        // Fallback: Show content if fetch fails
+        gsap.set(".main-header, .footer-section, main", { autoAlpha: 1 });
     }
 }
 
-// 3. GLOBAL MODULES (Header/Footer/Buttons)
+// 3. GLOBAL MODULES (Header/Footer/Dropdown)
 function setupGlobalAnimations() {
+    // Header Entrance
     const headerTl = gsap.timeline();
     headerTl.to(".main-header", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
         .from(".nav-link", { y: -10, opacity: 0, stagger: 0.1 }, "-=0.5")
         .from(".main-header .btn-book", { scale: 0, opacity: 0, duration: 0.8, ease: "back.out" }, "-=0.3");
 
-    gsap.to(".footer-section", { scrollTrigger: { trigger: ".footer-section", start: "top 80%" }, opacity: 1, duration: 1 });
-    
-    const brandingText = document.getElementById('footer-branding-text');
-    if (brandingText) {
-        gsap.from(brandingText, {
-            scrollTrigger: { trigger: ".massive-branding-area", start: "top 95%" },
-            y: 100, opacity: 0, duration: 1.5,
-            onComplete: () => {
-                gsap.to(brandingText, { backgroundPosition: "200% center", duration: 10, repeat: -1, ease: "none" });
-                gsap.to(brandingText, { y: -15, scale: 1.03, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
-            }
+    // DESKTOP DROPDOWN FIX (Ensures it closes properly)
+    const dropdownWraps = document.querySelectorAll('.nav-dropdown');
+    dropdownWraps.forEach(wrap => {
+        const menu = wrap.querySelector('.dropdown-content');
+        if (!menu) return;
+
+        wrap.addEventListener('mouseenter', () => {
+            gsap.to(menu, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" });
         });
+
+        wrap.addEventListener('mouseleave', () => {
+            gsap.to(menu, { autoAlpha: 0, y: 10, duration: 0.3, ease: "power2.in" });
+        });
+
+        // Close menu if a link inside is clicked
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                gsap.set(menu, { autoAlpha: 0, y: 10 });
+            });
+        });
+    });
+
+    // Global Footer Reveal
+    const footer = document.querySelector(".footer-section");
+    if (footer) {
+        gsap.to(footer, { scrollTrigger: { trigger: footer, start: "top 90%" }, opacity: 1, duration: 1 });
+        const brandingText = document.getElementById('footer-branding-text');
+        if (brandingText) {
+            gsap.from(brandingText, {
+                scrollTrigger: { trigger: ".massive-branding-area", start: "top 95%" },
+                y: 100, opacity: 0, duration: 1.5,
+                onComplete: () => {
+                    gsap.to(brandingText, { backgroundPosition: "200% center", duration: 10, repeat: -1, ease: "none" });
+                    gsap.to(brandingText, { y: -15, scale: 1.03, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+                }
+            });
+        }
     }
 }
 
@@ -77,55 +105,33 @@ function initHomeModules() {
         opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power2.out"
     });
 
-    // Execute Home Sections
-    initHorizontalScroll();
-    initSpotlightMarquee();
-    initServicesPinning();
-    initFeaturedProjects();
-    initFAQ();
-    initFinalCTA();
+    // Run sections if they exist on the page
+    if (document.getElementById("howItWorks")) initHorizontalScroll();
+    if (document.getElementById("marqueeTrack")) initSpotlightMarquee();
+    if (document.querySelector(".services-pin-section")) initServicesPinning();
+    if (document.querySelector(".project-card")) initFeaturedProjects();
+    if (document.querySelector(".faq-list")) initFAQ();
+    if (document.querySelector(".final-cta")) initFinalCTA();
     
     // Process Reveal
     gsap.from(".process-header", { scrollTrigger: { trigger: ".process-header", start: "top 85%" }, opacity: 0, y: 30, duration: 1 });
-    gsap.from(".process-cta", { 
-    scrollTrigger: { 
-        trigger: ".process-cta", // WATCH THE CTA ITSELF
-        start: "top 90%",        // Starts when the top of the CTA peeks into the screen
-        toggleActions: "play none none none" 
-    }, 
-    opacity: 0, 
-    y: 40, 
-    duration: 2, 
-    ease: "power3.out" 
-});
+    gsap.from(".process-cta", { scrollTrigger: { trigger: ".process-cta", start: "top 90%" }, opacity: 0, y: 40, duration: 2, ease: "power3.out" });
     gsap.to(".card-reveal", { scrollTrigger: { trigger: ".process-grid", start: "top 80%" }, opacity: 1, y: 0, stagger: 0.15, duration: 1 });
 }
 
-
-// 5. MODULES
+// 5. HELPER MODULES (Horizontal Scroll, Marquee, Pinning, etc.)
 function initHorizontalScroll() {
-    gsap.from(".how-it-works", { 
-    scrollTrigger: { 
-        trigger: ".how-it-works", 
-        start: "top 90%",        
-        toggleActions: "play none none none" 
-    }, 
-    opacity: 0, 
-    y: 40, 
-    duration: 3, 
-    ease: "power3.out" 
-});
     let mm = gsap.matchMedia();
     mm.add("(min-width: 901px)", () => {
-        const horizontalSection = document.querySelector(".horizontal-container");
+        const container = document.querySelector(".horizontal-container");
         const heading = document.querySelector(".horizontal-heading");
-        if (!horizontalSection || !heading) return;
+        if (!container || !heading) return;
 
         const workTl = gsap.timeline({
-            scrollTrigger: { trigger: "#howItWorks", pin: true, scrub: 1, start: "top top", end: () => "+=" + horizontalSection.scrollWidth, invalidateOnRefresh: true }
+            scrollTrigger: { trigger: "#howItWorks", pin: true, scrub: 1, start: "top top", end: () => "+=" + container.scrollWidth, invalidateOnRefresh: true }
         });
 
-        workTl.to(horizontalSection, { x: () => -(horizontalSection.scrollWidth - window.innerWidth + 200), ease: "none" }, 0)
+        workTl.to(container, { x: () => -(container.scrollWidth - window.innerWidth + 200), ease: "none" }, 0)
             .to(heading, { opacity: 0, filter: "blur(20px)", x: -80, scale: 0.9, duration: 0.15, ease: "power2.in" }, 0.02);
 
         gsap.from(".live-text", { scrollTrigger: { trigger: ".live-card", containerAnimation: workTl, start: "right right", toggleActions: "play none none reverse" }, scale: 0.5, opacity: 0, duration: 1, ease: "back.out(1.7)" });
@@ -133,55 +139,24 @@ function initHorizontalScroll() {
 }
 
 function initSpotlightMarquee() {
-    
     const track = document.getElementById("marqueeTrack");
     if (!track) return;
-
-    // 1. Clone the content to create the infinite tail
     const originalCards = Array.from(track.children);
     originalCards.forEach(card => {
         const clone = card.cloneNode(true);
         track.appendChild(clone);
     });
-
-    // 2. Calculate the exact distance to scroll
     const firstCard = track.firstElementChild;
-    const gap = 40; // This must match your CSS gap
-
-    // Total width of one set = (Card Width + Gap) * Number of original cards
+    const gap = 40;
     const scrollDistance = (firstCard.offsetWidth + gap) * originalCards.length;
-
-    //  Create the Buttery Smooth Animation
-    let marquee = gsap.to(track, {
-        x: -scrollDistance,
-        duration: 30, // Increase for slower, smoother motion
-        ease: "none",
-        repeat: -1,
-        // force3D ensures the GPU handles the movement
-        force3D: true,
-        // This prevents the "jump" by ensuring GSAP resets at the exact pixel
-        modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % scrollDistance)
-        }
-    });
-
+    gsap.to(track, { x: -scrollDistance, duration: 30, ease: "none", repeat: -1, force3D: true, modifiers: { x: gsap.utils.unitize(x => parseFloat(x) % scrollDistance) } });
 }
+
 function initServicesPinning() {
-    gsap.from(".services-wrapper", { 
-    scrollTrigger: { 
-        trigger: ".services-wrapper", 
-        start: "top 90%",        
-        toggleActions: "play none none none" 
-    }, 
-    opacity: 0, 
-    y: 40, 
-    duration: 3, 
-    ease: "power3.out" 
-});
     let mm = gsap.matchMedia();
     mm.add("(min-width: 1025px)", () => {
         const section = document.querySelector(".services-pin-section");
-        const menuItems = document.querySelectorAll(".menu-item");
+        const items = document.querySelectorAll(".menu-item");
         const slides = document.querySelectorAll(".service-slide");
         const indicator = document.querySelector(".active-indicator");
         if (!section) return;
@@ -190,12 +165,11 @@ function initServicesPinning() {
         let autoPlayTimer;
 
         function updateUI(index) {
-            menuItems.forEach((item, i) => {
-                const isActive = (i === index);
-                item.classList.toggle("active", isActive);
-                slides[i].classList.toggle("active", isActive);
+            items.forEach((item, i) => {
+                item.classList.toggle("active", i === index);
+                slides[i].classList.toggle("active", i === index);
             });
-            const targetMenu = menuItems[index];
+            const targetMenu = items[index];
             if (indicator) gsap.to(indicator, { y: targetMenu.offsetTop, height: targetMenu.offsetHeight, duration: 0.4, ease: "power2.out" });
             currentIndex = index;
         }
@@ -207,21 +181,18 @@ function initServicesPinning() {
                 if (newIdx !== currentIndex) updateUI(newIdx);
             },
             onEnter: () => startLoop(),
-            onEnterBack: () => startLoop(),
-            onLeave: () => stopLoop(),
-            onLeaveBack: () => stopLoop()
+            onLeave: () => stopLoop()
         });
 
         function startLoop() {
             if (autoPlayTimer) autoPlayTimer.kill();
             autoPlayTimer = gsap.delayedCall(3, () => {
-                let nextIndex = (currentIndex + 1) % menuItems.length;
-                let targetScroll = nextIndex === 0 ? st.start : st.start + ((st.end - st.start) * (nextIndex / (menuItems.length - 1))) + 5;
+                let nextIndex = (currentIndex + 1) % items.length;
+                let targetScroll = nextIndex === 0 ? st.start : st.start + ((st.end - st.start) * (nextIndex / (items.length - 1))) + 5;
                 gsap.to(window, { scrollTo: { y: targetScroll }, duration: 0.8, ease: "power4.inOut", onComplete: () => startLoop() });
             });
         }
         function stopLoop() { if (autoPlayTimer) autoPlayTimer.kill(); }
-
         window.addEventListener("wheel", () => { stopLoop(); gsap.delayedCall(3, () => { if (st.isActive) startLoop(); }); }, { passive: true });
         updateUI(0);
     });
@@ -230,7 +201,8 @@ function initServicesPinning() {
 function initFeaturedProjects() {
     gsap.utils.toArray(".project-card").forEach((card) => {
         gsap.from(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 60, opacity: 0, duration: 1.2, ease: "power3.out" });
-        gsap.to(card.querySelector("img"), { scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true }, y: "-15%", ease: "none" });
+        const img = card.querySelector("img");
+        if(img) gsap.to(img, { scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true }, y: "-15%", ease: "none" });
     });
 }
 
@@ -263,6 +235,7 @@ function initFinalCTA() {
     });
 }
 
+// 6. INTERACTIONS (Magnetism & Mobile)
 function setupButtonInteractions() {
     gsap.to(".btn-book", { boxShadow: "0 0 20px rgba(165, 148, 253, 0.8)", repeat: -1, yoyo: true, duration: 1.5, overwrite: "auto" });
     const wraps = document.querySelectorAll('.magnetic-wrap');
@@ -283,58 +256,94 @@ function setupButtonInteractions() {
 }
 
 function setupMobileMenu() {
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (!btn || !menu) return;
-    let isOpen = false;
-    btn.onclick = () => {
-        isOpen = !isOpen;
-        gsap.to(menu, { right: isOpen ? 0 : "-100%", duration: 0.6, ease: "power4.inOut" });
-    };
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bars = document.querySelectorAll('.bar');
+    const servicesToggle = document.getElementById('mobileServicesToggle');
+    const subMenu = document.getElementById('mobileSubMenu');
+    const chevron = document.querySelector('.mobile-chevron');
+    
+    let isMenuOpen = false;
+    let isSubMenuOpen = false;
+
+    if (!menuBtn || !mobileMenu) return;
+
+    // --- 1. MAIN MENU TOGGLE ---
+    menuBtn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+
+        if (isMenuOpen) {
+            // OPEN
+            gsap.set(mobileMenu, { visibility: "visible" });
+            gsap.to(mobileMenu, { right: 0, duration: 0.6, ease: "expo.inOut" });
+            
+            // X Animation
+            gsap.to(bars[0], { rotation: 45, y: 4, duration: 0.3 });
+            gsap.to(bars[1], { rotation: -45, y: -4, duration: 0.3 });
+        } else {
+            // CLOSE
+            closeEverything();
+        }
+    });
+
+    // --- 2. SERVICES ACCORDION ---
+    if (servicesToggle && subMenu) {
+        servicesToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isSubMenuOpen = !isSubMenuOpen;
+
+            if (isSubMenuOpen) {
+                gsap.to(subMenu, { height: "auto", opacity: 1, marginTop: 20, duration: 0.5, ease: "power3.out" });
+                gsap.to(chevron, { rotation: 180, duration: 0.4 });
+            } else {
+                gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.4, ease: "power3.in" });
+                gsap.to(chevron, { rotation: 0, duration: 0.4 });
+            }
+        });
+    }
+
+    // --- 3. HELPER: CLOSE FUNCTION ---
+    function closeEverything() {
+        isMenuOpen = false;
+        isSubMenuOpen = false;
+        
+        // Slide out main menu
+        gsap.to(mobileMenu, { right: "-100%", duration: 0.5, ease: "expo.in" });
+        
+        // Reset Hamburger
+        gsap.to(bars, { rotation: 0, y: 0, duration: 0.3 });
+        
+        // THE FIX: Force close the services sub-menu so it's fresh for next time
+        gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.3 });
+        gsap.to(chevron, { rotation: 0, duration: 0.3 });
+    }
+
+    // Close menu when any link is clicked
+    const links = mobileMenu.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', () => closeEverything());
+    });
 }
 
 function initLazyCTA() {
     const placeholder = document.getElementById('final-CTA-placeholder');
     if (!placeholder) return;
-
     let isLoaded = false;
-
     ScrollTrigger.create({
-        trigger: placeholder,
-        start: "top 110%", 
+        trigger: placeholder, start: "top 110%",
         onEnter: async () => {
             if (isLoaded) return;
             isLoaded = true;
-
             try {
                 const response = await fetch('final-CTA.html');
-                const html = await response.text();
-                placeholder.innerHTML = html;
-
-                // IMPORTANT: Tell GSAP the page height has changed
+                placeholder.innerHTML = await response.text();
                 ScrollTrigger.refresh();
-
-                // Wait for the elements to be physically rendered
-                const checkExistence = setInterval(() => {
-                    const hasHTML = placeholder.querySelector(".common-final-cta"); // MATCHED CLASS
-                    const hasFunction = typeof window.initFinalCTAAnimations === "function";
-
-                    if (hasHTML && hasFunction) {
-                        clearInterval(checkExistence);
-                        window.initFinalCTAAnimations();
-                        
-                        // Make the new buttons magnetic
-                        if (typeof setupButtonInteractions === "function") {
-                            setupButtonInteractions();
-                        }
-                    }
-                }, 50);
-
-            } catch (error) {
-                console.error("❌ Lazy Load Error:", error);
-            }
+                if (window.initFinalCTAAnimations) window.initFinalCTAAnimations();
+                setupButtonInteractions();
+            } catch (error) { console.error("Lazy Load Error:", error); }
         }
     });
 }
 
+// 7. START UP
 document.addEventListener("DOMContentLoaded", initSite);
