@@ -17,7 +17,7 @@ async function initSite() {
         ]);
 
         // Global UI Setup (Runs on every page load)
-        setupGlobalAnimations(); 
+        setupGlobalAnimations();
         setupButtonInteractions();
         setupMobileMenu();
         initLazyCTA();
@@ -26,8 +26,8 @@ async function initSite() {
         if (document.querySelector(".hero-section")) {
             console.log("🏠 Logic: Home Page Active");
             initHomeModules();
-        } 
-        
+        }
+
         // Signal for page-specific scripts (portfolio.js / about.js)
         document.dispatchEvent(new Event("siteReady"));
 
@@ -43,50 +43,285 @@ async function initSite() {
 
 // 3. GLOBAL MODULES (Header/Footer/Dropdown)
 function setupGlobalAnimations() {
-    // Header Entrance
-    const headerTl = gsap.timeline();
-    headerTl.to(".main-header", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
-        .from(".nav-link", { y: -10, opacity: 0, stagger: 0.1 }, "-=0.5")
-        .from(".main-header .btn-book", { scale: 0, opacity: 0, duration: 0.8, ease: "back.out" }, "-=0.3");
 
-    // DESKTOP DROPDOWN FIX (Ensures it closes properly)
-    const dropdownWraps = document.querySelectorAll('.nav-dropdown');
-    dropdownWraps.forEach(wrap => {
-        const menu = wrap.querySelector('.dropdown-content');
-        if (!menu) return;
+    /* ==========================
+       HEADER ANIMATION
+    ========================== */
 
-        wrap.addEventListener('mouseenter', () => {
-            gsap.to(menu, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" });
-        });
+    gsap.from(".main-header", {
 
-        wrap.addEventListener('mouseleave', () => {
-            gsap.to(menu, { autoAlpha: 0, y: 10, duration: 0.3, ease: "power2.in" });
-        });
+        y: -80,
 
-        // Close menu if a link inside is clicked
-        menu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                gsap.set(menu, { autoAlpha: 0, y: 10 });
-            });
-        });
+        opacity: 0,
+
+        duration: 1,
+
+        ease: "power3.out"
+
     });
 
-    // Global Footer Reveal
-    const footer = document.querySelector(".footer-section");
-    if (footer) {
-        gsap.to(footer, { scrollTrigger: { trigger: footer, start: "top 90%" }, opacity: 1, duration: 1 });
-        const brandingText = document.getElementById('footer-branding-text');
-        if (brandingText) {
-            gsap.from(brandingText, {
-                scrollTrigger: { trigger: ".massive-branding-area", start: "top 95%" },
-                y: 100, opacity: 0, duration: 1.5,
-                onComplete: () => {
-                    gsap.to(brandingText, { backgroundPosition: "200% center", duration: 10, repeat: -1, ease: "none" });
-                    gsap.to(brandingText, { y: -15, scale: 1.03, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
-                }
-            });
-        }
+
+    gsap.from(".nav-link", {
+
+        y: -20,
+
+        opacity: 0,
+
+        stagger: 0.1,
+
+        duration: 0.6,
+
+        delay: 0.4
+
+    });
+
+
+    gsap.from(".main-header .btn-book", {
+
+        scale: 0,
+
+        opacity: 0,
+
+        duration: 0.6,
+
+        delay: 0.6,
+
+        ease: "back.out(1.7)"
+
+    });
+
+
+    /* ==========================
+       MOBILE MENU
+    ========================== */
+
+    const menuBtn = document.getElementById("menuBtn");
+
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    let menuOpen = false;
+
+    if (menuBtn) {
+
+        menuBtn.addEventListener("click", () => {
+
+            if (!menuOpen) {
+
+                gsap.set(mobileMenu, { visibility: "visible" });
+
+                gsap.to(mobileMenu, {
+
+                    right: 0,
+
+                    duration: 0.5,
+
+                    ease: "power3.out"
+
+                });
+
+                menuOpen = true;
+
+            } else {
+
+                gsap.to(mobileMenu, {
+
+                    right: "-100%",
+
+                    duration: 0.5,
+
+                    ease: "power3.in",
+
+                    onComplete: () => {
+
+                        gsap.set(mobileMenu, { visibility: "hidden" });
+
+                    }
+
+                });
+
+                menuOpen = false;
+
+            }
+
+        });
+
     }
+
+
+    /* ==========================
+       MOBILE DROPDOWN
+    ========================== */
+
+    const toggle = document.getElementById("mobileServicesToggle");
+
+    const submenu = document.getElementById("mobileSubMenu");
+
+    let subOpen = false;
+
+    if (toggle) {
+
+        toggle.addEventListener("click", () => {
+
+            if (!subOpen) {
+
+                gsap.to(submenu, {
+
+                    height: "auto",
+
+                    opacity: 1,
+
+                    duration: 0.4
+
+                });
+
+                subOpen = true;
+
+            } else {
+
+                gsap.to(submenu, {
+
+                    height: 0,
+
+                    opacity: 0,
+
+                    duration: 0.4
+
+                });
+
+                subOpen = false;
+
+            }
+
+        });
+
+    }
+
+
+    /* ==========================
+       DESKTOP DROPDOWN
+    ========================== */
+
+    document.querySelectorAll(".nav-dropdown").forEach(drop => {
+
+        const menu = drop.querySelector(".dropdown-content");
+
+        drop.addEventListener("mouseenter", () => {
+
+            gsap.to(menu, {
+
+                autoAlpha: 1,
+
+                y: 0,
+
+                duration: 0.3,
+
+                ease: "power2.out"
+
+            });
+
+        });
+
+        drop.addEventListener("mouseleave", () => {
+
+            gsap.to(menu, {
+
+                autoAlpha: 0,
+
+                y: 10,
+
+                duration: 0.3,
+
+                ease: "power2.in"
+
+            });
+
+        });
+
+    });
+
+
+    /* ==========================
+       FOOTER (UNCHANGED)
+    ========================== */
+
+    const footer = document.querySelector(".footer-section");
+
+    if (footer) {
+
+        gsap.to(footer, {
+
+            scrollTrigger: {
+
+                trigger: footer,
+
+                start: "top 90%"
+
+            },
+
+            opacity: 1,
+
+            duration: 1
+
+        });
+
+        const brandingText = document.getElementById("footer-branding-text");
+
+        if (brandingText) {
+
+            gsap.from(brandingText, {
+
+                scrollTrigger: {
+
+                    trigger: ".massive-branding-area",
+
+                    start: "top 95%"
+
+                },
+
+                y: 100,
+
+                opacity: 0,
+
+                duration: 1.5,
+
+                onComplete: () => {
+
+                    gsap.to(brandingText, {
+
+                        backgroundPosition: "200% center",
+
+                        duration: 10,
+
+                        repeat: -1,
+
+                        ease: "none"
+
+                    });
+
+                    gsap.to(brandingText, {
+
+                        y: -15,
+
+                        scale: 1.03,
+
+                        duration: 3,
+
+                        repeat: -1,
+
+                        yoyo: true,
+
+                        ease: "sine.inOut"
+
+                    });
+
+                }
+
+            });
+
+        }
+
+    }
+
 }
 
 // 4. HOME PAGE ONLY MODULES
@@ -112,7 +347,7 @@ function initHomeModules() {
     if (document.querySelector(".project-card")) initFeaturedProjects();
     if (document.querySelector(".faq-list")) initFAQ();
     if (document.querySelector(".final-cta")) initFinalCTA();
-    
+
     // Process Reveal
     gsap.from(".process-header", { scrollTrigger: { trigger: ".process-header", start: "top 85%" }, opacity: 0, y: 30, duration: 1 });
     gsap.from(".process-cta", { scrollTrigger: { trigger: ".process-cta", start: "top 90%" }, opacity: 0, y: 40, duration: 2, ease: "power3.out" });
@@ -121,21 +356,106 @@ function initHomeModules() {
 
 // 5. HELPER MODULES (Horizontal Scroll, Marquee, Pinning, etc.)
 function initHorizontalScroll() {
-    let mm = gsap.matchMedia();
+
+    const mm = gsap.matchMedia();
+
+    /* ===============================
+       DESKTOP (KEEP EXACT BEHAVIOUR)
+       =============================== */
     mm.add("(min-width: 901px)", () => {
+
         const container = document.querySelector(".horizontal-container");
         const heading = document.querySelector(".horizontal-heading");
+
         if (!container || !heading) return;
 
         const workTl = gsap.timeline({
-            scrollTrigger: { trigger: "#howItWorks", pin: true, scrub: 1, start: "top top", end: () => "+=" + container.scrollWidth, invalidateOnRefresh: true }
+            scrollTrigger: {
+                trigger: "#howItWorks",
+                pin: true,
+                scrub: 1,
+                start: "top top",
+                end: () => "+=" + container.scrollWidth,
+                invalidateOnRefresh: true
+            }
         });
 
-        workTl.to(container, { x: () => -(container.scrollWidth - window.innerWidth + 200), ease: "none" }, 0)
-            .to(heading, { opacity: 0, filter: "blur(20px)", x: -80, scale: 0.9, duration: 0.15, ease: "power2.in" }, 0.02);
+        workTl.to(container, {
+            x: () => -(container.scrollWidth - window.innerWidth + 200),
+            ease: "none"
+        }, 0)
 
-        gsap.from(".live-text", { scrollTrigger: { trigger: ".live-card", containerAnimation: workTl, start: "right right", toggleActions: "play none none reverse" }, scale: 0.5, opacity: 0, duration: 1, ease: "back.out(1.7)" });
+            .to(heading, {
+                opacity: 0,
+                filter: "blur(20px)",
+                x: -80,
+                scale: 0.9,
+                duration: 0.15,
+                ease: "power2.in"
+            }, 0.02);
+
+        // Live card animation (same as yours)
+        gsap.from(".live-text", {
+            scrollTrigger: {
+                trigger: ".live-card",
+                containerAnimation: workTl,
+                start: "right right",
+                toggleActions: "play none none reverse"
+            },
+            scale: 0.5,
+            opacity: 0,
+            duration: 1,
+            ease: "back.out(1.7)"
+        });
+
     });
+
+
+    /* ===============================
+       TABLET & MOBILE
+       =============================== */
+    mm.add("(max-width: 900px)", () => {
+
+        const cards = gsap.utils.toArray(".work-card");
+
+        cards.forEach((card, index) => {
+
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    end: "top 60%",
+                    toggleActions: "play none none reverse"
+                },
+
+                y: 80,
+                opacity: 0,
+                scale: 0.95,
+
+                duration: 0.8,
+                ease: "power3.out",
+
+                delay: index * 0.05
+            });
+
+        });
+
+
+        // Live text animation for mobile
+        gsap.from(".live-text", {
+            scrollTrigger: {
+                trigger: ".live-card",
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            },
+            scale: 0.7,
+            opacity: 0,
+            duration: 0.8,
+            ease: "back.out(1.7)"
+        });
+
+    });
+
 }
 
 function initSpotlightMarquee() {
@@ -153,7 +473,12 @@ function initSpotlightMarquee() {
 }
 
 function initServicesPinning() {
-    let mm = gsap.matchMedia();
+
+    const mm = gsap.matchMedia();
+
+    /* ===============================
+       DESKTOP PIN SYSTEM
+       =============================== */
     mm.add("(min-width: 1025px)", () => {
         const section = document.querySelector(".services-pin-section");
         const items = document.querySelectorAll(".menu-item");
@@ -170,31 +495,79 @@ function initServicesPinning() {
                 slides[i].classList.toggle("active", i === index);
             });
             const targetMenu = items[index];
-            if (indicator) gsap.to(indicator, { y: targetMenu.offsetTop, height: targetMenu.offsetHeight, duration: 0.4, ease: "power2.out" });
+
+            if (indicator) {
+                gsap.to(indicator, {
+                    y: targetMenu.offsetTop,
+                    height: targetMenu.offsetHeight,
+                    duration: 0.4,
+                    ease: "power2.out"
+                });
+            }
             currentIndex = index;
         }
 
         const st = ScrollTrigger.create({
-            trigger: section, start: "top top", end: "+=200%", pin: true, scrub: 1,
+            trigger: section,
+            start: "top top",
+            end: "+=200%",
+            pin: true,
+            scrub: 1,
+
             onUpdate: (self) => {
-                let newIdx = self.progress < 0.20 ? 0 : self.progress < 0.70 ? 1 : 2;
-                if (newIdx !== currentIndex) updateUI(newIdx);
+
+                let newIdx =
+                    self.progress < 0.33 ? 0 :
+                        self.progress < 0.66 ? 1 : 2;
+
+                if (newIdx !== currentIndex)
+                    updateUI(newIdx);
+            }
+        });
+        updateUI(0);
+    });
+
+    /* ===============================
+       MOBILE & TABLET ANIMATIONS
+       =============================== */
+    mm.add("(max-width: 1024px)", () => {
+        // Animate left content
+        gsap.from(".services-intro", {
+            scrollTrigger: {
+                trigger: ".services-intro",
+                start: "top 85%"
             },
-            onEnter: () => startLoop(),
-            onLeave: () => stopLoop()
+            opacity: 0,
+            y: 40,
+            duration: 1
         });
 
-        function startLoop() {
-            if (autoPlayTimer) autoPlayTimer.kill();
-            autoPlayTimer = gsap.delayedCall(3, () => {
-                let nextIndex = (currentIndex + 1) % items.length;
-                let targetScroll = nextIndex === 0 ? st.start : st.start + ((st.end - st.start) * (nextIndex / (items.length - 1))) + 5;
-                gsap.to(window, { scrollTo: { y: targetScroll }, duration: 0.8, ease: "power4.inOut", onComplete: () => startLoop() });
+        // Animate menu items
+        gsap.utils.toArray(".menu-item").forEach(item => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 90%"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.6
             });
-        }
-        function stopLoop() { if (autoPlayTimer) autoPlayTimer.kill(); }
-        window.addEventListener("wheel", () => { stopLoop(); gsap.delayedCall(3, () => { if (st.isActive) startLoop(); }); }, { passive: true });
-        updateUI(0);
+        });
+
+        // Animate slides
+        gsap.utils.toArray(".service-slide").forEach(slide => {
+            gsap.from(slide, {
+                scrollTrigger: {
+                    trigger: slide,
+                    start: "top 85%"
+                },
+                opacity: 0,
+                y: 60,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
     });
 }
 
@@ -202,7 +575,7 @@ function initFeaturedProjects() {
     gsap.utils.toArray(".project-card").forEach((card) => {
         gsap.from(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 60, opacity: 0, duration: 1.2, ease: "power3.out" });
         const img = card.querySelector("img");
-        if(img) gsap.to(img, { scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true }, y: "-15%", ease: "none" });
+        if (img) gsap.to(img, { scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true }, y: "-15%", ease: "none" });
     });
 }
 
@@ -246,8 +619,8 @@ function setupButtonInteractions() {
         const yTo = gsap.quickTo(item, "y", { duration: 0.4, ease: "power3" });
         wrap.onmousemove = (e) => {
             const r = wrap.getBoundingClientRect();
-            const x = gsap.utils.clamp(-25, 25, (e.clientX - (r.left + r.width/2))/2.5);
-            const y = gsap.utils.clamp(-25, 25, (e.clientY - (r.top + r.height/2))/2.5);
+            const x = gsap.utils.clamp(-25, 25, (e.clientX - (r.left + r.width / 2)) / 2.5);
+            const y = gsap.utils.clamp(-25, 25, (e.clientY - (r.top + r.height / 2)) / 2.5);
             xTo(x); yTo(y);
             gsap.to(item, { rotationY: x * 0.2, rotationX: y * -0.2, duration: 0.3 });
         };
@@ -262,7 +635,19 @@ function setupMobileMenu() {
     const servicesToggle = document.getElementById('mobileServicesToggle');
     const subMenu = document.getElementById('mobileSubMenu');
     const chevron = document.querySelector('.mobile-chevron');
-    
+
+    gsap.to(mobileMenu, {
+        right: 0,
+        duration: 0.45,
+        ease: "power3.out"
+    });
+
+    gsap.to(mobileMenu, {
+        right: "-100%",
+        duration: 0.45,
+        ease: "power3.in"
+    });
+
     let isMenuOpen = false;
     let isSubMenuOpen = false;
 
@@ -276,7 +661,7 @@ function setupMobileMenu() {
             // OPEN
             gsap.set(mobileMenu, { visibility: "visible" });
             gsap.to(mobileMenu, { right: 0, duration: 0.6, ease: "expo.inOut" });
-            
+
             // X Animation
             gsap.to(bars[0], { rotation: 45, y: 4, duration: 0.3 });
             gsap.to(bars[1], { rotation: -45, y: -4, duration: 0.3 });
@@ -306,13 +691,13 @@ function setupMobileMenu() {
     function closeEverything() {
         isMenuOpen = false;
         isSubMenuOpen = false;
-        
+
         // Slide out main menu
         gsap.to(mobileMenu, { right: "-100%", duration: 0.5, ease: "expo.in" });
-        
+
         // Reset Hamburger
         gsap.to(bars, { rotation: 0, y: 0, duration: 0.3 });
-        
+
         // THE FIX: Force close the services sub-menu so it's fresh for next time
         gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.3 });
         gsap.to(chevron, { rotation: 0, duration: 0.3 });
