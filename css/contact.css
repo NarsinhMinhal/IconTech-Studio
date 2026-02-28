@@ -72,6 +72,11 @@
     transition: all 0.3s;
 }
 
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: rgba(165, 148, 253, 0.4);
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: var(--purple-light);
@@ -167,7 +172,8 @@
 }
 
 .calendly-glass-frame {
-    background: #0d0d0d; /* Matching Calendly's dark theme background */
+    background: #0d0d0d;
+    /* Matching Calendly's dark theme background */
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
@@ -198,7 +204,17 @@
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-    .booking-section { padding: 120px 0 60px; }
-    .calendly-inline-widget { height: 900px !important; } /* Calendly needs more height on mobile */
-    .frame-tag { right: 50%; transform: translateX(50%); }
+    .booking-section {
+        padding: 120px 0 60px;
+    }
+
+    .calendly-inline-widget {
+        height: 900px !important;
+    }
+
+    /* Calendly needs more height on mobile */
+    .frame-tag {
+        right: 50%;
+        transform: translateX(50%);
+    }
 }
