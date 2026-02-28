@@ -1368,6 +1368,7 @@ body {
 }
 
 .process-cta p {
+    color: #888;
     font-size: clamp(14px, 2.5vw, 18px);
     margin-bottom: clamp(20px, 4vw, 45px);
 }
