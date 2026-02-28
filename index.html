@@ -44,7 +44,7 @@
                     <p class="hero-tagline">for Modern Visionaries & Founders</p>
                     <div class="hero-btns">
                         <div class="magnetic-wrap">
-                            <a href="contact.html" class="btn-book magnetic-item">Book a call</a>
+                            <a href="contact.html#bookACallForm" target="_blank" class="btn-book magnetic-item">Book a call</a>
                         </div>
                         <a href="#howItWorks" class="btn-secondary-outline magnetic-item">How it works</a>
                     </div>
@@ -174,7 +174,8 @@
                     <div class="process-icon">🚀</div>
                     <div class="card-content">
                         <h3>Launch & Scale</h3>
-                        <p>We stick with you post-launch. From initial MVP to global scaling, we provide the technical
+                        <p>We stick with you post-launch. From initial product to global scaling, we provide the
+                            technical
                             support needed to grow your impact.</p>
                     </div>
                 </div>
@@ -187,11 +188,11 @@
                 <div class="process-btns">
                     <!-- Magnetic Wrapper for Hero Style Button -->
                     <div class="magnetic-wrap">
-                        <a href="contact.html" class="btn-book magnetic-item">Book a Call </a>
+                        <a href="contact.html#bookACallForm" target="_blank" class="btn-book magnetic-item">Book a Call </a>
                     </div>
                     <!-- Magnetic Wrapper for Contact Button -->
                     <div class="magnetic-wrap">
-                        <a href="contact.html" class="btn-secondary-outline magnetic-item">Contact Us</a>
+                        <a href="contact.html" target="_blank" class="btn-secondary-outline magnetic-item">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -253,7 +254,7 @@
                     <div class="deliverables">
                         <h4>Phase deliverables:</h4>
                         <ul>
-                            <li>Functional MVP</li>
+                            <li>Functional product</li>
                             <li>QA Testing</li>
                             <li>API Integrations</li>
                             <li>Cloud Setup</li>
@@ -268,7 +269,7 @@
                         <h2 class="live-text">We're Live!</h2>
                         <p>Your product is now in the hands of users. We scale your impact.</p>
                         <div class="magnetic-wrap" style="margin-top: 30px;">
-                            <a href="contact.html" class="btn-book magnetic-item">Start Project</a>
+                            <a href="contact.html" target="_blank" class="btn-book magnetic-item">Start Project</a>
                         </div>
                     </div>
                 </div>
@@ -369,7 +370,7 @@
             <!-- Left Side: Nav & Intro -->
             <div class="services-left">
                 <div class="services-intro">
-                    <span class="studio-tag">OUR SERVICES</span>
+                    <span class="heading-tag">OUR SERVICES</span>
                     <h2 class="services-main-title">
                         Services that help you scale <br>& <span class="purple-text">impact the world.</span>
                     </h2>
@@ -403,7 +404,7 @@
 
                 <!-- Magnetic Button -->
                 <div class="magnetic-wrap" style="margin-top: 50px;">
-                    <a href="contact.html" class="btn-book magnetic-item">BOOK A CALL</a>
+                    <a href="contact.html#bookACallForm" target="_blank" class="btn-book magnetic-item">BOOK A CALL</a>
                 </div>
             </div>
 
@@ -524,11 +525,11 @@
                 <!-- Question 1 -->
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>How long does it take to build an MVP?</h3>
+                        <h3>How long does it take to build an product?</h3>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Our "Launch Pad" process is optimized for speed. Typically, a high-performance MVP takes
+                        <p>Our "Launch Pad" process is optimized for speed. Typically, a high-performance product takes
                             between 4 to 8 weeks to go from initial concept to a live product, depending on the
                             complexity of the features.</p>
                     </div>
@@ -566,7 +567,7 @@
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes. We are long-term partners. After your MVP impacts the market, we provide dedicated
+                        <p>Yes. We are long-term partners. After your product impacts the market, we provide dedicated
                             support for feature iterations, performance optimization, and global scaling strategies.</p>
                     </div>
                 </div>
@@ -605,31 +606,39 @@
 
                     <form id="iconTechForm" class="stagger-form">
                         <div class="form-row">
-                            <input type="text" placeholder="Your Name" required>
-                            <input type="email" placeholder="Email Address" required>
+                            <input type="text" name="name" placeholder="Your Name" required>
+                            <input type="email" name="email" placeholder="Email Address" required>
                         </div>
 
                         <div class="form-row">
-                            <input type="text" placeholder="Company Name">
-                            <input type="text" placeholder="Project Budget">
+                            <input type="text" name="company" placeholder="Company Name">
+                            <input type="text" name="budget" placeholder="Project Budget">
                         </div>
 
                         <div class="form-full">
-                            <textarea placeholder="Briefly describe your vision..." rows="4"></textarea>
+                            <textarea name="message" placeholder="Briefly describe your vision..." rows="4"></textarea>
                         </div>
 
                         <div class="service-selector">
                             <p>What do you need help with?</p>
                             <div class="tag-cloud">
-                                <label class="tag-item"><input type="checkbox"><span>App Dev</span></label>
-                                <label class="tag-item"><input type="checkbox"><span>Web Dev</span></label>
-                                <label class="tag-item"><input type="checkbox"><span>UI/UX</span></label>
+                                <label class="tag-item"><input type="checkbox" name="services[]"
+                                        value="App Dev"><span>App Dev</span></label>
+                                <label class="tag-item"><input type="checkbox" name="services[]"
+                                        value="Web Dev"><span>Web Dev</span></label>
+                                <label class="tag-item"><input type="checkbox" name="services[]"
+                                        value="UI/UX"><span>UI/UX</span></label>
+                                <label class="tag-item"><input type="checkbox" name="services[]"
+                                        value="Other"><span>Other</span></label>
                             </div>
                         </div>
 
                         <!-- Centered Clamped Magnetic Submit Button -->
                         <div class="magnetic-wrap">
-                            <button type="submit" class="btn-book magnetic-item">SUBMIT PROJECT</button>
+                            <button type="submit" class="btn-book magnetic-item submit-btn">
+                                <span class="btn-text">SUBMIT PROJECT</span>
+                                <span class="btn-loader"></span>
+                            </button>
                         </div>
 
                         <p class="form-footer-msg">⚡ Average response time: 4 Hours</p>

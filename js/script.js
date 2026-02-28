@@ -21,6 +21,7 @@ async function initSite() {
         setupButtonInteractions();
         setupMobileMenu();
         initLazyCTA();
+        setupFormSubmission();
 
         // PAGE ROUTER: Detect where we are and run specific modules
         if (document.querySelector(".hero-section")) {
@@ -730,5 +731,45 @@ function initLazyCTA() {
     });
 }
 
-// 7. START UP
+function setupFormSubmission() {
+    const form = document.getElementById("iconTechForm");
+    if (!form) return;
+
+    const submitBtn = form.querySelector(".submit-btn");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Sending...";
+
+        try {
+            const response = await fetch("/send-email.php", {
+                method: "POST",
+                body: new FormData(form)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                submitBtn.innerText = "✓ SENT";
+                submitBtn.style.background = "#00ff88";
+                form.reset();
+            } else {
+                throw new Error(result.message);
+            }
+
+        } catch (error) {
+            submitBtn.innerText = "❌ ERROR";
+            submitBtn.style.background = "#ff4d4d";
+        }
+
+        setTimeout(() => {
+            submitBtn.innerText = "SUBMIT PROJECT";
+            submitBtn.style.background = "";
+            submitBtn.disabled = false;
+        }, 3000);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", initSite);
