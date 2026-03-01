@@ -1,95 +1,88 @@
 /* ======================
-     COMMON FINAL CTA 
-    ==================== */
+   COMMON FINAL CTA
+====================== */
+
+.common-final-cta {
+    padding: clamp(80px, 8vw, 120px) 0 clamp(100px, 12vw, 160px);
+    background: #05010a;
+}
+
+/* GRID */
 .cta-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
-    gap: 60px;
+    gap: clamp(40px, 6vw, 60px);
     align-items: center;
     position: relative;
     z-index: 10;
 }
 
-#final-CTA-placeholder {
-    min-height: 600px;
-    /* Give it space so you can scroll to it */
-    width: 100%;
-}
-
-.common-final-cta {
-    padding: 100px 0 160px;
-    /* Extra bottom padding for breathing room before footer */
-    background: #05010a;
-}
-
+/* BANNER */
 .cta-banner {
     position: relative;
     width: 100%;
     background: #0d0d0d;
-    /* Slightly lighter than section bg for depth */
-    border-radius: 40px;
-    /* Large professional radius from image */
-    padding: 100px 80px;
+    border-radius: clamp(20px, 4vw, 40px);
+    padding: clamp(50px, 8vw, 100px) clamp(30px, 6vw, 80px);
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
-/* The subtle branding shapes in the background */
+/* Background Glow */
 .banner-glow {
     position: absolute;
     top: -50%;
     right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(165, 148, 253, 0.08) 0%, transparent 70%);
+    width: clamp(300px, 40vw, 600px);
+    height: clamp(300px, 40vw, 600px);
+    background: radial-gradient(circle,
+        rgba(165, 148, 253, 0.08) 0%,
+        transparent 70%);
     pointer-events: none;
     z-index: 1;
 }
 
-.cta-banner-content {
-    position: relative;
-    z-index: 10;
-    max-width: 700px;
-}
-
-.cta-banner-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    color: #fff;
-    margin-bottom: 30px;
-}
-
-.cta-banner-text {
-    font-size: 19px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 50px;
-    max-width: 550px;
-}
-
-.cta-banner-btns {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
+/* LEFT SIDE */
 .cta-left {
     text-align: left;
 }
 
-/* FOUNDER SIDE STYLING */
+.cta-banner-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.cta-banner-text {
+    font-size: clamp(14px, 1.2vw, 19px);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: clamp(30px, 5vw, 50px);
+    max-width: 550px;
+}
+
+/* Buttons */
+.cta-banner-btns {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* RIGHT SIDE */
 .cta-right-founder {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Portrait */
 .founder-portrait-wrap {
     position: relative;
-    width: 280px;
-    /* Refined size */
+    width: clamp(180px, 22vw, 280px);
     aspect-ratio: 1 / 1.2;
     border-radius: 20px;
     overflow: hidden;
@@ -102,10 +95,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.8);
+    filter: saturate(0.85);
 }
 
-/* THE QUOTE STYLING */
+/* Quote */
 .founder-quote-area {
     text-align: center;
     max-width: 320px;
@@ -113,9 +106,8 @@
 
 .motivating-quote {
     font-family: serif;
-    /* Elegant contrast */
     font-style: italic;
-    font-size: 20px;
+    font-size: clamp(14px, 1.4vw, 20px);
     line-height: 1.4;
     color: #fff;
     margin-bottom: 15px;
@@ -134,8 +126,12 @@
     font-weight: 700;
 }
 
-/* RESPONSIVE */
+/* ======================
+   TABLET (1024px ↓)
+====================== */
+
 @media (max-width: 1024px) {
+
     .cta-grid {
         grid-template-columns: 1fr;
         text-align: center;
@@ -143,9 +139,80 @@
 
     .cta-left {
         margin-bottom: 60px;
+        text-align: center;
+    }
+
+    .cta-banner-text {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .cta-banner-btns {
         justify-content: center;
+    }
+
+    .banner-glow {
+        right: 50%;
+        transform: translateX(50%);
+        top: -40%;
+    }
+}
+
+/* ======================
+   MOBILE (768px ↓)
+====================== */
+
+@media (max-width: 768px) {
+
+    .common-final-cta {
+        padding: 100px 0;
+    }
+
+    .cta-banner {
+        padding: 40px 25px;
+    }
+
+    .cta-banner-title {
+        font-size: clamp(1.6rem, 7vw, 2.4rem);
+    }
+
+    .cta-banner-text {
+        font-size: 14px;
+    }
+
+    .cta-banner-btns {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .founder-portrait-wrap {
+        width: 180px;
+    }
+
+    .motivating-quote {
+        font-size: 14px;
+    }
+}
+
+/* ======================
+   SMALL MOBILE (480px ↓)
+====================== */
+
+@media (max-width: 480px) {
+
+    .common-final-cta {
+        padding: 80px 0;
+    }
+
+    .cta-banner {
+        border-radius: 16px;
+    }
+
+    .founder-portrait-wrap {
+        width: 150px;
+    }
+
+    .quote-author {
+        font-size: 10px;
     }
 }
