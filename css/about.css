@@ -80,6 +80,7 @@
     background: linear-gradient(to bottom, var(--purple-light), transparent);
     box-shadow: 0 0 20px rgba(165, 148, 253, 0.5);
     transform-origin: top;
+    transform: scaleY(0); /* Important for animation */
 }
 
 .stat-data h2 {
@@ -98,48 +99,123 @@
     text-transform: uppercase;
 }
 
+@media (max-width: 1024px) {
+
+    .about-hero {
+        padding-top: 120px;
+        min-height: auto;
+        padding-bottom: 100px;
+    }
+
+    .about-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        text-align: center;
+    }
+
+    .about-hero-para {
+        margin: 0 auto;
+    }
+
+    .about-hero-stats {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .about-hero-overlay {
+        background: linear-gradient(to bottom, #05010a 30%, rgba(5, 1, 10, 0.6) 100%);
+    }
+
+    .about-hero-title {
+        font-size: clamp(2.2rem, 8vw, 3rem);
+        letter-spacing: -1px;
+        line-height: 1.1;
+    }
+
+    .about-hero-para {
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0 10px;
+    }
+
+    .about-hero-stats {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .stat-item {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .stat-bar {
+        display: none;
+    }
+
+    .stat-data h2 {
+        font-size: 42px;
+    }
+
+    .stat-data p {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .about-hero {
+        padding-top: 100px;
+        padding-bottom: 80px;
+    }
+
+    .about-hero-title {
+        font-size: 2rem;
+    }
+
+    .about-hero-para {
+        font-size: 14px;
+    }
+
+    .stat-data h2 {
+        font-size: 34px;
+    }
+}
+
 /* ======================
-     MISSION SECTION
-    ==================== */
+   MISSION SECTION
+====================== */
+
 .mission-section {
-    padding: 160px 0;
+    padding: clamp(80px, 10vw, 160px) 0;
     background: #05010a;
     position: relative;
     overflow: hidden;
     color: #fff;
 }
 
+/* Layout */
 .mission-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Aligns left text and right image horizontally */
-    gap: 100px;
+    gap: clamp(40px, 6vw, 100px);
 }
 
+/* Text Side */
 .mission-text-content {
-    width: 55%;
-}
-
-.heading-tag {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: var(--purple-light);
-    font-weight: 800;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    flex: 1.2;
 }
 
 .mission-display-title {
-    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-size: clamp(2.5rem, 6vw, 6.5rem);
     font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -3px;
+    line-height: 0.95;
+    letter-spacing: -2px;
     text-transform: uppercase;
-    margin-bottom: 50px;
+    margin-bottom: clamp(30px, 5vw, 50px);
 }
 
 .mission-para-stack {
@@ -148,7 +224,7 @@
 }
 
 .mission-lead-text {
-    font-size: 24px;
+    font-size: clamp(18px, 2vw, 24px);
     line-height: 1.4;
     color: #fff;
     font-weight: 500;
@@ -156,21 +232,23 @@
 }
 
 .mission-body-text p {
-    font-size: 17px;
+    font-size: clamp(14px, 1.2vw, 17px);
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.5);
-    max-width: 480px;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 520px;
 }
 
+/* Visual Side */
 .mission-visual-content {
-    width: 38%;
+    flex: 1;
 }
 
 .mission-frame {
     position: relative;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    will-change: transform, opacity;
 }
 
 .frame-border {
@@ -185,8 +263,13 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.8) contrast(1.1);
+    filter: saturate(0.85) contrast(1.05);
     display: block;
+    transition: transform 0.6s ease;
+}
+
+.mission-frame:hover .mission-image {
+    transform: scale(1.05);
 }
 
 .mission-label-tag {
@@ -195,7 +278,7 @@
     right: 20px;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    padding: 10px 20px;
+    padding: 8px 18px;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -203,20 +286,21 @@
     z-index: 6;
 }
 
-/* --- RESPONSIVE --- */
+/* ======================
+   TABLET (1024px ↓)
+====================== */
+
 @media (max-width: 1024px) {
 
-    .about-hero-grid,
     .mission-wrapper {
-        grid-template-columns: 1fr;
         flex-direction: column;
         text-align: center;
-        gap: 60px;
+        gap: 70px;
     }
 
-    .about-hero-para,
-    .mission-body-text p {
-        margin: 0 auto;
+    .mission-text-content,
+    .mission-visual-content {
+        width: 100%;
     }
 
     .mission-para-stack {
@@ -224,48 +308,97 @@
         padding-left: 0;
     }
 
-    .mission-visual-content,
-    .mission-text-content {
-        width: 100%;
+    .mission-body-text p {
+        margin: 0 auto;
+    }
+
+    .mission-display-title {
+        letter-spacing: -1px;
     }
 }
 
 /* ======================
-     VALUES SECTION 
-    ==================== */
+   MOBILE (768px ↓)
+====================== */
+
+@media (max-width: 768px) {
+
+    .mission-section {
+        padding: 100px 0;
+    }
+
+    .mission-display-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+        line-height: 1.1;
+    }
+
+    .mission-lead-text {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .mission-body-text p {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .mission-frame {
+        max-width: 92%;
+        margin: 0 auto;
+    }
+
+    .mission-label-tag {
+        font-size: 9px;
+        padding: 6px 14px;
+    }
+}
+
+/* ======================
+   SMALL MOBILE (480px ↓)
+====================== */
+
+@media (max-width: 480px) {
+
+    .mission-section {
+        padding: 80px 0;
+    }
+
+    .mission-display-title {
+        font-size: 1.8rem;
+    }
+
+    .mission-lead-text {
+        font-size: 16px;
+    }
+
+    .mission-body-text p {
+        font-size: 14px;
+    }
+}
+
+/* ======================
+   VALUES MONOLITH SECTION
+====================== */
+
 .values-monolith-section {
-    padding: 160px 0;
+    padding: clamp(80px, 10vw, 160px) 0;
     background: #000;
-    /* Pure Black for OLED impact */
     color: #fff;
 }
 
+/* Intro */
 .values-intro {
-    margin-bottom: 100px;
+    margin-bottom: clamp(60px, 8vw, 100px);
 }
 
 .values-title {
-    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-size: clamp(2.5rem, 6vw, 6rem);
     font-weight: 800;
     line-height: 0.95;
-    letter-spacing: -3px;
-    margin-bottom: 35px;
-    color: #fff;
+    letter-spacing: -2px;
 }
 
-.heading-tag {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: var(--purple-light);
-    font-weight: 800;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* THE LIST STRUCTURE */
+/* List Layout */
 .monolith-list {
     display: flex;
     flex-direction: column;
@@ -275,82 +408,75 @@
 .monolith-item {
     position: relative;
     width: 100%;
-    padding: 80px 60px;
+    padding: clamp(40px, 6vw, 80px) clamp(25px, 5vw, 60px);
     background: #05010a;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-    /* Industrial sharp edges */
+    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
 
     transform-style: preserve-3d;
-    /* CRUCIAL: Allows elements to float in 3D */
-    will-change: transform, clip-path;
+    will-change: transform;
 }
 
-/* The hover glow effect background */
+/* Glow Background */
 .monolith-bg {
     position: absolute;
-    /* inset: 0; */
-    /* background: linear-gradient(135deg, rgba(99, 44, 155, 0.1) 0%, transparent 100%); */
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    z-index: 1;
-
     inset: -50%;
-    /* Make it larger than the item */
-    background: radial-gradient(circle at center, rgba(165, 148, 253, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle at center,
+        rgba(165, 148, 253, 0.15) 0%,
+        transparent 70%);
+    opacity: 0;
+    z-index: 1;
     pointer-events: none;
+    transition: opacity 0.6s ease;
 }
 
+/* Content Layout */
 .monolith-content {
     position: relative;
     z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 40px;
 }
 
-/* LEFT SIDE: TITLES */
+/* Left */
 .m-left {
-    width: 50%;
+    flex: 1;
 }
 
 .m-number {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 800;
     color: var(--purple-light);
-    letter-spacing: 5px;
+    letter-spacing: 4px;
     display: block;
     margin-bottom: 20px;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .m-title {
-    font-size: 72px;
-    /* Massive Typography */
+    font-size: clamp(2.5rem, 5vw, 72px);
     font-weight: 900;
-    line-height: 0.9;
+    line-height: 1.1;
     text-transform: uppercase;
-    letter-spacing: -3px;
+    letter-spacing: -2px;
     color: #fff;
-
     display: inline-block;
-    pointer-events: none;
 }
 
-/* RIGHT SIDE: INFO */
+/* Right */
 .m-right {
-    width: 35%;
+    flex: 0.8;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-
-    pointer-events: none;
+    gap: 25px;
 }
 
 .m-right p {
-    font-size: 18px;
+    font-size: clamp(14px, 1.2vw, 18px);
     line-height: 1.6;
     color: #888;
     transition: color 0.4s ease;
@@ -367,7 +493,7 @@
     color: #666;
 }
 
-/* --- INTERACTIVE HOVER --- */
+/* Hover */
 .monolith-item:hover {
     border-color: rgba(165, 148, 253, 0.3);
 }
@@ -391,8 +517,22 @@
     color: var(--purple-light);
 }
 
-/* RESPONSIVE */
+/* ======================
+   TABLET (1024px ↓)
+====================== */
 @media (max-width: 1024px) {
+    .values-intro {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .values-title {
+        text-align: center;
+        line-height: 1.1;
+    }
+
     .monolith-content {
         flex-direction: column;
         align-items: flex-start;
@@ -405,7 +545,7 @@
     }
 
     .m-title {
-        font-size: 48px;
+        font-size: clamp(2rem, 6vw, 48px);
     }
 
     .monolith-item {
@@ -414,26 +554,76 @@
 }
 
 /* ======================
-     PHILOSOPHY SECTION 
-    ==================== */
+   MOBILE (768px ↓)
+====================== */
+@media (max-width: 768px) {
+
+    .values-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+        letter-spacing: -1px;
+    }
+
+    .values-intro {
+        margin-bottom: 60px;
+    }
+
+    .monolith-content {
+        text-align: center;
+        align-items: center;
+    }
+
+    .m-right {
+        align-items: center;
+        text-align: center;
+    }
+
+    .m-title {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        
+    }
+
+    .m-right p {
+        font-size: 15px;
+    }
+
+    .monolith-item {
+        padding: 40px 20px;
+    }
+}
+
+/* ======================
+   SMALL MOBILE (480px ↓)
+====================== */
+@media (max-width: 480px) {
+    .values-monolith-section {
+        padding: 80px 0;
+    }
+}
+
+/* ======================
+   PHILOSOPHY SECTION
+====================== */
+
 .philosophy-section {
-    padding: 140px 0;
+    padding: clamp(80px, 8vw, 140px) 0;
     background: #000;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
     z-index: 5;
 }
 
+/* Layout */
 .philosophy-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    gap: clamp(40px, 6vw, 80px);
 }
 
+/* Titles */
 .philo-main-title {
-    font-size: 48px;
+    font-size: clamp(2rem, 4vw, 48px);
     font-weight: 700;
-    margin-bottom: 60px;
+    margin-bottom: clamp(40px, 5vw, 60px);
     color: #fff;
 }
 
@@ -444,22 +634,22 @@
     opacity: 0.6;
 }
 
+/* Remove desktop-only offset on smaller screens */
 .do-side .philo-list {
     transform: translateY(-26px);
 }
 
+/* List */
 .philo-list {
     display: flex;
     flex-direction: column;
 }
 
 .philo-item {
-    padding: 40px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: clamp(25px, 4vw, 40px) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     transition: padding-left 0.4s ease, border-color 0.4s ease;
-    /* Ensure no COLLAPSE happens */
     min-height: 100px;
-    opacity: 1;
 }
 
 .philo-item:last-child {
@@ -467,7 +657,7 @@
 }
 
 .philo-item h3 {
-    font-size: 22px;
+    font-size: clamp(18px, 2vw, 22px);
     font-weight: 700;
     margin-bottom: 12px;
     color: #fff;
@@ -479,59 +669,137 @@
 }
 
 .philo-item p {
-    font-size: 16px;
+    font-size: clamp(14px, 1.2vw, 16px);
     color: #777;
     line-height: 1.6;
     max-width: 480px;
 }
 
-/* Right Side Accent */
+/* Accent */
 .purple-accent {
     color: var(--purple-light) !important;
 }
 
-/* Hover Effects */
-.do-side .philo-item:hover p {
-    color: #bbb;
+/* Hover (Desktop only feel) */
+@media (hover: hover) {
+    .do-side .philo-item:hover p {
+        color: #bbb;
+    }
+
+    .do-side .philo-item:hover {
+        padding-left: 20px;
+        border-bottom-color: var(--purple-light);
+    }
 }
 
-.do-side .philo-item:hover {
-    padding-left: 20px;
-    border-bottom-color: var(--purple-light);
-}
+/* ======================
+   TABLET (1024px ↓)
+====================== */
 
-/* RESPONSIVE */
 @media (max-width: 1024px) {
+
     .philosophy-grid {
         grid-template-columns: 1fr;
         gap: 80px;
     }
 
     .philo-main-title {
-        font-size: 36px;
+        text-align: center;
+    }
+
+    .philo-list {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .philo-item p {
+        max-width: 100%;
+    }
+
+    /* Remove vertical offset on stacked layout */
+    .do-side .philo-list {
+        transform: none;
     }
 }
 
 /* ======================
-     HISTORY SECTION 
-    ==================== */
+   MOBILE (768px ↓)
+====================== */
+
+@media (max-width: 768px) {
+
+    .philosophy-section {
+        padding: 100px 0;
+    }
+
+    .philo-main-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        text-align: center;
+    }
+
+    .philo-list {
+        max-width: 100%;
+    }
+
+    .philo-item {
+        padding: 25px 0;
+    }
+
+    .philo-item h3 {
+        font-size: 18px;
+    }
+
+    .philo-item p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+}
+
+/* ======================
+   SMALL MOBILE (480px ↓)
+====================== */
+
+@media (max-width: 480px) {
+
+    .philosophy-section {
+        padding: 80px 0;
+    }
+
+    .philo-main-title {
+        font-size: 1.6rem;
+    }
+
+    .philo-item h3 {
+        font-size: 16px;
+    }
+
+    .philo-item p {
+        font-size: 13px;
+    }
+}
+
+/* ======================
+   HISTORY SECTION
+====================== */
+
 .history-section {
-    padding: 160px 0;
+    padding: clamp(80px, 10vw, 160px) 0;
     background: #05010a;
     position: relative;
     overflow: hidden;
 }
 
+/* Layout */
 .history-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    gap: 100px;
+    gap: clamp(40px, 6vw, 100px);
     align-items: flex-start;
 }
 
-/* Left Content */
+/* Left Column */
 .history-title {
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size: clamp(2.2rem, 5vw, 5rem);
     font-weight: 800;
     margin-bottom: 40px;
     color: #fff;
@@ -539,20 +807,20 @@
 }
 
 .history-text p {
-    font-size: 18px;
+    font-size: clamp(14px, 1.2vw, 18px);
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 25px;
     max-width: 520px;
 }
 
-/* Right Timeline Column */
+/* Timeline */
 .history-timeline {
     position: relative;
     padding-left: 60px;
 }
 
-/* Vertical Line Logic */
+/* Vertical Line */
 .timeline-line-bg {
     position: absolute;
     left: 0;
@@ -568,7 +836,6 @@
     top: 0;
     width: 2px;
     height: 0%;
-    /* Managed by GSAP */
     background: var(--purple-light);
     box-shadow: 0 0 15px var(--purple-main);
     z-index: 2;
@@ -577,7 +844,7 @@
 /* Timeline Items */
 .timeline-item {
     position: relative;
-    margin-bottom: 80px;
+    margin-bottom: clamp(50px, 6vw, 80px);
     padding-left: 20px;
 }
 
@@ -588,7 +855,6 @@
 .timeline-dot {
     position: absolute;
     left: -64px;
-    /* Center on the line */
     top: 10px;
     width: 10px;
     height: 10px;
@@ -617,22 +883,40 @@
 }
 
 .timeline-content h3 {
-    font-size: 22px;
+    font-size: clamp(16px, 2vw, 22px);
     font-weight: 500;
     line-height: 1.4;
     color: #fff;
     max-width: 500px;
 }
 
-/* RESPONSIVE */
+/* ======================
+   TABLET (1024px ↓)
+====================== */
+
 @media (max-width: 1024px) {
+    .history-info .magnetic-wrap{
+        justify-content: center;
+    }
+
     .history-grid {
         grid-template-columns: 1fr;
         gap: 80px;
     }
 
+    .history-title {
+        text-align: center;
+    }
+
+    .history-text p {
+        max-width: 100%;
+        text-align: center;
+    }
+
     .history-timeline {
         padding-left: 40px;
+        max-width: 700px;
+        margin: 0 auto;
     }
 
     .timeline-dot {
@@ -641,37 +925,108 @@
 }
 
 /* ======================
-     RECOGNITION SECTION 
-    ==================== */
+   MOBILE (768px ↓)
+====================== */
+
+@media (max-width: 768px) {
+
+    .history-section {
+        padding: 100px 0;
+    }
+
+    .history-title {
+        font-size: clamp(1.8rem, 7vw, 2.8rem);
+        text-align: center;
+    }
+
+    .history-text p {
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .history-timeline {
+        padding-left: 30px;
+    }
+
+    .timeline-dot {
+        left: -34px;
+        width: 8px;
+        height: 8px;
+    }
+
+    .timeline-content h3 {
+        font-size: 16px;
+    }
+
+    .timeline-date {
+        font-size: 10px;
+    }
+}
+
+/* ======================
+   SMALL MOBILE (480px ↓)
+====================== */
+
+@media (max-width: 480px) {
+
+    .history-section {
+        padding: 80px 0;
+    }
+
+    .history-timeline {
+        padding-left: 24px;
+    }
+
+    .timeline-dot {
+        left: -28px;
+    }
+
+    .timeline-content h3 {
+        font-size: 14px;
+    }
+}
+
+/* ======================
+   RECOGNITION SECTION
+====================== */
+
 .recognition-section {
-    padding: 120px 0;
+    padding: clamp(80px, 8vw, 120px) 0;
     background: #05010a;
 }
 
+/* Header */
 .recognition-header {
-    margin-bottom: 80px;
+    margin-bottom: clamp(60px, 8vw, 80px);
     text-align: center;
+}
+
+.recognition-header .heading-tag{
+    justify-content: center;
 }
 
 .recognition-header p {
     color: #888;
     max-width: 600px;
     margin: 20px auto 0;
-    font-size: 18px;
+    font-size: clamp(14px, 1.2vw, 18px);
+    line-height: 1.6;
 }
 
-/* RECOGNITION BLOCKS */
+/* BLOCKS */
 .recognition-block {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 40px;
-    /* Large professional radius from image */
+    border-radius: clamp(20px, 4vw, 40px);
     overflow: hidden;
     margin-bottom: 40px;
-    min-height: 500px;
+    min-height: clamp(400px, 50vw, 500px);
+    gap: clamp(20px, 4vw, 40px);
 }
 
+/* Themes */
 .dark-block {
     background: #0d0d0d;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -679,19 +1034,18 @@
 
 .purple-block {
     background: var(--purple-light);
-    color: #000;
+    color: #05010a;
 }
 
-/* Inner Content Styling */
+/* Content */
 .rec-content {
-    width: 50%;
-    padding: 80px;
+    flex: 1;
+    padding: clamp(40px, 6vw, 80px);
 }
 
 .rec-visual {
-    width: 50%;
-    height: 100%;
-    padding: 40px;
+    flex: 1;
+    padding: clamp(20px, 4vw, 40px);
 }
 
 .rec-visual img {
@@ -700,11 +1054,16 @@
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    transition: transform 0.6s ease;
 }
 
-/* Text inside blocks */
+.recognition-block:hover .rec-visual img {
+    transform: scale(1.03);
+}
+
+/* Titles */
 .rec-title {
-    font-size: 48px;
+    font-size: clamp(1.8rem, 4vw, 48px);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 20px;
@@ -717,36 +1076,39 @@
 }
 
 .rec-content p {
-    font-size: 18px;
+    font-size: clamp(14px, 1.2vw, 18px);
     line-height: 1.6;
-    opacity: 0.7;
+    opacity: 0.75;
 }
 
-/* Logo treatments */
-.rec-logo img {
-    height: 40px;
-    filter: brightness(0) invert(1);
-    margin-bottom: 30px;
-}
-
+/* Accent Overrides */
 .purple-block .rec-title,
 .purple-block p {
     color: #05010a;
 }
 
-.rec-icon-group {
-    font-size: 30px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
+/* Logo / Icons */
+.rec-logo {
+    margin-bottom: 30px;
 }
 
-/* RESPONSIVE */
+.rec-icon-group {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+/* ======================
+   TABLET (1024px ↓)
+====================== */
+
 @media (max-width: 1024px) {
+
     .recognition-block {
         flex-direction: column;
-        height: auto;
         text-align: center;
+        min-height: auto;
     }
 
     .rec-content,
@@ -755,18 +1117,66 @@
         padding: 40px;
     }
 
-    /* Flip second block on mobile to keep Image-Text rhythm */
+    .rec-visual img {
+        height: auto;
+    }
+
+    /* Maintain rhythm */
     .purple-block {
         flex-direction: column-reverse;
     }
+
+    .rec-icon-group {
+        justify-content: center;
+    }
 }
 
-@media (max-width: 600px) {
+/* ======================
+   MOBILE (768px ↓)
+====================== */
+
+@media (max-width: 768px) {
+
+    .recognition-section {
+        padding: 100px 0;
+    }
+
     .rec-title {
-        font-size: 32px;
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+    }
+
+    .rec-content {
+        padding: 30px;
+    }
+
+    .rec-visual {
+        padding: 20px;
     }
 
     .recognition-block {
-        border-radius: 24px;
+        border-radius: 20px;
+    }
+}
+
+/* ======================
+   SMALL MOBILE (480px ↓)
+====================== */
+
+@media (max-width: 480px) {
+
+    .recognition-section {
+        padding: 80px 0;
+    }
+
+    .rec-title {
+        font-size: 1.4rem;
+    }
+
+    .rec-content p {
+        font-size: 13px;
+    }
+
+    .recognition-block {
+        border-radius: 16px;
     }
 }
