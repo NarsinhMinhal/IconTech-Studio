@@ -44,285 +44,151 @@ async function initSite() {
 
 // 3. GLOBAL MODULES (Header/Footer/Dropdown)
 function setupGlobalAnimations() {
-
     /* ==========================
        HEADER ANIMATION
     ========================== */
 
     gsap.from(".main-header", {
-
         y: -80,
-
         opacity: 0,
-
         duration: 1,
-
         ease: "power3.out"
-
     });
-
 
     gsap.from(".nav-link", {
-
         y: -20,
-
         opacity: 0,
-
         stagger: 0.1,
-
         duration: 0.6,
-
         delay: 0.4
-
     });
-
 
     gsap.from(".main-header .btn-book", {
-
         scale: 0,
-
         opacity: 0,
-
         duration: 0.6,
-
         delay: 0.6,
-
         ease: "back.out(1.7)"
-
     });
-
 
     /* ==========================
        MOBILE MENU
     ========================== */
 
     const menuBtn = document.getElementById("menuBtn");
-
     const mobileMenu = document.getElementById("mobileMenu");
-
     let menuOpen = false;
-
     if (menuBtn) {
-
         menuBtn.addEventListener("click", () => {
-
             if (!menuOpen) {
-
                 gsap.set(mobileMenu, { visibility: "visible" });
-
                 gsap.to(mobileMenu, {
-
                     right: 0,
-
                     duration: 0.5,
-
                     ease: "power3.out"
-
                 });
-
                 menuOpen = true;
-
             } else {
-
                 gsap.to(mobileMenu, {
-
                     right: "-100%",
-
                     duration: 0.5,
-
                     ease: "power3.in",
-
                     onComplete: () => {
-
                         gsap.set(mobileMenu, { visibility: "hidden" });
-
                     }
-
                 });
-
                 menuOpen = false;
-
             }
-
         });
-
     }
-
 
     /* ==========================
        MOBILE DROPDOWN
     ========================== */
 
     const toggle = document.getElementById("mobileServicesToggle");
-
     const submenu = document.getElementById("mobileSubMenu");
-
     let subOpen = false;
-
     if (toggle) {
-
         toggle.addEventListener("click", () => {
-
             if (!subOpen) {
-
                 gsap.to(submenu, {
-
                     height: "auto",
-
                     opacity: 1,
-
                     duration: 0.4
-
                 });
-
                 subOpen = true;
-
             } else {
-
                 gsap.to(submenu, {
-
                     height: 0,
-
                     opacity: 0,
-
                     duration: 0.4
-
                 });
-
                 subOpen = false;
-
             }
-
         });
-
     }
-
 
     /* ==========================
        DESKTOP DROPDOWN
     ========================== */
-
     document.querySelectorAll(".nav-dropdown").forEach(drop => {
-
         const menu = drop.querySelector(".dropdown-content");
-
         drop.addEventListener("mouseenter", () => {
-
             gsap.to(menu, {
-
                 autoAlpha: 1,
-
                 y: 0,
-
                 duration: 0.3,
-
                 ease: "power2.out"
-
             });
-
         });
 
         drop.addEventListener("mouseleave", () => {
-
             gsap.to(menu, {
-
                 autoAlpha: 0,
-
                 y: 10,
-
                 duration: 0.3,
-
                 ease: "power2.in"
-
             });
-
         });
-
     });
-
 
     /* ==========================
        FOOTER (UNCHANGED)
     ========================== */
 
     const footer = document.querySelector(".footer-section");
-
     if (footer) {
-
         gsap.to(footer, {
-
             scrollTrigger: {
-
                 trigger: footer,
-
                 start: "top 90%"
-
             },
-
             opacity: 1,
-
             duration: 1
-
         });
 
         const brandingText = document.getElementById("footer-branding-text");
-
         if (brandingText) {
-
             gsap.from(brandingText, {
-
                 scrollTrigger: {
-
                     trigger: ".massive-branding-area",
-
                     start: "top 95%"
-
                 },
-
                 y: 100,
-
                 opacity: 0,
-
                 duration: 1.5,
-
                 onComplete: () => {
-
                     gsap.to(brandingText, {
-
                         backgroundPosition: "200% center",
-
                         duration: 10,
-
                         repeat: -1,
-
                         ease: "none"
-
                     });
-
-                    gsap.to(brandingText, {
-
-                        y: -15,
-
-                        scale: 1.03,
-
-                        duration: 3,
-
-                        repeat: -1,
-
-                        yoyo: true,
-
-                        ease: "sine.inOut"
-
-                    });
-
                 }
-
             });
-
         }
-
     }
-
 }
 
 // 4. HOME PAGE ONLY MODULES
@@ -732,6 +598,7 @@ function initLazyCTA() {
 }
 
 function setupFormSubmission() {
+
     const form = document.getElementById("iconTechForm");
     if (!form) return;
 
@@ -744,7 +611,7 @@ function setupFormSubmission() {
         submitBtn.innerText = "Sending...";
 
         try {
-            const response = await fetch("/send-email.php", {
+            const response = await fetch("send-email.php", {
                 method: "POST",
                 body: new FormData(form)
             });
@@ -756,7 +623,8 @@ function setupFormSubmission() {
                 submitBtn.style.background = "#00ff88";
                 form.reset();
             } else {
-                throw new Error(result.message);
+                submitBtn.innerText = "❌ ERROR";
+                submitBtn.style.background = "#ff4d4d";
             }
 
         } catch (error) {
@@ -772,4 +640,5 @@ function setupFormSubmission() {
     });
 }
 
+// 7. START UP
 document.addEventListener("DOMContentLoaded", initSite);

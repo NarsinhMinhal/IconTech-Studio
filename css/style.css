@@ -44,6 +44,12 @@ body {
     gap: 10px;
 }
 
+@media (max-width: 1024px) {
+    .heading-tag {
+        justify-content: center;
+    }
+}
+
 .purple-text {
     background: linear-gradient(to right, #fff, #A594FD);
     -webkit-background-clip: text;
@@ -568,13 +574,15 @@ body {
 .massive-branding-area {
     text-align: center;
     margin-top: clamp(30px, 6vw, 60px);
+    padding-bottom: 20px;
 }
 
 #footer-branding-text {
+    display: inline-block;
     font-size: clamp(60px, 16vw, 240px);
     font-weight: 900;
     letter-spacing: clamp(-2px, -0.8vw, -16px);
-    line-height: 0.8;
+    line-height: 1;
     margin: 0;
     background: linear-gradient(90deg,
             #fff,
@@ -1596,7 +1604,7 @@ body {
     animation: live-pulse 2s infinite;
 }
 
-.live-card .magnetic-wrap{
+.live-card .magnetic-wrap {
     justify-content: center !important;
 }
 
@@ -1618,10 +1626,6 @@ body {
 
 /* Laptop */
 @media (max-width: 1200px) {
-    .horizontal-heading .heading-tag {
-        text-align: center;
-    }
-
     .horizontal-heading {
         left: 5%;
         width: 420px;
@@ -2052,12 +2056,6 @@ body {
     .services-wrapper {
         flex-direction: column;
         gap: 40px;
-    }
-
-    .services-intro .heading-tag {
-        display: block;
-        width: 100%;
-        text-align: center;
     }
 
     .services-left,
@@ -2577,7 +2575,7 @@ body {
 }
 
 .final-cta .btn-book {
-    display: inline-flex;   
+    display: inline-flex;
     width: auto;
     max-width: 320px;
     padding: clamp(14px, 4vw, 20px) clamp(16px, 5vw, 28px);
