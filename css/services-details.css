@@ -1,92 +1,141 @@
-/* --- APP DEV HERO --- */
-.app-hero {
+/* ============================================================
+   SERVICE DETAILS HERO
+============================================================ */
+
+/* ================= BASE HERO ================= */
+
+.service_details-hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 85vh;
+    /* Cinematic height without huge empty space */
     display: flex;
     align-items: center;
     background: #05010a;
-    padding-top: 100px;
-    overflow: hidden;
+    padding: 100px 0 60px;
+    z-index: 5;
+    /* Controlled vertical spacing */
+
 }
 
-.app-hero-grid {
+.service_details-hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    gap: 5rem;
     align-items: center;
+    justify-content: center;
+    width: 92%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.app-reveal {
+/* ================= CONTENT ================= */
+
+.service_details-hero-content .heading-tag {
+    padding-top: 100px;
+}
+
+.service_details-reveal {
     opacity: 0;
     transform: translateY(30px);
-    filter: blur(10px); /* Adds a premium 'dreamy' reveal effect */
-    will-change: transform, opacity, filter;
+    filter: blur(10px);
 }
 
-/* CONTENT SIDE */
-.app-main-title {
-    font-size: clamp(3.5rem, 8vw, 6rem);
+.service_details-main-title {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
     font-weight: 800;
     line-height: 0.95;
     letter-spacing: -3px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
     color: #fff;
 }
 
-.app-description {
-    font-size: 18px;
+.service_details-description {
+    font-size: 17px;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.6);
     max-width: 550px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
-/* MOCKUP SHOWCASE */
-.app-hero-visual {
+.service_details-hero-btns {
+    display: flex;
+    gap: 20px;
+}
+
+/* ================= VISUAL AREA ================= */
+
+.service_details-hero-visual {
     position: relative;
-    height: 600px;
+    height: 520px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
 
 .iphone-stack-container {
     position: relative;
     width: 100%;
-    max-width: 650px;
-    height: 650px;
+    max-width: 600px;
+    height: 520px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    perspective: 2000px;
+    z-index: 15;
 }
 
 .iphone-mockup {
     position: absolute;
-    width: 250px;
+    width: 240px;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
     aspect-ratio: 1 / 2.1;
     border-radius: 40px;
     overflow: hidden;
     background: #000;
-    /* Physical bezel look */
     border: 6px solid #1a1a1a;
     box-shadow: -20px 40px 60px rgba(0, 0, 0, 0.7);
-    cursor: pointer;
-    will-change: transform, filter;
-    transition: filter 0.5s ease;
+    z-index: 20;
+}
 
-    /* INITIAL STATE FOR GSAP */
-    opacity: 0;
+/* Smooth interaction */
+.iphone-mockup {
+    transition: transform 0.4s ease,
+        filter 0.4s ease,
+        opacity 0.4s ease;
+    will-change: transform;
+}
+
+/* Default slightly dimmed */
+@media (min-width: 1025px) {
+    .iphone-mockup {
+        opacity: 0.7;
+    }
+
+    .iphone-mockup.active-hover {
+        opacity: 1;
+        filter: brightness(1.05);
+        z-index: 20;
+    }
+
+    .iphone-mockup.dimmed {
+        opacity: 0.35;
+        filter: brightness(0.7);
+    }
 }
 
 .iphone-mockup img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Inactive screens are slightly darker to make hover "pop" */
-    /* filter: brightness(0.6) saturate(0.8); */
 }
 
-/* THE UP-DOWN STAGGER (Matching your image) */
+/* ================= DESKTOP STACK ================= */
+
 .s-left-2 {
-    left: 0;
+    left: 0%;
     top: 15%;
     z-index: 4;
 }
@@ -99,112 +148,219 @@
 
 .s-right-1 {
     left: 30%;
-    top: 12%;
+    top: 15%;
     z-index: 2;
 }
 
 .s-front {
     left: 45%;
-    top: 20%;
+    top: 5%;
     z-index: 1;
 }
 
-/* HOVER HIGHLIGHT EFFECT */
-.iphone-mockup:hover {
-    z-index: 100 !important;
-    /* Bring to frontmost layer */
-    box-shadow: 0 50px 100px rgba(165, 148, 253, 0.3);
-    /* Purple Glow */
-}
+/* ================= TABLET (768–1024) CLEAN FIX ================= */
 
-.iphone-mockup:hover img {
-    cursor: default;
-    filter: brightness(1.1) saturate(1);
-}
+@media (max-width: 1024px) and (min-width: 768px) {
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .iphone-stack-container {
-        max-width: 400px;
-        height: 500px;
-    }
-
-    .iphone-mockup {
-        width: 180px;
-    }
-
-    .s-left-2 {
-        left: 0;
-    }
-
-    .s-left-1 {
-        left: 20%;
-    }
-
-    .s-right-1 {
-        left: 40%;
-    }
-
-    .s-front {
-        left: 60%;
-    }
-}
-
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-    .app-hero-grid {
-        gap: 40px;
-    }
-
-    .mockup-screen {
-        width: 200px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .app-hero-grid {
+    .service_details-hero-grid {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 80px;
+        justify-items: center;
     }
 
-    .app-description {
-        margin: 0 auto 50px;
-    }
-
-    .app-hero-btns {
+    .service_details-hero-visual {
+        padding-right: 0;
+        height: 500px;
         display: flex;
         justify-content: center;
+        align-items: center;
     }
 
-    .app-hero-visual {
-        height: 400px;
-        max-width: 500px;
+    .iphone-stack-container {
+        position: relative;
+        width: 500px;
+        height: 500px;
         margin: 0 auto;
     }
 
-    .mockup-screen {
-        width: 150px;
+    /* 🔥 RESET DESKTOP ABSOLUTE POSITIONS */
+    .iphone-mockup {
+        position: absolute;
+        width: 190px;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+    }
+
+    /* PURE FAN USING TRANSFORM ONLY */
+    .s-left-2 {
+        transform: translate(-180%, -50%) rotate(-20deg);
+        z-index: 1;
+    }
+
+    .s-left-1 {
+        transform: translate(-100%, -50%) rotate(-10deg);
+        z-index: 2;
+    }
+
+    .s-right-1 {
+        transform: translate(0%, -50%) rotate(10deg);
+        z-index: 3;
+    }
+
+    .s-front {
+        transform: translate(100%, -50%) rotate(20deg);
+        z-index: 4;
     }
 }
 
-/* --- PARTNER TRUST SECTION --- */
+@media (max-width: 1024px) {
+
+    .service_details-hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+        /* 🔥 IMPORTANT */
+    }
+
+    .service_details-hero-content {
+        max-width: 700px;
+        /* keeps text nicely readable */
+        margin: 0 auto;
+        /* hard center */
+    }
+
+    .service_details-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .service_details-hero-btns {
+        justify-content: center;
+    }
+}
+
+/* ================= MOBILE (<768px) ================= */
+
+@media (max-width: 767px) {
+
+    .service_details-hero {
+        padding: 90px 20px 70px;
+        text-align: center;
+    }
+
+    .service_details-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .service_details-hero-visual {
+        position: relative;
+        height: 360px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .iphone-stack-container {
+        position: relative;
+        width: 320px;
+        height: 360px;
+        margin: 0 auto;
+    }
+
+    /* CLEAN BASE — JS WILL CONTROL TRANSFORM */
+    .iphone-mockup {
+        position: absolute;
+        width: 190px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: center;
+        border-width: 4px;
+        border-radius: 26px;
+        opacity: 1;
+        z-index: 1;
+    }
+
+
+}
+
+/* ================= SMALL MOBILE (≤420px) ================= */
+
+@media (max-width:420px) {
+
+    .service_details-hero {
+        padding: 80px 16px 60px;
+    }
+
+    .service_details-main-title {
+        font-size: clamp(2rem, 9vw, 2.6rem);
+        letter-spacing: -1px;
+    }
+
+    .service_details-description {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .service_details-hero-grid {
+        gap: 40px;
+    }
+
+    /* visual container */
+
+    .service_details-hero-visual {
+        height: 300px;
+    }
+
+    /* IMPORTANT — fluid width */
+
+    .iphone-stack-container {
+        width: 100%;
+        max-width: 260px;
+        height: 300px;
+    }
+
+    /* phone size scales */
+
+    .iphone-mockup {
+        width: 160px;
+    }
+
+}
+
+/* ============================================================
+PARTNER TRUST SECTION
+============================================================ */
+
 .partner-trust-section {
     padding: 140px 0;
     background: #05010a;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
+
+.container {
+    width: 92%;
+    max-width: 1300px;
+    margin: auto;
+}
+
+/* ================= GRID ================= */
 
 .partner-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.1fr .9fr;
     gap: 100px;
     align-items: center;
 }
 
-/* LEFT SIDE */
+/* ================= LEFT SIDE ================= */
+
 .partner-main-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
     font-weight: 800;
     line-height: 1.1;
     color: #fff;
@@ -223,20 +379,27 @@
 
 .partner-point-item {
     display: flex;
-    gap: 25px;
+    gap: 22px;
     align-items: flex-start;
 }
 
 .point-icon {
     width: 48px;
     height: 48px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .1);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    font-size: 20px;
+}
+
+.partner-point-item h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 6px;
 }
 
 .partner-point-item p {
@@ -246,44 +409,54 @@
     max-width: 420px;
 }
 
-/* RIGHT SIDE VISUAL */
+/* ================= RIGHT SIDE ================= */
+
 .partner-visual {
     position: relative;
     padding-bottom: 60px;
-    /* Space for the overlapping card */
 }
+
+.partner-visual-reveal {
+    position: relative;
+}
+
+/* IMAGE */
 
 .portrait-frame {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    max-width: 420px;
+    aspect-ratio: 1/1;
     border-radius: 30px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, .1);
+    margin-left: auto;
 }
 
 .expert-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.8);
+    filter: saturate(.9);
 }
 
-/* Floating Tech Tags */
+/* ================= FLOATING TAGS ================= */
+
 .tech-tag {
     position: absolute;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, .92);
     color: #000;
-    padding: 10px 25px;
+    padding: 10px 24px;
     border-radius: 100px;
     font-weight: 700;
     font-size: 13px;
     z-index: 15;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+    white-space: nowrap;
 }
 
 .tag-ios {
-    top: -20px;
-    right: 80px;
+    top: -25px;
+    right: 70px;
 }
 
 .tag-android {
@@ -291,21 +464,23 @@
     right: -20px;
 }
 
-/* The Impact Card (Overlapping) */
+/* ================= IMPACT CARD ================= */
+
 .impact-glass-card {
     position: absolute;
-    bottom: -60px;
-    left: -100px;
-    /* Overlaps into the center */
+    bottom: -50px;
+    right: 0;
+    /* align with image right edge */
     width: 120%;
-    background: rgba(99, 44, 155, 0.9);
-    /* Your logo purple */
+    max-width: 520px;
+    /* control expansion */
+    background: rgba(99, 44, 155, .9);
     backdrop-filter: blur(15px);
     padding: 40px;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, .2);
     z-index: 20;
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, .6);
 }
 
 .impact-glass-card p {
@@ -314,36 +489,196 @@
     line-height: 1.6;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-    .impact-glass-card {
-        left: -20px;
-        width: 100%;
-        padding: 30px;
-        bottom: -40px;
+/* ============================================================
+    LARGE DESKTOP
+============================================================ */
+
+@media (max-width:1400px) {
+
+    .partner-grid {
+        gap: 80px;
     }
+}
+
+/* ============================================================
+    LAPTOP
+============================================================ */
+
+@media (max-width:1200px) {
 
     .partner-grid {
         gap: 60px;
     }
+
+    .portrait-frame {
+        max-width: 380px;
+    }
+
+    .impact-glass-card {
+        left: -40px;
+        width: 110%;
+        bottom: -50px;
+    }
+
+    .tag-ios {
+        right: 40px;
+    }
+
+    .tag-android {
+        right: -10px;
+    }
 }
 
-@media (max-width: 900px) {
+/* ============================================================
+    TABLET LANDSCAPE (KEEP SIDE BY SIDE)
+============================================================ */
+
+@media (max-width:1024px) {
+
+    .partner-trust-section {
+        padding: 120px 0;
+    }
+
+    .partner-grid {
+        grid-template-columns: 1.1fr .9fr;
+        /* keep 2 columns */
+        gap: 50px;
+    }
+
+    .partner-info .heading-tag {
+        justify-content: left;
+    }
+
+    .partner-main-title {
+        font-size: clamp(2.2rem, 4vw, 3rem);
+    }
+
+    .partner-point-item p {
+        font-size: 15px;
+        max-width: 360px;
+    }
+
+    .portrait-frame {
+        max-width: 360px;
+    }
+
+    .impact-glass-card {
+        left: -30px;
+        bottom: -40px;
+        width: 110%;
+        padding: 30px;
+    }
+
+    .tag-ios {
+        right: 30px;
+    }
+
+    .tag-android {
+        right: -10px;
+    }
+}
+
+/* ============================================================
+    TABLET FIX (768px — 1024px)
+============================================================ */
+
+@media (max-width:1024px) and (min-width:769px) {
+
+    .partner-grid {
+        grid-template-columns: 1.1fr .9fr;
+        gap: 40px;
+        align-items: start;
+    }
+
+    /* smaller image */
+
+    .portrait-frame {
+        max-width: 320px;
+        margin-left: auto;
+    }
+
+    /* floating tags adjustment */
+
+    .tag-ios {
+        top: -15px;
+        right: 10px;
+    }
+
+    .tag-android {
+        top: 30px;
+        right: -10px;
+    }
+
+    /* IMPORTANT FIX */
+
+    .impact-glass-card {
+        position: relative;
+        /* remove absolute */
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        margin-top: 20px;
+        padding: 28px;
+    }
+
+    .impact-glass-card p {
+        font-size: 15px;
+    }
+
+    .partner-main-title {
+        font-size: clamp(2rem, 3vw, 2.6rem);
+    }
+
+    .partner-point-item p {
+        font-size: 15px;
+        max-width: 340px;
+    }
+}
+
+/* ============================================================
+    TABLET PORTRAIT (STACK STARTS HERE)
+============================================================ */
+
+@media (max-width:768px) {
+
     .partner-grid {
         grid-template-columns: 1fr;
+        gap: 80px;
         text-align: center;
+    }
+
+    .partner-info {
+        max-width: 620px;
+        margin: auto;
+    }
+
+    .partner-info .heading-tag {
+        justify-content: center;
+    }
+
+    .partner-points {
+        align-items: center;
     }
 
     .partner-point-item {
         flex-direction: column;
         align-items: center;
+        text-align: center;
+    }
+
+    .partner-point-item p {
+        max-width: 520px;
     }
 
     .partner-visual {
-        margin-top: 100px;
-        max-width: 500px;
+        margin-top: 40px;
+        max-width: 420px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .portrait-frame {
+        margin: 0 auto;
     }
 
     .impact-glass-card {
@@ -352,122 +687,340 @@
         bottom: 0;
         width: 100%;
         margin-top: 30px;
+        padding: 34px;
+    }
+
+    .tag-ios {
+        right: 20px;
     }
 
     .tag-android {
-        right: 20px;
+        right: 10px;
     }
 }
 
-/* --- BUILD CAPABILITY SECTION --- */
-.build-capability-section {
-    padding: 140px 0;
-    background: #05010a;
-}
+/* ============================================================
+    MOBILE
+============================================================ */
 
-.capability-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 80px;
-}
+@media (max-width:600px) {
 
-/* LEFT SIDE */
-.capability-header {
-    width: 35%;
-}
-
-.build-main-title {
-    font-size: clamp(3rem, 6vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -2px;
-    color: #fff;
-}
-
-.build-main-title i {
-    font-family: serif;
-    font-style: italic;
-    opacity: 0.6;
-    font-weight: 400;
-}
-
-/* RIGHT SIDE LIST */
-.capability-list {
-    width: 60%;
-}
-
-.capability-row {
-    position: relative;
-    width: 100%;
-}
-
-.row-content {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 40px;
-    padding: 60px 0;
-    transition: background 0.4s ease;
-}
-
-/* The Horizontal Line */
-.row-divider {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    /* Managed by GSAP */
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.bottom-line {
-    top: auto;
-    bottom: 0;
-}
-
-.row-title h3 {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #fff;
-    line-height: 1.4;
-}
-
-.row-text p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #888;
-    transition: color 0.4s ease;
-}
-
-/* INTERACTIVE HOVER */
-.capability-row:hover .row-text p {
-    color: #fff;
-}
-
-.capability-row:hover .row-divider {
-    background: var(--purple-light);
-    box-shadow: 0 0 10px var(--purple-main);
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .capability-wrapper {
-        flex-direction: column;
-        gap: 60px;
+    .partner-trust-section {
+        padding: 100px 0;
     }
 
-    .capability-header,
-    .capability-list {
-        width: 100%;
+    .partner-main-title {
+        font-size: 2.1rem;
     }
 
-    .row-content {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 40px 0;
+    .partner-point-item {
+        gap: 12px;
     }
+
+    .partner-point-item p {
+        font-size: 15px;
+    }
+
+    .tech-tag {
+        font-size: 12px;
+        padding: 8px 20px;
+    }
+
+    .portrait-frame {
+        border-radius: 22px;
+    }
+
+    .impact-glass-card {
+        padding: 26px;
+    }
+}
+
+/* ============================================================
+    SMALL PHONES
+============================================================ */
+
+@media (max-width:420px) {
+
+    .partner-main-title {
+        font-size: 1.8rem;
+    }
+
+    .partner-point-item p {
+        font-size: 14px;
+    }
+
+    .impact-glass-card {
+        padding: 20px;
+    }
+
+    .impact-glass-card p {
+        font-size: 14px;
+    }
+
+    .tech-tag {
+        font-size: 11px;
+        padding: 6px 16px;
+    }
+
+    .tag-ios {
+        right: 10px;
+    }
+
+    .tag-android {
+        right: 0;
+    }
+}
+
+/* ============================================================
+    BUILD CAPABILITY SECTION
+============================================================ */
+
+.build-capability-section{
+padding:140px 0;
+background:#05010a;
+}
+
+.container{
+width:92%;
+max-width:1300px;
+margin:auto;
+}
+
+/* ================= LAYOUT ================= */
+
+.capability-wrapper{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:100px;
+}
+
+/* ================= LEFT SIDE ================= */
+
+.capability-header{
+width:38%;
+}
+
+.build-main-title{
+font-size:clamp(3rem,5vw,4.5rem);
+font-weight:800;
+line-height:1;
+letter-spacing:-2px;
+color:#fff;
+}
+
+.build-main-title i{
+font-family:serif;
+font-style:italic;
+opacity:.6;
+font-weight:400;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.capability-list{
+width:60%;
+}
+
+.capability-row{
+position:relative;
+width:100%;
+}
+
+.row-content{
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:40px;
+padding:60px 0;
+transition:background .4s ease;
+}
+
+/* Divider */
+
+.row-divider{
+position:absolute;
+bottom:0;
+left:0;
+width:0%;
+height:1px;
+background:rgba(255,255,255,.1);
+}
+
+/* Title */
+
+.row-title h3{
+font-size:16px;
+font-weight:700;
+letter-spacing:2px;
+color:#fff;
+line-height:1.4;
+}
+
+/* Text */
+
+.row-text p{
+font-size:16px;
+line-height:1.7;
+color:#888;
+transition:color .4s ease;
+max-width:520px;
+}
+
+/* Hover */
+
+.capability-row:hover .row-text p{
+color:#fff;
+}
+
+.capability-row:hover .row-divider{
+background:var(--purple-light);
+box-shadow:0 0 10px var(--purple-main);
+}
+
+/* ============================================================
+    LARGE DESKTOP
+============================================================ */
+
+@media (max-width:1400px){
+
+.capability-wrapper{
+gap:80px;
+}
+
+}
+
+/* ============================================================
+    LAPTOP
+============================================================ */
+
+@media (max-width:1200px){
+
+.capability-wrapper{
+gap:60px;
+}
+
+.build-main-title{
+font-size:clamp(2.6rem,4.5vw,3.6rem);
+}
+
+.row-content{
+gap:30px;
+}
+
+.row-text p{
+font-size:15px;
+}
+
+}
+
+/* ============================================================
+    TABLET LANDSCAPE
+============================================================ */
+
+@media (max-width:1024px){
+
+.capability-wrapper{
+flex-direction:column;
+gap:70px;
+}
+
+.capability-header{
+width:100%;
+max-width:600px;
+}
+
+.capability-list{
+width:100%;
+}
+
+.row-content{
+grid-template-columns:1fr 1.1fr;
+gap:30px;
+padding:50px 0;
+}
+
+.build-main-title{
+font-size:clamp(2.4rem,5vw,3rem);
+}
+
+}
+
+/* ============================================================
+    TABLET PORTRAIT
+============================================================ */
+
+@media (max-width:768px){
+
+.capability-wrapper{
+gap:60px;
+}
+
+.build-main-title{
+font-size:2.4rem;
+}
+
+.row-content{
+grid-template-columns:1fr;
+gap:18px;
+padding:40px 0;
+}
+
+.row-title h3{
+font-size:15px;
+}
+
+.row-text p{
+font-size:15px;
+max-width:100%;
+}
+
+}
+
+/* ============================================================
+    MOBILE
+============================================================ */
+
+@media (max-width:600px){
+
+.build-capability-section{
+padding:110px 0;
+}
+
+.build-main-title{
+font-size:2.1rem;
+letter-spacing:-1px;
+}
+
+.row-content{
+padding:36px 0;
+}
+
+.row-text p{
+font-size:14.5px;
+line-height:1.6;
+}
+
+}
+
+/* ============================================================
+    SMALL PHONES
+============================================================ */
+
+@media (max-width:420px){
+
+.build-main-title{
+font-size:1.9rem;
+}
+
+.row-title h3{
+font-size:14px;
+letter-spacing:1.5px;
+}
+
+.row-text p{
+font-size:14px;
+}
+
 }
 
 /* --- ROADMAP SECTION --- */
@@ -483,18 +1036,17 @@
 }
 
 .reveal-line {
-    overflow: hidden; /* This creates the 'shutter' effect */
+    overflow: hidden;
     display: block;
 }
 
 .roadmap-main-title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2rem, 5vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
     color: #fff;
     margin: 0;
-    /* Initial state for GSAP to take over */
-    transform: translateY(100%); 
+    transform: translateY(100%);
     filter: blur(15px);
     opacity: 0;
 }
@@ -506,37 +1058,79 @@
     align-items: center;
 }
 
-/* THE POWER LINE (Progressive Vertical Line) */
+/* =====================
+   POWER LINE
+   ===================== */
 .roadmap-steps {
     position: relative;
     padding-left: 80px;
 }
 
-.power-line-bg {
+.power-line-bg,
+.power-line-active {
     position: absolute;
     left: 25px;
-    top: 0;
-    width: 2px;
-    height: 100%;
+    width: 3px;
+    /* top & height set dynamically by JS setLineHeight() */
+}
+
+.power-line-bg {
     background: rgba(255, 255, 255, 0.05);
 }
 
 .power-line-active {
-    position: absolute;
-    left: 25px;
-    top: 0;
-    width: 2px;
-    height: 0;
-    /* Managed by GSAP */
-    background: var(--purple-light);
-    box-shadow: 0 0 15px var(--purple-main);
+    background:linear-gradient(
+to bottom,
+#a594fd 0%,
+#8b5cf6 30%,
+#c4b5fd 60%,
+#8b5cf6 100%
+);
+
+box-shadow:
+0 0 8px #a594fd,
+0 0 18px #8b5cf6,
+0 0 35px rgba(165,148,253,.6);
+    transform-origin: top;
+    transform: scaleY(0);
+    overflow: hidden;
 }
 
+.power-line-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -100%;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 255, 255, 0.9),
+        transparent
+    );
+    animation: electricFlow 2s linear infinite;
+}
+
+@keyframes electricFlow {
+    0%   { transform: translateY(-100%); opacity: 0; }
+    40%  { opacity: 1; }
+    100% { transform: translateY(100%);  opacity: 0; }
+}
+
+/* =====================
+   STEP ITEMS
+   ===================== */
 .step-item {
     position: relative;
     margin-bottom: 60px;
     display: flex;
     align-items: flex-start;
+}
+
+/* FIX: Remove last step's bottom margin so line stops flush */
+.step-item:last-child {
+    margin-bottom: 0;
 }
 
 .step-number {
@@ -554,11 +1148,10 @@
     font-weight: 800;
     color: #fff;
     z-index: 10;
-    transition: all 0.4s ease;
+    /* FIX: Keep only one transition declaration */
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Active State for numbers when the line reaches them */
 .step-item.active .step-number {
     border-color: var(--purple-light);
     box-shadow: 0 0 20px rgba(165, 148, 253, 0.3);
@@ -579,7 +1172,9 @@
     max-width: 450px;
 }
 
-/* --- CINEMATIC ROADMAP VISUAL --- */
+/* =====================
+   VISUAL / RIGHT PANEL
+   ===================== */
 .roadmap-visual {
     position: relative;
     width: 100%;
@@ -603,7 +1198,6 @@
     aspect-ratio: 1 / 1.1;
     background: #111;
     border-radius: 40px;
-    /* Matching the iPhone look */
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
@@ -617,11 +1211,10 @@
     filter: brightness(0.9) contrast(1.1);
 }
 
-/* Moving Light Reflection across the image */
 .glass-reflection {
     position: absolute;
     inset: 0;
-    background: linear-gradient(125deg, rgba(255, 255, 255, 0.1) 0%, transparent 40%, rgba(255, 255, 255, 0.05) 100%);
+    background: linear-gradient(125deg, rgba(255,255,255,0.1) 0%, transparent 40%, rgba(255,255,255,0.05) 100%);
     pointer-events: none;
     z-index: 6;
 }
@@ -633,11 +1226,10 @@
     transform: translate(-50%, -50%);
     width: 120%;
     height: 120%;
-    background: radial-gradient(circle, rgba(99, 44, 155, 0.2) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99,44,155,0.2) 0%, transparent 70%);
     z-index: 1;
 }
 
-/* Floating Status Tag */
 .visual-meta-tag {
     position: absolute;
     bottom: 40px;
@@ -666,45 +1258,58 @@
 }
 
 @keyframes tag-pulse {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.5);
-        opacity: 0.5;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    0%   { transform: scale(1);   opacity: 1; }
+    50%  { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1);   opacity: 1; }
 }
 
-@media (max-width: 1024px) {
+/* =====================
+   RESPONSIVE — 1200px
+   ===================== */
+@media (max-width: 1200px) {
+    .roadmap-section {
+        padding: 100px 0;
+    }
+
+    .roadmap-grid {
+        gap: 50px;
+    }
+
     .roadmap-visual {
-        height: 450px;
+        height: 500px;
     }
 
     .visual-engine-wrapper {
-        max-width: 320px;
+        max-width: 380px;
     }
 
-    .visual-meta-tag {
-        right: 20px;
+    .step-info h3 {
+        font-size: 22px;
     }
 }
 
-/* RESPONSIVE */
+/* =====================
+   RESPONSIVE — 1024px (tablet landscape / single col)
+   ===================== */
 @media (max-width: 1024px) {
     .roadmap-grid {
         grid-template-columns: 1fr;
         gap: 60px;
     }
 
+    /* Stack visual ABOVE steps on tablet */
     .roadmap-visual {
-        height: 400px;
+        order: -1;
+        height: 420px;
+    }
+
+    .visual-engine-wrapper {
+        max-width: 340px;
+    }
+
+    .visual-meta-tag {
+        right: 10px;
+        bottom: 20px;
     }
 
     .roadmap-steps {
@@ -715,11 +1320,131 @@
         left: -60px;
         width: 44px;
         height: 44px;
+        font-size: 14px;
     }
 
     .power-line-bg,
     .power-line-active {
         left: 21px;
+    }
+
+    .step-info h3 {
+        font-size: 20px;
+    }
+
+    .step-info p {
+        font-size: 15px;
+    }
+}
+
+/* =====================
+   RESPONSIVE — 768px (tablet portrait)
+   ===================== */
+@media (max-width: 768px) {
+    .roadmap-section {
+        padding: 80px 0;
+    }
+
+    .roadmap-header {
+        margin-bottom: 60px;
+    }
+
+    .roadmap-visual {
+        height: 360px;
+    }
+
+    .visual-engine-wrapper {
+        max-width: 280px;
+    }
+
+    .visual-frame {
+        border-radius: 28px;
+    }
+
+    .step-item {
+        margin-bottom: 44px;
+    }
+
+    .step-info h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .step-info p {
+        font-size: 14px;
+        max-width: 100%;
+    }
+
+    .roadmap-main-title {
+        font-size: clamp(1.8rem, 7vw, 2.8rem);
+    }
+}
+
+/* =====================
+   RESPONSIVE — 480px (mobile)
+   ===================== */
+@media (max-width: 480px) {
+    .roadmap-section {
+        padding: 60px 0;
+    }
+
+    .roadmap-header {
+        margin-bottom: 48px;
+    }
+
+    .roadmap-steps {
+        padding-left: 50px;
+    }
+
+    .step-number {
+        left: -50px;
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    /* Mobile: step-number = 36px tall, margin-bottom = 36px per step
+       Line must start at center of first node (top: 18px)
+       and end at center of last node, so subtract:
+       - 18px (top offset)
+       - 36px (last step's margin-bottom which is now 0 but padding compensates)
+       Net: height goes from center of node 1 → center of node 4 only */
+    .power-line-bg,
+    .power-line-active {
+        left: 17px;
+        top: 18px;
+        height: calc(100% - 36px);
+    }
+
+    .roadmap-visual {
+        height: 300px;
+    }
+
+    .visual-engine-wrapper {
+        max-width: 230px;
+    }
+
+    .visual-frame {
+        border-radius: 22px;
+    }
+
+    .visual-meta-tag {
+        right: 0;
+        bottom: 10px;
+        padding: 8px 14px;
+        font-size: 10px;
+    }
+
+    .step-item {
+        margin-bottom: 36px;
+    }
+
+    .step-info h3 {
+        font-size: 16px;
+    }
+
+    .step-info p {
+        font-size: 13px;
     }
 }
 
@@ -739,24 +1464,23 @@
 }
 
 .title-mask {
-    overflow: hidden; /* Clips the text so it can "emerge" */
+    overflow: hidden;
     display: block;
 }
 
 .special-title.reveal-item {
-    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
     color: #fff;
     margin: 0;
-    /* Starting position for GSAP */
-    transform: translateY(110%); 
+    transform: translateY(110%);
     opacity: 0;
     will-change: transform, filter, opacity;
 }
 
 .special-title {
-    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
     font-weight: 800;
     line-height: 1;
     color: #fff;
@@ -795,6 +1519,7 @@
     color: var(--purple-light);
     font-size: 20px;
     font-weight: 300;
+    flex-shrink: 0;
     transition: transform 0.3s ease;
 }
 
@@ -805,9 +1530,7 @@
 .special-item p {
     font-size: 20px;
     font-weight: 400;
-
     color: rgba(255, 255, 255, 0.8) !important;
-    /* Force color visibility */
     margin: 0;
 }
 
@@ -819,6 +1542,7 @@
     visibility: hidden;
 }
 
+/* BUTTON */
 .view-more-btn {
     background: transparent;
     border: none;
@@ -845,6 +1569,7 @@
 
 .view-more-btn .btn-text {
     position: relative;
+    display: inline-block; /* needed for ::after to size correctly */
     color: #fff;
     transition: color 0.3s ease;
 }
@@ -854,25 +1579,16 @@
     position: absolute;
     bottom: -5px;
     left: 0;
-    /* THE FIX: Pin to left */
     width: 100%;
-    /* Spans the full text */
     height: 1px;
     background: var(--purple-light);
     box-shadow: 0 0 12px var(--purple-main);
-
-    /* THE KEY: Sets the starting point of the animation to the left edge */
     transform-origin: left;
-
-    /* THE FIX: Start at 0 size using scale */
     transform: scaleX(0);
-
-    /* High-end cubic-bezier for a 'snappy' studio feel */
     transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .view-more-btn:hover .btn-text::after {
-    /* Expand to full size */
     transform: scaleX(1);
 }
 
@@ -880,9 +1596,7 @@
 .special-image-wrapper {
     position: relative;
     width: 100%;
-    /* aspect-ratio: 1 / 1.1; */
     border-radius: 40px;
-    /* Matching the reference image */
     overflow: hidden;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -892,6 +1606,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    display: block;
 }
 
 .image-overlay-glow {
@@ -901,16 +1616,194 @@
     pointer-events: none;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .special-grid {
-        grid-template-columns: 1fr;
-        gap: 60px;
+/* =====================
+   RESPONSIVE — 1200px
+   ===================== */
+@media (max-width: 1200px) {
+    .specialized-services-section {
+        padding: 100px 0;
     }
 
+    .special-grid {
+        gap: 70px;
+    }
+
+    .special-item p {
+        font-size: 18px;
+    }
+}
+
+/* =====================
+   RESPONSIVE — 1024px (tablet landscape)
+   ===================== */
+@media (max-width: 1024px) {
+    .specialized-services-section {
+        padding: 90px 0;
+    }
+
+    .special-grid {
+        grid-template-columns: 1fr;
+        gap: 56px;
+    }
+
+    /* Image above text on tablet */
     .special-visual {
         order: -1;
         max-width: 500px;
         margin: 0 auto;
+    }
+
+    .special-image-wrapper {
+        border-radius: 32px;
+    }
+
+    .special-title {
+        margin-bottom: 44px;
+        letter-spacing: -1px;
+    }
+
+    .special-item p {
+        font-size: 18px;
+    }
+}
+
+/* =====================
+   RESPONSIVE — 768px (tablet portrait)
+   ===================== */
+@media (max-width: 768px) {
+    .specialized-services-section {
+        padding: 80px 0;
+    }
+
+    .special-grid {
+        gap: 44px;
+    }
+
+    .special-visual {
+        max-width: 420px;
+    }
+
+    .special-image-wrapper {
+        border-radius: 26px;
+    }
+
+    .special-title {
+        margin-bottom: 36px;
+        letter-spacing: -0.5px;
+    }
+
+    .special-item {
+        padding: 16px 0;
+        gap: 16px;
+    }
+
+    .special-item p {
+        font-size: 16px;
+    }
+
+    .arrow-icon {
+        font-size: 17px;
+    }
+
+    .special-list {
+        margin-bottom: 32px;
+    }
+
+    .view-more-btn {
+        font-size: 13px;
+    }
+}
+
+/* =====================
+   RESPONSIVE — 480px (mobile)
+   ===================== */
+@media (max-width: 480px) {
+    .specialized-services-section {
+        padding: 64px 0;
+    }
+
+    .special-grid {
+        gap: 36px;
+    }
+
+    .special-visual {
+        max-width: 100%;
+    }
+
+    .special-image-wrapper {
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .special-title {
+        margin-bottom: 28px;
+        letter-spacing: -0.5px;
+    }
+
+    .special-item {
+        padding: 14px 0;
+        gap: 14px;
+    }
+
+    /* Disable hover indent on touch — no hover on mobile */
+    .special-item:hover {
+        padding-left: 0;
+    }
+
+    .special-item p {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .arrow-icon {
+        font-size: 15px;
+    }
+
+    .special-list {
+        margin-bottom: 28px;
+    }
+
+    .view-more-btn {
+        font-size: 12px;
+        letter-spacing: 1.5px;
+        gap: 10px;
+    }
+}
+
+/* =====================
+   RESPONSIVE — 360px (small mobile)
+   ===================== */
+@media (max-width: 360px) {
+    .specialized-services-section {
+        padding: 52px 0;
+    }
+
+    .special-item p {
+        font-size: 14px;
+    }
+
+    .view-more-btn {
+        font-size: 11px;
+    }
+}
+
+/* =====================
+   TOUCH DEVICES — disable all hover effects
+   (hover: none) targets only devices with no mouse/stylus
+   ===================== */
+@media (hover: none) {
+    /* No indent on list item tap */
+    .special-item:hover {
+        padding-left: 0;
+    }
+
+    /* No arrow nudge on tap */
+    .special-item:hover .arrow-icon {
+        transform: none;
+    }
+
+    /* No underline on button tap */
+    .view-more-btn .btn-text::after {
+        display: none;
     }
 }
