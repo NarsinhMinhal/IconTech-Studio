@@ -74,11 +74,17 @@
                     </div>
                 </div>
 
-                <!-- Centered Browser Mockup (Overlap Effect) -->
+                <!-- Browser Mockup (Persistent UI Dots) -->
                 <div class="project-mockup-reveal">
                     <div class="browser-frame-container">
-                        <img src="images/project/Ever Shine/evershine_home.png" alt="Evershine Web Interface"
-                            class="mockup-img">
+                        <div class="browser-top-bar">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="browser-inner">
+                            <img src="images/project/Ever Shine/evershine_home.png" alt="Evershine Web Interface" class="mockup-img">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,7 +164,7 @@
                         <div class="part-image-frame shutter-reveal">
                             <img src="images/project/Ever Shine/evershine_product-1.png"
                                 alt="Rainwear Product Technology" class="part-img">
-                            <!-- <div class="part-img-tag">ALL-WEATHER TECH</div> -->
+                             <div class="part-img-tag">All-Weather Tech</div>
                         </div>
                     </div>
 
@@ -170,15 +176,6 @@
         <section class="experience-section">
             <div class="container">
                 <div class="exp-wrapper">
-
-                    <div class="exp-visual-side">
-                        <div class="sticky-node-wrapper">
-                            <div class="ui-node exp-img-reveal">
-                                <img src="images/project/Ever Shine/evershine_product-2.png" alt="E-commerce UI Detail">
-                                <!-- <div class="node-tag">MOBILE OPTIMIZED</div> -->
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="exp-content">
                         <span class="heading-tag exp-reveal">THE JOURNEY</span>
@@ -204,6 +201,15 @@
                                 the "Add to Cart" and "Checkout" pathways were frictionless, specifically for users on
                                 lower-bandwidth mobile networks in regional India.
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="exp-visual-side">
+                        <div class="sticky-node-wrapper">
+                            <div class="ui-node exp-img-reveal">
+                                <img src="images/project/Ever Shine/evershine_product-2.png" alt="E-commerce UI Detail">
+                                <div class="node-tag">Mobile Optimized</div>
+                            </div>
                         </div>
                     </div>
 
@@ -262,12 +268,19 @@
                     </div>
                 </div>
 
-                <div class="final-project-mockup project-mockup-reveal shutter-reveal">
+                <div class="final-project-mockup shutter-reveal">
                     <div class="browser-frame-container">
-                        <img src="images/project/Ever Shine/evershine_home-2.png" alt="Evershine Final Store"
-                            class="mockup-img parallax-mockup">
+                        <div class="browser-top-bar">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="browser-inner">
+                            <img src="images/project/Ever Shine/evershine_home-2.png" alt="Evershine Final Store" class="mockup-img">
+                        </div>
                     </div>
                 </div>
+            </div>
         </section>
 
         <!-- FUTURE ROADMAP -->
@@ -277,12 +290,12 @@
                 <div class="future-block">
                     <span class="heading-tag next-reveal">ROADMAP</span>
                     <h2 class="section-title next-reveal">What’s <span class="purple-text">Next.</span></h2>
-                    <div class="future-content next-reveal">
-                        <p>We are integrating an <strong>Automated Size-Predictor</strong> based on height and weight
-                            data to further reduce returns and ensure customers get the perfect raincoat fit every time.
+                    <div class="future-content">
+                        <p class="next-reveal">We are integrating an <strong>Automated Size-Predictor</strong> based on height and weight
+                        data to further reduce returns and ensure customers get the perfect raincoat fit every time.
                         </p>
-                        <p>IconTech continues to manage the <strong>technical scaling</strong> of Evershine as they
-                            expand their industrial protective wear division into global B2B markets.</p>
+                        <p class="next-reveal">IconTech continues to manage the <strong>technical scaling</strong> of Evershine as they
+                        expand their industrial protective wear division into global B2B markets.</p>
                     </div>
                 </div>
 
@@ -328,9 +341,12 @@
 
     <div id="footer-placeholder"></div>
 
+    <!-- GSAP Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <!-- Custom Scripts -->
     <script src="js/final-CTA.js"></script>
     <script src="js/script.js"></script>
     <script src="js/case-study_details.js"></script>

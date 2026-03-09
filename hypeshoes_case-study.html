@@ -9,9 +9,9 @@
     <title>Hype Shoes Case Study | IconTech Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/case-study_details.css">
-    <link rel="stylesheet" href="/css/final-CTA.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/case-study_details.css">
+    <link rel="stylesheet" href="css/final-CTA.css">
 </head>
 
 <body>
@@ -74,11 +74,18 @@
                     </div>
                 </div>
 
-                <!-- Centered Browser Mockup (Overlap Effect) -->
+                <!-- Browser Mockup (Persistent UI Dots) -->
                 <div class="project-mockup-reveal">
                     <div class="browser-frame-container">
-                        <img src="images/project/Hype Shoes/hypeshoes_home.png" alt="Hype Shoes Web Interface"
-                            class="mockup-img">
+                        <div class="browser-top-bar">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="browser-inner">
+                            <img src="images/project/Hype Shoes/hypeshoes_home.png" alt="Hype Shoes Web Interface"
+                                class="mockup-img">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,7 +165,7 @@
                         <div class="part-image-frame shutter-reveal">
                             <img src="images/project/Hype Shoes/hypeshoes_product-1.png" alt="Footwear Merchandising"
                                 class="part-img">
-                            <!-- <div class="part-img-tag">FASHION TECH</div> -->
+                            <div class="part-img-tag">Fashion Tech</div>
                         </div>
                     </div>
 
@@ -170,16 +177,6 @@
         <section class="experience-section">
             <div class="container">
                 <div class="exp-wrapper">
-
-                    <div class="exp-visual-side">
-                        <div class="sticky-node-wrapper">
-                            <div class="ui-node exp-img-reveal">
-                                <img src="images/project/Hype Shoes/hypeshoes_product-2.png"
-                                    alt="Mobile Shopping Experience">
-                                <!-- <div class="node-tag">CONVERSION OPTIMIZED</div> -->
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="exp-content">
                         <span class="heading-tag exp-reveal">THE JOURNEY</span>
@@ -205,6 +202,15 @@
                                 making it effortless for users to find their perfect pair based on size, occasion, and
                                 trend, resulting in a higher average order value.
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="exp-visual-side">
+                        <div class="sticky-node-wrapper">
+                            <div class="ui-node exp-img-reveal">
+                                <img src="images/project/Hype Shoes/hypeshoes_product-2.png" alt="Mobile Optimized UI">
+                                <div class="node-tag">Conversion Optimized</div>
+                            </div>
                         </div>
                     </div>
 
@@ -262,12 +268,20 @@
                     </div>
                 </div>
 
-                <div class="final-project-mockup project-mockup-reveal shutter-reveal">
+                <div class="final-project-mockup shutter-reveal">
                     <div class="browser-frame-container">
-                        <img src="images/project/Hype Shoes/hypeshoes_home-2.png" alt="Hype Shoes Final Store"
-                            class="mockup-img parallax-mockup">
+                        <div class="browser-top-bar">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="browser-inner">
+                            <img src="images/project/Hype Shoes/hypeshoes_home-2.png" alt="Hype Shoes Final Store"
+                                class="mockup-img">
+                        </div>
                     </div>
                 </div>
+            </div>
         </section>
 
         <!-- FUTURE ROADMAP -->
@@ -277,12 +291,14 @@
                 <div class="future-block">
                     <span class="heading-tag next-reveal">ROADMAP</span>
                     <h2 class="section-title next-reveal">What’s <span class="purple-text">Next.</span></h2>
-                    <div class="future-content next-reveal">
-                        <p>We are currently exploring an <strong>AR Virtual Try-On</strong> integration, allowing
+                    <div class="future-content">
+                        <p class="next-reveal">We are currently exploring an <strong>AR Virtual Try-On</strong>
+                            integration, allowing
                             customers to see the shoes on their feet using their smartphone camera, reducing
                             size-related returns.</p>
-                        <p>IconTech remains the long-term strategic partner, managing the <strong>technical
-                                scaling</strong> as Hype Shoes prepares for its first international market expansion.
+                        <p class="next-reveal">IconTech remains the long-term strategic partner, managing the
+                            <strong>technical scaling</strong> as Hype Shoes prepares for its first international market
+                            expansion.
                         </p>
                     </div>
                 </div>
@@ -324,14 +340,16 @@
         </section>
 
         <div id="final-CTA-placeholder"></div>
-
     </main>
 
     <div id="footer-placeholder"></div>
 
+    <!-- GSAP Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+    <!-- Custom Scripts -->
     <script src="js/final-CTA.js"></script>
     <script src="js/script.js"></script>
     <script src="js/case-study_details.js"></script>
