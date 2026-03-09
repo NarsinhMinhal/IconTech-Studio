@@ -1,6 +1,6 @@
 /* ======================
-     WORK HERO
-    ==================== */
+   WORK HERO
+   ====================== */
 .work-hero {
     padding: 140px 0 100px;
     background-color: #05010a;
@@ -12,7 +12,6 @@
     margin: 0 auto 100px;
 }
 
-/* Typography from your logo theme */
 .work-main-title {
     font-size: clamp(3rem, 7vw, 5.5rem);
     font-weight: 800;
@@ -26,7 +25,9 @@
     color: #888;
 }
 
-/* --- THE PROJECT GRID --- */
+/* ======================
+   PROJECT GRID
+   ====================== */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -36,131 +37,365 @@
     margin: 0 auto;
 }
 
-/* The Card Styling */
+/* 5 cards: row1 = 3, row2 = 2 centered */
+.project-grid:has(.project-card:nth-child(5):last-child) {
+    grid-template-columns: repeat(6, 1fr);
+}
+.project-grid:has(.project-card:nth-child(5):last-child) .project-card {
+    grid-column: span 2;
+}
+.project-grid:has(.project-card:nth-child(5):last-child) .project-card:nth-child(4) {
+    grid-column: 2 / span 2;
+}
+.project-grid:has(.project-card:nth-child(5):last-child) .project-card:nth-child(5) {
+    grid-column: 4 / span 2;
+}
+
+/* ======================
+   CARD
+   ====================== */
 .project-card {
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
-    /* Ensures the image doesn't leak out of rounded corners */
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
-.project-card:hover .client-logo {
-    transform: scale(1.1);
-}
-
-.project-card a{
+.project-card a {
     text-decoration: none;
     color: black;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .card-top {
     background: #0d0d0d;
-    /* Deep studio black */
     width: 100%;
-
-    /* 1. Set a standard height for the top section */
     aspect-ratio: 16 / 10;
-
-    /* 2. REMOVE all padding and flex centering */
-    padding: 0 !important;
-    margin-top: -2rem;
-
-    /* 3. Kills the 4px 'text baseline' gap at the bottom */
-    line-height: 0;
-    font-size: 0;
-
+    padding: 24px;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Divider between dark top and white bottom */
+.card-top::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .client-logo {
-    width: 100% !important;
-    height: 100% !important;
-
-    /* 5. 'cover' ensures it touches top, bottom, left, and right */
+    width: auto !important;
+    height: auto !important;
+    max-width: 65% !important;
+    max-height: 65% !important;
     object-fit: contain;
     object-position: center;
-
-    /* 6. Block display prevents any 'inline' spacing bugs */
     display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-
+    margin: auto !important;
     opacity: 1 !important;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-bottom {
-    margin-top: 0;
-    padding: 40px;
+    padding: 28px;
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .card-bottom h3 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     color: #05010a;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .card-bottom p {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.65;
     color: #555;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+    flex: 1;
 }
 
 .view-project {
     margin-top: auto;
     text-decoration: none;
     color: #05010a;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
     background: #f4f4f4;
-    padding: 12px 24px;
+    padding: 11px 20px;
     border-radius: 6px;
     width: fit-content;
-    transition: 0.3s;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.view-project:hover {
-    background: var(--purple-light);
-    color: #fff;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-    .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 1024px) {
-    .card-top {
-        aspect-ratio: 16 / 9;
-        /* Slightly wider on tablets */
-    }
-}
-
-@media (max-width: 768px) {
-    .project-grid {
-        grid-template-columns: 1fr;
+/* =====================
+   HOVER — mouse only
+   ===================== */
+@media (hover: hover) {
+    .project-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(167, 139, 250, 0.25);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
     }
 
-    .card-top {
-        height: 220px;
+    .project-card:hover .client-logo {
+        transform: scale(1.05);
+    }
+
+    .view-project:hover {
+        background: var(--purple-light, #a78bfa);
+        color: #fff;
     }
 }
 
 /* ======================
-     WHY ICONTECH SECTION
-    ==================== */
+   1200px
+   ====================== */
+@media (max-width: 1200px) {
+    .work-hero {
+        padding: 120px 0 80px;
+    }
+
+    .project-grid {
+        gap: 24px;
+    }
+}
+
+/* ======================
+   1100px — 2 col (tablet landscape only)
+   min-width: 769px ensures it doesnt affect mobile
+   ====================== */
+@media (min-width: 769px) and (max-width: 1100px) {
+    .project-grid,
+    .project-grid:has(.project-card:nth-child(5):last-child) {
+        grid-template-columns: repeat(2, 1fr) !important;
+        width: 92%;
+    }
+
+    .project-grid:has(.project-card:nth-child(5):last-child) .project-card,
+    .project-grid:has(.project-card:nth-child(5):last-child) .project-card:nth-child(4),
+    .project-grid:has(.project-card:nth-child(5):last-child) .project-card:nth-child(5) {
+        grid-column: span 1 !important;
+    }
+}
+
+/* ======================
+   1024px
+   ====================== */
+@media (max-width: 1024px) {
+    .work-hero {
+        padding: 100px 0 70px;
+    }
+
+    .work-header-content {
+        margin-bottom: 70px;
+    }
+
+    .card-top {
+        aspect-ratio: 16 / 9;
+    }
+
+    .card-bottom {
+        padding: 22px;
+    }
+}
+
+/* ======================
+   768px — 1 col starts here
+   ====================== */
+@media (max-width: 768px) {
+    .work-hero {
+        padding: 90px 0 60px;
+    }
+
+    .work-header-content {
+        margin-bottom: 50px;
+        padding: 0 16px;
+    }
+
+    .work-subtitle {
+        font-size: 16px;
+    }
+
+    /* SINGLE COLUMN */
+    .project-grid {
+        grid-template-columns: 1fr !important;
+        width: 88%;
+        gap: 20px;
+    }
+
+    /* Reset 5-card layout */
+    .project-grid:has(.project-card:nth-child(5):last-child) {
+        grid-template-columns: 1fr !important;
+    }
+
+    .project-grid:has(.project-card:nth-child(5):last-child) .project-card,
+    .project-grid:has(.project-card:nth-child(5):last-child) .project-card:nth-child(4),
+    .project-grid:has(.project-card:nth-child(5):last-child) .project-card:nth-child(5) {
+        grid-column: span 1 !important;
+    }
+
+    .card-top {
+        aspect-ratio: 16 / 8;
+        padding: 28px;
+    }
+
+    .card-bottom {
+        padding: 24px;
+    }
+
+    .card-bottom h3 {
+        font-size: 20px;
+    }
+
+    .card-bottom p {
+        font-size: 15px;
+    }
+
+    .view-project {
+        font-size: 12px;
+        padding: 11px 20px;
+    }
+}
+
+/* ======================
+   480px
+   ====================== */
+@media (max-width: 480px) {
+    .work-hero {
+        padding: 80px 0 50px;
+    }
+
+    .work-header-content {
+        margin-bottom: 40px;
+    }
+
+    .work-subtitle {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .project-grid {
+        width: 92%;
+        gap: 16px;
+    }
+
+    .card-top {
+        aspect-ratio: 16 / 9;
+        padding: 24px;
+    }
+
+    .card-bottom {
+        padding: 20px;
+    }
+
+    .card-bottom h3 {
+        font-size: 18px;
+    }
+
+    .card-bottom p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+}
+
+/* ======================
+   360px
+   ====================== */
+@media (max-width: 360px) {
+    .work-hero {
+        padding: 70px 0 44px;
+    }
+
+    .project-grid {
+        width: 94%;
+    }
+
+    .card-bottom {
+        padding: 16px;
+    }
+
+    .card-bottom h3 {
+        font-size: 17px;
+    }
+
+    .card-bottom p {
+        font-size: 13px;
+    }
+
+    .view-project {
+        font-size: 10px;
+        padding: 9px 14px;
+    }
+}
+
+/* ======================
+   300px AND BELOW (ULTRA-SMALL)
+   ====================== */
+@media (max-width: 320px) {
+    .project-grid {
+        width: 95%;
+        gap: 15px;
+    }
+
+    .card-top {
+        padding: 15px;
+        aspect-ratio: 4 / 3; /* Taller area for the logo to breathe */
+    }
+
+    .client-logo {
+        max-width: 80%;
+    }
+
+    .card-bottom {
+        padding: 15px;
+        text-align: center; /* Center text for easier reading on narrow width */
+    }
+
+    .card-bottom h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .card-bottom p {
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+
+    .view-project {
+        width: 100%; /* Full width button is easier to tap on tiny screens */
+        font-size: 10px;
+        padding: 10px;
+    }
+}
+
+/* ============================================================
+   WHY ICONTECH SECTION - PREMIUM RESPONSIVE
+   ============================================================ */
 .why-icontech-section {
-    padding: 160px 0;
+    padding: clamp(80px, 15vh, 160px) 0;
     background: #05010a;
     position: relative;
     overflow: hidden;
@@ -169,148 +404,214 @@
 .why-grid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-    gap: 100px;
+    gap: clamp(40px, 8vw, 100px);
     align-items: center;
 }
 
+/* --- CONTENT --- */
 .why-main-title {
-    font-size: clamp(3rem, 7vw, 5rem);
+    font-size: clamp(2.5rem, 6vw, 5rem);
     font-weight: 800;
-    line-height: 1;
-    letter-spacing: -3px;
-    margin-bottom: 25px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
     color: #fff;
 }
 
 .why-subtitle {
-    font-size: 19px;
+    font-size: clamp(16px, 1.2vw, 19px);
     color: #888;
-    margin-bottom: 60px;
+    margin-bottom: clamp(30px, 5vh, 60px);
     max-width: 500px;
+    line-height: 1.6;
 }
 
 /* Benefit Items */
 .benefits-list {
     display: flex;
     flex-direction: column;
-    gap: 45px;
-    margin-bottom: 60px;
+    gap: clamp(25px, 4vw, 45px);
+    margin-bottom: clamp(40px, 6vh, 60px);
 }
 
 .benefit-item {
     display: flex;
-    gap: 25px;
+    gap: 20px;
     align-items: flex-start;
 }
 
 .benefit-icon-box {
-    width: 55px;
-    height: 55px;
+    width: clamp(45px, 4vw, 55px);
+    height: clamp(45px, 4vw, 55px);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: clamp(18px, 1.5vw, 22px);
     flex-shrink: 0;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .benefit-text h3 {
-    font-size: 24px;
+    font-size: clamp(18px, 1.8vw, 24px);
     font-weight: 700;
     color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     letter-spacing: -0.5px;
 }
 
 .benefit-text p {
-    font-size: 16px;
+    font-size: clamp(14px, 1.1vw, 16px);
     line-height: 1.6;
     color: #777;
-    max-width: 450px;
+    max-width: 480px;
 }
 
 /* Buttons */
 .why-btns {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
-/* Cinematic Visual */
+/* --- CINEMATIC VISUAL --- */
 .why-image-frame {
     position: relative;
     width: 100%;
     aspect-ratio: 1 / 1.1;
-    border-radius: 45px;
-    /* Premium large radius */
+    border-radius: clamp(20px, 4vw, 45px);
     overflow: hidden;
-    clip-path: inset(0 0 100% 0);
-    /* Initial shutter state for GSAP */
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
+    clip-path: inset(0 0 100% 0); /* Shutter state */
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
 }
 
 .why-img {
     width: 100%;
-    /* height: 100%; */
-    object-fit: contain;
-    filter: saturate(0.8);
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) brightness(0.9);
+    transition: transform 0.8s ease;
+}
+
+.why-image-frame:hover .why-img {
+    transform: scale(1.05);
 }
 
 .why-img-tag {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    bottom: clamp(15px, 3vw, 30px);
+    right: clamp(15px, 3vw, 30px);
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
     color: #fff;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border-radius: 100px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* RESPONSIVE */
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* Laptop / Small Desktop */
+@media (max-width: 1200px) {
+    .why-grid { gap: 60px; }
+}
+
+/* Tablet (Switch to Vertical) */
 @media (max-width: 1024px) {
     .why-grid {
         grid-template-columns: 1fr;
-        gap: 80px;
+        gap: 50px;
     }
 
     .why-visual {
-        order: -1;
+        order: -1; /* Photo goes to the top on mobile */
+        max-width: 700px;
+        margin: 0 auto;
     }
 
-    /* Photo on top for mobile */
     .why-image-frame {
-        aspect-ratio: 4/3;
-        border-radius: 30px;
+        aspect-ratio: 16 / 9; /* Cinematic wide view on tablets */
+    }
+
+    .why-content {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .why-subtitle, .benefit-text p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .benefit-item {
+        text-align: left;
+    }
+
+    .why-btns {
+        justify-content: center;
     }
 }
 
-/* ======================
-    TRUSTED PARTNERS
-    ==================== */
+/* Mobile Devices */
+@media (max-width: 600px) {
+    .why-icontech-section { padding: 60px 0; }
+    
+    .why-image-frame {
+        aspect-ratio: 4 / 3;
+        border-radius: 20px;
+    }
+
+    .benefit-item {
+        gap: 15px;
+    }
+
+    .why-btns {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .why-btns .magnetic-wrap {
+        width: 100%;
+    }
+
+    .btn-book, .btn-secondary-outline {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ============================================================
+    TRUSTED PARTNERS - PREMIUM RESPONSIVE
+   ============================================================ */
 .partners-section {
-    padding: 140px 0;
+    padding: clamp(80px, 12vh, 140px) 0;
     background: #05010a;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
 }
 
 .partners-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    /* Aligns top of text with top of grid */
-    gap: 80px;
+    gap: clamp(40px, 6vw, 80px);
 }
 
 .partners-content {
     width: 40%;
+    position: sticky;
+    top: 120px; /* Sticks the text while scrolling through logos on desktop */
 }
 
 .partners-title {
@@ -318,17 +619,19 @@
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 25px;
-    letter-spacing: -2px;
+    letter-spacing: -0.03em;
+    color: #fff;
 }
 
 .partners-title span {
-    color: var(--purple-light);
+    color: var(--purple-light, #A594FD);
 }
 
 .partners-subtitle {
-    font-size: 18px;
+    font-size: clamp(16px, 1.1vw, 18px);
     color: #888;
     line-height: 1.6;
+    max-width: 480px;
 }
 
 /* THE GRID & TILES */
@@ -336,62 +639,101 @@
     width: 55%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: clamp(10px, 1.5vw, 20px);
 }
 
 .partner-tile {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Box shadow used as border for pixel-perfect alignment on all devices */
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05); 
     border-radius: 12px;
-    aspect-ratio: 1.6 / 1;
+    aspect-ratio: 1.5 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 25px;
+    padding: clamp(15px, 2vw, 30px);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
 }
 
 .partner-tile img {
-    max-width: 80%;
-    max-height: 50%;
+    max-width: 85%;
+    max-height: 55%;
     object-fit: contain;
-    /* THE TRICK: Makes every logo pure white regardless of original color */
+    /* Forces all logos to be uniform white */
     filter: brightness(0) invert(1);
-    opacity: 0.6;
-    transition: opacity 0.4s ease;
+    opacity: 0.4;
+    transition: all 0.4s ease;
 }
 
-/* Hover effect: Glow and highlight */
-.partner-tile:hover {
-    background: rgba(165, 148, 253, 0.05);
-    border-color: rgba(165, 148, 253, 0.3);
-    transform: translateY(-5px);
+/* --- HOVER EFFECTS --- */
+@media (hover: hover) {
+    .partner-tile:hover {
+        background: rgba(165, 148, 253, 0.08);
+        box-shadow: 0 0 0 1px rgba(165, 148, 253, 0.3), 0 20px 40px -10px rgba(0,0,0,0.5);
+        transform: translateY(-5px);
+        z-index: 2;
+    }
+
+    .partner-tile:hover img {
+        opacity: 1;
+        transform: scale(1.05);
+    }
 }
 
-.partner-tile:hover img {
-    opacity: 1;
+/* ============================================================
+    RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* Laptop / Small Desktop */
+@media (max-width: 1100px) {
+    .partners-wrapper { gap: 40px; }
+    .partners-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Responsive */
+/* Tablet (Switch to Vertical) */
 @media (max-width: 1024px) {
     .partners-wrapper {
         flex-direction: column;
+        align-items: center;
         text-align: center;
     }
 
-    .partners-content,
-    .partners-grid {
+    .partners-content {
         width: 100%;
+        position: static; /* Remove sticky on mobile */
+        margin-bottom: 50px;
+    }
+
+    .partners-subtitle {
+        margin: 0 auto;
     }
 
     .partners-grid {
+        width: 100%;
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 600px) {
+/* Mobile Devices */
+@media (max-width: 650px) {
     .partners-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
+    
+    .partner-tile {
+        aspect-ratio: 1.4 / 1;
+        padding: 20px;
+    }
+}
+
+/* Ultra Small Devices (iPhone SE / Galaxy Fold) */
+@media (max-width: 340px) {
+    .partners-grid {
+        grid-template-columns: 1fr; /* Single column for extreme narrowness */
+    }
+    
+    .partners-title { font-size: 2rem; }
 }
