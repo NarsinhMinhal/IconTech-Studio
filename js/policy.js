@@ -1,8 +1,3 @@
-/**
- * policy.js - IconTech Studio Ultimate Edition
- * 3D Kinetic Reveal + Zero-Delay Logic
- */
-
 let isPolicyInitialized = false;
 
 document.addEventListener("siteReady", () => {
