@@ -1,10 +1,9 @@
+<!-- MAIN HEADER -->
 <header class="main-header">
     <div class="nav-container">
-
-        <!-- LOGO SECTION -->
+        <!-- LOGO -->
         <div class="logo">
-            <a href="index.html" >
-                <!-- IMPORTANT: Replace 'logo.png' with your actual logo file -->
+            <a href="index.html">
                 <img src="images/Logo-white.webp" alt="IconTech Studio" class="logo-img">
             </a>
         </div>
@@ -12,32 +11,26 @@
         <!-- DESKTOP NAVIGATION -->
         <nav class="desktop-nav">
             <ul class="nav-list">
-                <li><a href="index.html"  class="nav-link">Home</a></li>
-                <li><a href="about.html"  class="nav-link">About Us</a></li>
-
-                <!-- Dropdown for Services -->
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
                 <li class="nav-dropdown">
-                    <a href="services.html"  class="nav-link">Services <span class="chevron">▾</span></a>
+                    <a href="services.html" class="nav-link">Services <span class="chevron">▾</span></a>
                     <ul class="dropdown-content">
-                        <li><a href="app-development.html" >Application Development</a></li>
-                        <li><a href="web-development.html" >Website Development</a></li>
-                        <li><a href="ui-ux-development.html" >UI/UX Design</a></li>
+                        <li><a href="app-development.html">Application Development</a></li>
+                        <li><a href="web-development.html">Website Development</a></li>
+                        <li><a href="ui-ux-development.html">UI/UX Design</a></li>
                     </ul>
                 </li>
-                <li><a href="portfolio.html"  class="nav-link">Our Work</a></li>
-
+                <li><a href="portfolio.html" class="nav-link">Our Work</a></li>
             </ul>
         </nav>
 
-        <!-- HEADER ACTIONS (CTA + Mobile Toggle) -->
+        <!-- HEADER ACTIONS -->
         <div class="header-right">
-            <!-- Magnetic Wrapper for the main button -->
             <div class="magnetic-wrap">
-                <a href="contact.html"  class="btn-book magnetic-item">BOOK A CALL</a>
+                <a href="contact.html" class="btn-book magnetic-item">BOOK A CALL</a>
             </div>
-
-            <!-- Mobile Hamburger Button -->
-            <button class="menu-toggle" id="menuBtn">
+            <button class="menu-toggle" id="menuBtn" aria-label="Toggle Menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
@@ -45,30 +38,32 @@
     </div>
 </header>
 
-<!-- MOBILE OVERLAY MENU -->
+<!-- MOBILE MENU BACKDROP (Click here to close) -->
+<div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+<!-- MOBILE MENU DRAWER -->
 <div class="mobile-overlay" id="mobileMenu">
     <nav class="mobile-nav">
-        <a href="index.html" >Home</a>
-        <a href="about.html" >About Us</a>
-        <a href="portfolio.html" >Our Work</a>
+        <a href="index.html" class="mob-link">Home</a>
+        <a href="about.html" class="mob-link">About Us</a>
+        <a href="portfolio.html" class="mob-link">Our Work</a>
         
-        <!-- Mobile Dropdown Wrapper -->
+        <!-- Services Accordion -->
         <div class="mobile-dropdown">
             <div class="mobile-dropdown-header" id="mobileServicesToggle">
-                <a href="services.html" >
-                <span>Services</span></a>
+                <span>Services</span>
                 <span class="mobile-chevron">▾</span>
             </div>
-            
             <div class="mobile-sub-menu" id="mobileSubMenu">
-                <a href="app-development.html"  class="mobile-sub">App Development</a>
-                <a href="web-development.html"  class="mobile-sub">Web Development</a>
-                <a href="ui-ux-development.html"  class="mobile-sub">UI/UX Design</a>
+                <a href="services.html" class="mobile-sub all-svc">View All Services</a>
+                <a href="app-development.html" class="mobile-sub">App Development</a>
+                <a href="web-development.html" class="mobile-sub">Web Development</a>
+                <a href="ui-ux-development.html" class="mobile-sub">UI/UX Design</a>
             </div>
         </div>
 
         <div class="mobile-cta-wrap">
-            <a href="contact.html"  class="btn-book">BOOK A CALL</a>
+            <a href="contact.html" class="btn-book">BOOK A CALL</a>
         </div>
     </nav>
 </div>

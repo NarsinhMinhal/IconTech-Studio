@@ -495,85 +495,116 @@ function setupButtonInteractions() {
     });
 }
 
+/**
+ * ICONTECH MOBILE MENU - SMART NAVIGATION VERSION
+ */
 function setupMobileMenu() {
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileBackdrop');
     const bars = document.querySelectorAll('.bar');
     const servicesToggle = document.getElementById('mobileServicesToggle');
     const subMenu = document.getElementById('mobileSubMenu');
     const chevron = document.querySelector('.mobile-chevron');
 
-    gsap.to(mobileMenu, {
-        right: 0,
-        duration: 0.45,
-        ease: "power3.out"
-    });
-
-    gsap.to(mobileMenu, {
-        right: "-100%",
-        duration: 0.45,
-        ease: "power3.in"
-    });
+    if (!menuBtn || !mobileMenu || !backdrop) return;
 
     let isMenuOpen = false;
-    let isSubMenuOpen = false;
 
-    if (!menuBtn || !mobileMenu) return;
+    // --- HELPER: GET CURRENT FILENAME ---
+    // This identifies if you are on 'about.html', 'index.html', etc.
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
 
-    // --- 1. MAIN MENU TOGGLE ---
-    menuBtn.addEventListener('click', () => {
+    // --- MAIN TOGGLE ---
+    function toggleMenu() {
         isMenuOpen = !isMenuOpen;
 
         if (isMenuOpen) {
-            // OPEN
-            gsap.set(mobileMenu, { visibility: "visible" });
-            gsap.to(mobileMenu, { right: 0, duration: 0.6, ease: "expo.inOut" });
+            document.body.style.overflow = 'hidden'; 
+            gsap.set([mobileMenu, backdrop], { visibility: "visible" });
+            
+            gsap.to(backdrop, { opacity: 1, duration: 0.4 });
+            gsap.to(mobileMenu, { right: 0, duration: 0.5, ease: "power3.out" });
 
-            // X Animation
             gsap.to(bars[0], { rotation: 45, y: 4, duration: 0.3 });
             gsap.to(bars[1], { rotation: -45, y: -4, duration: 0.3 });
         } else {
-            // CLOSE
             closeEverything();
         }
-    });
+    }
 
-    // --- 2. SERVICES ACCORDION ---
-    if (servicesToggle && subMenu) {
-        servicesToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            isSubMenuOpen = !isSubMenuOpen;
+    function closeEverything() {
+        isMenuOpen = false;
+        document.body.style.overflow = ''; 
 
-            if (isSubMenuOpen) {
-                gsap.to(subMenu, { height: "auto", opacity: 1, marginTop: 20, duration: 0.5, ease: "power3.out" });
-                gsap.to(chevron, { rotation: 180, duration: 0.4 });
+        gsap.to(mobileMenu, { right: "-100%", duration: 0.4, ease: "power3.in" });
+        gsap.to(backdrop, { 
+            opacity: 0, 
+            duration: 0.3, 
+            onComplete: () => gsap.set([mobileMenu, backdrop], { visibility: "hidden" }) 
+        });
+
+        gsap.to(bars, { rotation: 0, y: 0, duration: 0.3 });
+
+        if (subMenu) {
+            gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.3 });
+            if (chevron) gsap.to(chevron, { rotation: 0 });
+        }
+    }
+
+    // --- LISTENERS ---
+    menuBtn.addEventListener('click', toggleMenu);
+    backdrop.addEventListener('click', closeEverything);
+
+    // ACCORDION LOGIC
+    if (servicesToggle) {
+        servicesToggle.addEventListener('click', () => {
+            const isAccordionOpen = subMenu.offsetHeight > 0;
+            if (!isAccordionOpen) {
+                gsap.to(subMenu, { height: "auto", opacity: 1, marginTop: 15, duration: 0.4 });
+                if(chevron) gsap.to(chevron, { rotation: 180 });
             } else {
-                gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.4, ease: "power3.in" });
-                gsap.to(chevron, { rotation: 0, duration: 0.4 });
+                gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.3 });
+                if(chevron) gsap.to(chevron, { rotation: 0 });
             }
         });
     }
 
-    // --- 3. HELPER: CLOSE FUNCTION ---
-    function closeEverything() {
-        isMenuOpen = false;
-        isSubMenuOpen = false;
+    // --- THE FIX: SMART LINK REDIRECTION ---
+    const allLinks = document.querySelectorAll('a'); // Selects all links on page
+    
+    allLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const linkHref = link.getAttribute('href');
+            
+            // 1. Check if the link is just a hash (e.g. #howItWorks) 
+            // OR if the link points to the current page (e.g. about.html)
+            const isSamePage = linkHref === currentPath || linkHref === window.location.hash || linkHref === "#";
 
-        // Slide out main menu
-        gsap.to(mobileMenu, { right: "-100%", duration: 0.5, ease: "expo.in" });
+            if (isSamePage) {
+                // If it's the current page, stop the reload
+                if(linkHref !== "#") {
+                    // Allow hash anchors to work (scroll), but don't reload
+                    if(!linkHref.includes('#')) e.preventDefault(); 
+                }
 
-        // Reset Hamburger
-        gsap.to(bars, { rotation: 0, y: 0, duration: 0.3 });
-
-        // THE FIX: Force close the services sub-menu so it's fresh for next time
-        gsap.to(subMenu, { height: 0, opacity: 0, marginTop: 0, duration: 0.3 });
-        gsap.to(chevron, { rotation: 0, duration: 0.3 });
-    }
-
-    // Close menu when any link is clicked
-    const links = mobileMenu.querySelectorAll('a');
-    links.forEach(link => {
-        link.addEventListener('click', () => closeEverything());
+                // Close the mobile menu if it's open
+                if (isMenuOpen) {
+                    // Special case: If clicking 'Services' text which is also a link, 
+                    // and you are already on services.html, we just toggle accordion
+                    if (link.parentElement.classList.contains('mobile-dropdown-header')) {
+                        return; // Let the accordion logic handle it
+                    }
+                    closeEverything();
+                }
+            } else {
+                // If it's a different page, menu will close automatically as the new page loads
+                // but we trigger closeEverything for a smoother visual exit
+                if (isMenuOpen && !link.parentElement.classList.contains('mobile-dropdown-header')) {
+                    closeEverything();
+                }
+            }
+        });
     });
 }
 
