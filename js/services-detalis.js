@@ -18,15 +18,14 @@ function initAppDevAnimations() {
 
     let mm = gsap.matchMedia();
 
+
     /* ===============================
-       COMMON REVEAL (Tablet + Desktop)
+       TABLET + DESKTOP REVEAL
     =============================== */
 
     mm.add("(min-width: 768px)", () => {
 
-        const tl = gsap.timeline();
-
-        tl.to(".service_details-reveal", {
+        gsap.to(".service_details-reveal", {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
@@ -49,129 +48,172 @@ function initAppDevAnimations() {
 
     });
 
+
     /* ===============================
-       DESKTOP ONLY ( >1024px )
+       DESKTOP ONLY (>1024px)
+       Floating + Hover highlight
     =============================== */
 
     mm.add("(min-width: 1025px)", () => {
 
-        // Floating
+        // Gentle float per phone
         screens.forEach((screen, i) => {
             gsap.to(screen, {
                 y: (i % 2 === 0) ? -20 : 20,
-                duration: 3 + i,
+                duration: 3 + i * 0.5,
                 repeat: -1,
                 yoyo: true,
                 ease: "sine.inOut"
             });
         });
 
-        // Hover
-        // Hover Highlight System
+        // Hover highlight
         screens.forEach(screen => {
-
             screen.addEventListener("mouseenter", () => {
-
                 screens.forEach(s => s.classList.add("dimmed"));
                 screen.classList.remove("dimmed");
                 screen.classList.add("active-hover");
-
-                gsap.to(screen, {
-                    scale: 1.08,
-                    duration: 0.3,
-                    ease: "power3.out"
-                });
-
+                gsap.to(screen, { scale: 1.08, duration: 0.3, ease: "power3.out" });
             });
 
             screen.addEventListener("mouseleave", () => {
-
                 screens.forEach(s => {
-                    s.classList.remove("dimmed");
-                    s.classList.remove("active-hover");
+                    s.classList.remove("dimmed", "active-hover");
                 });
-
-                gsap.to(screen, {
-                    scale: 1,
-                    duration: 0.3,
-                    ease: "power3.out"
-                });
-
+                gsap.to(screen, { scale: 1, duration: 0.3, ease: "power3.out" });
             });
-
         });
 
     });
 
+
     /* ===============================
-       MOBILE ONLY ( <768px )
+       MOBILE ONLY (<768px)
+       Auto-advancing carousel with dots
     =============================== */
 
     mm.add("(max-width: 767px)", () => {
 
-        const screens = gsap.utils.toArray(".iphone-mockup");
-        if (!screens.length) return;
-
+        // Instantly show text — no scroll needed on mobile hero
         gsap.set(".service_details-reveal", {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)"
+            opacity: 1, y: 0, filter: "blur(0px)"
         });
 
-        const tl = gsap.timeline({
-            repeat: -1
-        });
+        // Reset all phones to stacked position (CSS handles base state)
+        gsap.set(screens, { opacity: 0, scale: 1, x: 0, y: 0, rotation: 0 });
 
-        screens.forEach((screen) => {
+        // ---- Build dot indicators ----
+        const visual = document.querySelector(".service_details-hero-visual");
+        let dotsWrap = document.querySelector(".carousel-dots");
 
-            tl.to(screens, {
-                opacity: 0,              // hide all
-                duration: 0.3,
-                ease: "power1.out"
-            })
+        // Create only once
+        if (!dotsWrap) {
+            dotsWrap = document.createElement("div");
+            dotsWrap.className = "carousel-dots";
+            screens.forEach((_, i) => {
+                const dot = document.createElement("div");
+                dot.className = "carousel-dot" + (i === 0 ? " active" : "");
+                dot.addEventListener("click", () => goTo(i));
+                dotsWrap.appendChild(dot);
+            });
+            visual.appendChild(dotsWrap);
+        }
 
-                .to(screen, {
-                    opacity: 1,              // show only active
-                    duration: 0.2
-                })
+        const dots = dotsWrap.querySelectorAll(".carousel-dot");
 
-                .to(screen, {
-                    duration: 0.6,
-                    scale: 1.2,
-                    x: 0,
-                    y: 50,
-                    zIndex: 50,
-                    ease: "power2.out"
-                })
+        let current  = 0;
+        let timer    = null;
+        let isAnimating = false;
 
-                .to(screen, {
-                    duration: 2.5,
-                    rotation: 360,              // absolute instead of +=
-                    transformOrigin: "50% 50%",
-                    ease: "power2.inOut"
-                })
-                .set(screen, {
-                    rotation: 0                 // reset cleanly after full spin
-                })
+        function goTo(index, direction) {
+            if (isAnimating || index === current) return;
+            isAnimating = true;
 
-                .to(screen, {
-                    duration: 0.6,
-                    scale: 1,
-                    clearProps: "x,y",
-                    ease: "power2.in"
-                })
+            const prev    = current;
+            current       = index;
+            const dir     = direction ?? (index > prev ? 1 : -1);
+            const enterX  = dir * 260;  // incoming from right or left
+            const exitX   = -dir * 260; // outgoing opposite direction
 
-                .to({}, { duration: 1.2 })
+            // Update dots
+            dots.forEach((d, i) => d.classList.toggle("active", i === current));
 
-                .to(screens, {
-                    opacity: 1,             // bring all back
-                    duration: 0.4,
-                    ease: "power1.out"
-                });
+            const prevScreen = screens[prev];
+            const nextScreen = screens[current];
 
-        });
+            // Set incoming phone off-screen
+            gsap.set(nextScreen, { opacity: 1, x: enterX, scale: 0.88 });
+            nextScreen.classList.add("carousel-active");
+
+            // Slide out current, slide in next
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    prevScreen.classList.remove("carousel-active");
+                    gsap.set(prevScreen, { opacity: 0, x: 0 });
+                    isAnimating = false;
+                }
+            });
+
+            tl.to(prevScreen, {
+                x: exitX,
+                opacity: 0,
+                scale: 0.88,
+                duration: 0.45,
+                ease: "power2.in"
+            }, 0)
+            .to(nextScreen, {
+                x: 0,
+                scale: 1,
+                duration: 0.55,
+                ease: "power3.out"
+            }, 0.05);
+        }
+
+        function next() {
+            goTo((current + 1) % screens.length, 1);
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(next, 3000);
+        }
+
+        // Show first phone
+        gsap.set(screens[0], { opacity: 1, x: 0, scale: 1 });
+        screens[0].classList.add("carousel-active");
+        startTimer();
+
+        // Touch swipe support
+        const container = document.querySelector(".iphone-stack-container");
+        let touchStartX = 0;
+
+        container.addEventListener("touchstart", e => {
+            touchStartX = e.touches[0].clientX;
+            clearInterval(timer); // pause on touch
+        }, { passive: true });
+
+        container.addEventListener("touchend", e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) {
+                diff > 0
+                    ? goTo((current + 1) % screens.length, 1)
+                    : goTo((current - 1 + screens.length) % screens.length, -1);
+            }
+            startTimer(); // resume after swipe
+        }, { passive: true });
+
+        // Cleanup on matchMedia exit (e.g. screen rotated to desktop)
+        return () => {
+            clearInterval(timer);
+            screens.forEach(s => {
+                s.classList.remove("carousel-active");
+                gsap.set(s, { opacity: 0.7, x: 0, scale: 1 });
+            });
+            if (dotsWrap) dotsWrap.remove();
+        };
 
     });
+
 }
 
 function initPartnerSection() {
