@@ -1,6 +1,5 @@
 document.addEventListener("siteReady", () => {
     if (!document.querySelector(".service_details-hero")) return;
-    console.log("🚀 App Dev: Initializing 3D Kinetic Showcase...");
     initAppDevAnimations();
     initPartnerSection();
     initCapabilityAnimations();

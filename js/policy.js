@@ -5,8 +5,6 @@ document.addEventListener("siteReady", () => {
     if (isPolicyInitialized || !document.querySelector(".policy-hero")) return;
     isPolicyInitialized = true;
 
-    console.log("🚀 Policy Engine: Initializing 3D Architectural Logic...");
-
     // 2. FORCE REVEAL (Wake up the 'main' tag from the shutter)
     gsap.set("main, .footer-section", { autoAlpha: 1 });
     ScrollTrigger.refresh();

@@ -1,12 +1,9 @@
 // 1. REGISTER PLUGINS
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// 2. THE LOADING ENGINE
+// Load Initial Assets
 async function initSite() {
-    console.log("🚀 IconTech Engine: Starting...");
-
     try {
-        // AWAIT common components
         await Promise.all([
             fetch('header.html').then(res => res.text()).then(html => {
                 document.getElementById('header-placeholder').innerHTML = html;
@@ -23,13 +20,11 @@ async function initSite() {
         initLazyCTA();
         setupFormSubmission();
 
-        // PAGE ROUTER: Detect where we are and run specific modules
         if (document.querySelector(".hero-section")) {
-            console.log("🏠 Logic: Home Page Active");
             initHomeModules();
         }
 
-        // Signal for page-specific scripts (portfolio.js / about.js)
+        // Signal for dynamic page modules
         document.dispatchEvent(new Event("siteReady"));
 
         // Final calculation refresh to ensure ScrollTriggers are accurate
@@ -478,20 +473,32 @@ function initFinalCTA() {
 // 6. INTERACTIONS (Magnetism & Mobile)
 function setupButtonInteractions() {
     gsap.to(".btn-book", { boxShadow: "0 0 20px rgba(165, 148, 253, 0.8)", repeat: -1, yoyo: true, duration: 1.5, overwrite: "auto" });
+    
     const wraps = document.querySelectorAll('.magnetic-wrap');
     wraps.forEach(wrap => {
         const item = wrap.querySelector('.magnetic-item');
         if (!item) return;
         const xTo = gsap.quickTo(item, "x", { duration: 0.4, ease: "power3" });
         const yTo = gsap.quickTo(item, "y", { duration: 0.4, ease: "power3" });
+
         wrap.onmousemove = (e) => {
-            const r = wrap.getBoundingClientRect();
-            const x = gsap.utils.clamp(-25, 25, (e.clientX - (r.left + r.width / 2)) / 2.5);
-            const y = gsap.utils.clamp(-25, 25, (e.clientY - (r.top + r.height / 2)) / 2.5);
+            const r = item.getBoundingClientRect(); // ← button bounds, not wrap
+            const centerX = r.left + r.width / 2;
+            const centerY = r.top + r.height / 2;
+
+            const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+            if (dist > 80) { xTo(0); yTo(0); return; } // ← dead zone
+
+            const x = gsap.utils.clamp(-25, 25, (e.clientX - centerX) / 2.5);
+            const y = gsap.utils.clamp(-25, 25, (e.clientY - centerY) / 2.5);
             xTo(x); yTo(y);
             gsap.to(item, { rotationY: x * 0.2, rotationX: y * -0.2, duration: 0.3 });
         };
-        wrap.onmouseleave = () => { xTo(0); yTo(0); gsap.to(item, { rotationY: 0, rotationX: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" }); };
+
+        wrap.onmouseleave = () => {
+            xTo(0); yTo(0);
+            gsap.to(item, { rotationY: 0, rotationX: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+        };
     });
 }
 
@@ -510,12 +517,8 @@ function setupMobileMenu() {
     if (!menuBtn || !mobileMenu || !backdrop) return;
 
     let isMenuOpen = false;
-
-    // --- HELPER: GET CURRENT FILENAME ---
-    // This identifies if you are on 'about.html', 'index.html', etc.
     const currentPath = window.location.pathname.split("/").pop() || "index.html";
 
-    // --- MAIN TOGGLE ---
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
 
@@ -576,30 +579,20 @@ function setupMobileMenu() {
     allLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const linkHref = link.getAttribute('href');
-            
-            // 1. Check if the link is just a hash (e.g. #howItWorks) 
-            // OR if the link points to the current page (e.g. about.html)
             const isSamePage = linkHref === currentPath || linkHref === window.location.hash || linkHref === "#";
 
             if (isSamePage) {
-                // If it's the current page, stop the reload
-                if(linkHref !== "#") {
-                    // Allow hash anchors to work (scroll), but don't reload
-                    if(!linkHref.includes('#')) e.preventDefault(); 
+                if (linkHref !== "#") {
+                    if (!linkHref.includes('#')) e.preventDefault(); 
                 }
 
-                // Close the mobile menu if it's open
                 if (isMenuOpen) {
-                    // Special case: If clicking 'Services' text which is also a link, 
-                    // and you are already on services.html, we just toggle accordion
                     if (link.parentElement.classList.contains('mobile-dropdown-header')) {
-                        return; // Let the accordion logic handle it
+                        return;
                     }
                     closeEverything();
                 }
             } else {
-                // If it's a different page, menu will close automatically as the new page loads
-                // but we trigger closeEverything for a smoother visual exit
                 if (isMenuOpen && !link.parentElement.classList.contains('mobile-dropdown-header')) {
                     closeEverything();
                 }

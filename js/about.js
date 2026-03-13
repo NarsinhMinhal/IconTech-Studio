@@ -1,5 +1,4 @@
 document.addEventListener("siteReady", () => {
-    console.log("About Page: Initializing Specific Animations...");
     initAboutHero();
     initMissionReveal();
     initMonolithValues();
@@ -10,12 +9,9 @@ document.addEventListener("siteReady", () => {
 });
 
 function initAboutHero() {
-
     const mm = gsap.matchMedia();
 
-    /* ==========================
-        DESKTOP ANIMATION
-     ========================== */
+    // Desktop Animation
     mm.add("(min-width: 769px)", () => {
 
         const tl = gsap.timeline();
@@ -46,12 +42,8 @@ function initAboutHero() {
             }, "-=1");
     });
 
-    /* ==========================
-         MOBILE ANIMATION
-     ========================== */
+    // Mobile Animation
     mm.add("(max-width: 768px)", () => {
-
-        // No heavy background zoom
         gsap.from(".about-hero-content > *", {
             y: 25,
             opacity: 0,
@@ -70,9 +62,7 @@ function initAboutHero() {
 
     });
 
-    /* ==========================
-         COUNTERS (All Devices)
-     ========================== */
+    // Counters (All Devices)
     const counters = document.querySelectorAll(".counter");
     counters.forEach(counter => {
         const target = parseFloat(counter.getAttribute("data-target"));
@@ -277,7 +267,6 @@ function initPhilosophyReveal() {
 }
 
 function initHistoryTimeline() {
-    // 1. Entrance Reveal for Left Text
     gsap.from(".history-info .reveal-item", {
         scrollTrigger: {
             trigger: ".history-info",
@@ -290,7 +279,6 @@ function initHistoryTimeline() {
         ease: "power3.out"
     });
 
-    // 2. Vertical Line Drawing Animation
     gsap.to(".timeline-line-progress", {
         height: "100%",
         ease: "none",
@@ -302,7 +290,6 @@ function initHistoryTimeline() {
         }
     });
 
-    // 3. Dot Activation Logic
     const timelineItems = document.querySelectorAll(".timeline-item");
     timelineItems.forEach((item) => {
         ScrollTrigger.create({
@@ -312,7 +299,6 @@ function initHistoryTimeline() {
             onLeaveBack: () => item.classList.remove("active")
         });
 
-        // Content reveal for each point
         gsap.from(item.querySelector(".timeline-content"), {
             scrollTrigger: {
                 trigger: item,

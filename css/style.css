@@ -115,13 +115,14 @@ body {
 }
 
 .magnetic-wrap {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;  /* ← shrinks to button size */
+    justify-content: center;
     align-items: center;
-    width: auto;
+    padding: 20px;         /* ← trigger zone around button */
+    width: fit-content;    /* ← never stretch full width */
     position: relative;
-    z-index: 999 !important;
-    pointer-events: auto !important;
+    z-index: 999;
+    pointer-events: auto;
 }
 
 /* ============================================================
@@ -1878,15 +1879,6 @@ body {
 /* LEFT COLUMN */
 .services-left {
     width: 45%;
-}
-
-.studio-tag {
-    color: var(--purple-light);
-    font-size: 12px;
-    letter-spacing: 3px;
-    font-weight: 800;
-    display: block;
-    margin-bottom: 20px;
 }
 
 .services-main-title {
